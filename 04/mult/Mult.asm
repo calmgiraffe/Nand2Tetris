@@ -4,7 +4,7 @@
 // File name: projects/04/Mult.asm
 
 // Multiplies R0 and R1 and stores the result in R2.
-// (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.)
+// (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively)
 //
 // This program only needs to handle arguments that satisfy
 // R0 >= 0, R1 >= 0, and R0*R1 < 32768.
@@ -22,6 +22,7 @@
   M = 0
 
 // If either a or b == 0, immediately jump to end
+// any number * 0 = 0, and 0 is already stored in RAM[2]
   @R0
   D = M
   @END
@@ -31,7 +32,8 @@
   @END
   D; JEQ
 
-// Want to loop a times IF a > 1;
+// Want to loop a times (assume that a > 0)
+// sum = b + b + .. + b (a times)
 // for (i = 0; i < a; i++) {
 //    sum += b
 // }
@@ -51,7 +53,7 @@
   @R3
   M = M + 1
 // Store the curr value of i in D
-// Compare a with D. If D < a, jmp
+// Compare a with D. If D < a, jmp to loop start
   D = M
   @R0
   D = D - M
