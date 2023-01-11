@@ -9,8 +9,6 @@ public class Main {
         } else {
             String inputFile = args[0];
             Parser parser = new Parser(inputFile);
-            CodeWriter codeWriter = new CodeWriter(inputFile);
-
             parser.translate();
         }
     }

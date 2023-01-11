@@ -12,15 +12,14 @@ and determines what methods to call from the CodeWriter class next.
 */
 public class Parser {
     // Static variables
-    public static final HashSet<String> C_ARITHMETIC = new HashSet<>();
-    public static final String C_PUSH = "push";
-    public static final String C_POP = "pop";
+    public static final HashSet<String> ARITHMETIC = new HashSet<>();
 
     // Instance variables
     BufferedReader bufferedReader;
-
-    private String currInstruction;
-    private String[] words;
+    private String currInstruct;
+    private String commandType;
+    private String arg1;
+    private String arg2;
     HashMap<String, String> symbolTable = new HashMap<>();
 
     // Constructor
@@ -29,85 +28,99 @@ public class Parser {
         FileReader reader = new FileReader(source);
         this.bufferedReader = new BufferedReader(reader);
 
-        // Add strings to C_ARITHMETIC
-        C_ARITHMETIC.addAll(List.of("add", "sub", "neg", "eq", "gt", "lt", "and", "or", "not"));
-    }
+        // Add arithmetic commands to ARITHMETIC
+        ARITHMETIC.addAll(List.of("add", "sub", "neg", "eq", "gt", "lt", "and", "or", "not"));
 
-    /*
-    Iterates through the input file, analyzes the lines, calls appropriate method from CodeWriter
-    to generate the correct asm code
-    */
-    public boolean translate() throws IOException {
-        this.advance();
-
-        String command;
-        while (this.hasMoreLines()) {
-            // Parse the current instruction, determine whether it is arithmetic, push, or pop
-            command = commandType();
-            if (C_ARITHMETIC.contains(command)) {
-
-            } else if (command.equals(C_PUSH)) {
-
-            } else if (command.equals(C_POP)) {
-
-            }
-            System.out.println(command);
-            this.advance();
-        }
-        return false;
+        CodeWriter codeWriter = new CodeWriter(source);
     }
 
 
-    public boolean hasMoreLines() {
-        return currInstruction != null;
+    private boolean hasMoreLines() {
+        return currInstruct != null;
     }
 
     /*
     Advances the parser one line, setting currInstruction to the next valid instruction
     This method skips over comments, i.e., lines that start with //
     */
-    public void advance() throws IOException {
+    private void advance() throws IOException {
         while (true) {
-            currInstruction = bufferedReader.readLine();
-
-            if (currInstruction == null) { // indicating EOF
+            currInstruct = bufferedReader.readLine();
+            if (currInstruct == null) { // indicating EOF
                 break;
             }
-            currInstruction = currInstruction.trim();
-            /* If currInstruction is not empty && does not start with //,
+            currInstruct = currInstruct.trim();
+            /*
+            If currInstruction is not empty && does not start with //,
             and if the input file is error free, then currInstruction must be a VM command
-            Split to list of words, the separator being whitespace */
-            if (!currInstruction.isEmpty() && !currInstruction.startsWith("//")) {
-                words = currInstruction.split(" ");
+            Split to list of words, the separator being whitespace.
+            Then, change values of commandType, arg1, arg2.
+            */
+            if (!currInstruct.isEmpty() && !currInstruct.startsWith("//")) {
+                String[] words = currInstruct.split(" ", 3);
+
+                if (ARITHMETIC.contains(words[0])) {
+                    commandType = "arithmetic";
+                    arg1 = words[0];
+                    arg2 = null;
+                } else {
+                    commandType = words[0];
+                    arg1 = words[1];
+                    arg2 = words[2];
+                }
                 break;
             }
         }
     }
 
     /*
-    Returns a constant representing the type of the current command.
-    For example, if the current command is push local 2, then this method returns PUSH.
-    If the current command is add, then this method returns ARITHMETIC.
-    */
-    public String commandType() {
-        return words[0];
+    Iterates through the input, analyzes each line of instruction, and call appropriate translation
+    method.
+    Translates the source vm file into an asm file
+     */
+    public void translate() throws IOException {
+        this.advance();
+        while (this.hasMoreLines()) {
+            // Parse the current instruction, determine whether it is arithmetic, push, or pop
+
+            if (commandType.equals("arithmetic")) {
+                writeArithmetic();
+            } else if (commandType.equals("push") || commandType.equals("pop")) {
+                writePushPop();
+            }
+            this.advance();
+        }
+        // Todo: close Writer and Reader at end
     }
 
     /*
-    Returns the first argument of the current VM command.
-    For example, if the current command is push local 2, then this method returns local.
-    If the current command is arithmetic-logical, returns that command itself.
+    Writes to the output file the asm code that implements the given arithmetic-logical command
     */
-    public String arg1() {
-        return words[1];
+    private void writeArithmetic(String arg1) {
+        /*
+        Cases:
+        and, sub, and, or
+        not, neg
+        eq, gt, lt
+
+        no 2nd or 3rd args
+         */
     }
 
     /*
-    Returns the second argument of the current VM command.
-    For example, if the current command is push local 2, then this method returns 2.
-    Returns null if the current command is an arithmetic logical command.
+    Writes to the output file the asm code that implements the given push or pop command
     */
-    public String arg2() {
-        return words[2];
+    private void writePushPop(String arg1, String arg2) {
+        /*
+        Cases:
+        pop
+        push
+
+        Sub cases:
+        LCL, ARG, THIS, THAT
+        POINTER, TEMP
+        CONSTANT
+        STATIC
+        */
     }
 }
