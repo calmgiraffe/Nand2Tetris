@@ -201,6 +201,7 @@ public class Parser {
      * Sets CString to the substring that makes up valid instruction components.
      * Only appends CChars to intermediate string. Thus, there will be no whitespace in str.
      * If instructType != 'C', CString set to null.
+     * Todo: merge this with updateSymbol
      */
     private void updateCString() {
         StringBuilder str = new StringBuilder();
