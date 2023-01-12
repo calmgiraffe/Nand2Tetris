@@ -18,7 +18,6 @@ public class Parser {
     // Instance variables
     private final BufferedReader bufferedReader;
     private final PrintWriter printWriter;
-
     private final String filePrefix;
     private String currInstruct;
     private String commandType;
