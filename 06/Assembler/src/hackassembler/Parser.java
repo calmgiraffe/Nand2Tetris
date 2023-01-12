@@ -146,81 +146,69 @@ public class Parser {
                     case '(' -> instructType = 'L';
                     default -> instructType = 'C';
                 }
-                updateSymbol();
-                updateCString();
+                updateParams();
                 break;
             }
-        }
-    }
-
-    /*
-     * Updates this.symbol to the symbolic portion of currInstruct.
-     * For example, if currInstruct = "@123", symbol is set to "123".
-     * If currInstruct = "(END)", symbol is set to "END".
-     * If this.instructType = 'C', symbol is set to null.
-     */
-    private void updateSymbol() {
-        StringBuilder str = new StringBuilder();
-        int len, i;
-        char currChar;
-        boolean isSymbol = false;
-
-        if (instructType == 'C') {
-            symbol = null;
-            return;
-        }
-        len = currInstruct.length();
-        for (i = 0; i < len; i += 1) {
-            currChar = currInstruct.charAt(i);
-            if (Character.isLetterOrDigit(currChar) || SYMBOL_CHARS.contains(currChar)) {
-                str.append(currChar);
-            } else if (currChar == '/' || currChar == ' ') { // start of comment or space
-                break;
-            } else if (currChar == '(' || currChar == ')' || currChar == '@') {
-                continue;
-            } else {
-                throw new IllegalArgumentException("Invalid character for symbol");
-            }
-        }
-        symbol = str.toString();
-
-        // checking if this.symbol is a constant like "123" or a symbol
-        len = symbol.length();
-        for (i = 0; i < len; i += 1) {
-            currChar = symbol.charAt(i);
-            if ((SYMBOL_CHARS.contains(currChar))) {
-                isSymbol = true;
-            }
-        }
-        if (isSymbol && Character.isDigit(symbol.charAt(0))) {
-            throw new IllegalArgumentException("Symbol cannot begin with digit");
         }
     }
 
     /*
      * Sets CString to the substring that makes up valid instruction components.
      * Only appends CChars to intermediate string. Thus, there will be no whitespace in str.
-     * If instructType != 'C', CString set to null.
-     * Todo: merge this with updateSymbol
-     */
-    private void updateCString() {
-        StringBuilder str = new StringBuilder();
-        int len;
+     * symbol set to null in this case.
 
-        if (instructType != 'C') {
+     * Updates symbol to the symbolic portion of currInstruct.
+     * For example, if currInstruct = "@123", symbol is set to "123".
+     * If currInstruct = "(END)", symbol is set to "END".
+     * CString set to null in this case.
+     */
+    private void updateParams() {
+        StringBuilder str = new StringBuilder();
+        int len = currInstruct.length();
+        int i;
+        char currChar;
+        boolean isSymbol = false;
+
+        if (instructType == 'C') {
+            for (i = 0; i < len; i += 1) {
+                currChar = currInstruct.charAt(i);
+                if (C_CHARS.contains(currChar)) {
+                    str.append(currChar);
+                } else if (currChar == '/') { // start of comment or space
+                    break;
+                }
+            }
+            symbol = null;
+            CString = str.toString();
+
+        } else { // instructType = 'A' or 'L'
+            for (i = 0; i < len; i += 1) {
+                currChar = currInstruct.charAt(i);
+                if (Character.isLetterOrDigit(currChar) || SYMBOL_CHARS.contains(currChar)) {
+                    str.append(currChar);
+                } else if (currChar == '/' || currChar == ' ') { // start of comment or space
+                    break;
+                } else if (currChar == '(' || currChar == ')' || currChar == '@') {
+                    continue;
+                } else {
+                    throw new IllegalArgumentException("Invalid character for symbol");
+                }
+            }
+            symbol = str.toString();
             CString = null;
-            return;
-        }
-        len = currInstruct.length();
-        for (int i = 0; i < len; i += 1) {
-            char currChar = currInstruct.charAt(i);
-            if (C_CHARS.contains(currChar)) {
-                str.append(currChar);
-            } else if (currChar == '/') { // start of comment or space
-                break;
+
+            // checking if this.symbol is a constant like "123" or a symbol
+            len = symbol.length();
+            for (i = 0; i < len; i += 1) {
+                currChar = symbol.charAt(i);
+                if ((SYMBOL_CHARS.contains(currChar))) {
+                    isSymbol = true;
+                }
+            }
+            if (isSymbol && Character.isDigit(symbol.charAt(0))) {
+                throw new IllegalArgumentException("Symbol cannot begin with digit");
             }
         }
-        CString = str.toString();
     }
 
     /*
