@@ -7,9 +7,9 @@ import java.util.Map;
 Class to translate the fields (symbolic mnemonics) into binary codes.
  */
 public class Code {
-    public static final int MIN_INT = 0;
-    public static final int MAX_INT = 32767;
-    public static final Map<String, String> compCodes = new HashMap<>(){
+    private static final int MIN_INT = 0;
+    private static final int MAX_INT = 32767;
+    private static final Map<String, String> compCodes = new HashMap<>(){
         {
             put("0","0101010");
             put("1","0111111");
@@ -23,25 +23,38 @@ public class Code {
             put("-D","0001111");
             put("-A","0110011");
             put("-M","1110011");
-            put("D+1","0011111");
-            put("A+1","0110111");
-            put("M+1","1110111");
             put("D-1","0001110");
             put("A-1","0110010");
             put("M-1","1110010");
-            put("D+A","0000010");
-            put("D+M","1000010");
             put("D-A","0010011");
             put("D-M","1010011");
             put("A-D","0000111");
             put("M-D","1000111");
+
+            // commutative operations
+            put("D+1","0011111");
+            put("1+D","0011111");
+            put("A+1","0110111");
+            put("1+A","0110111");
+            put("M+1","1110111");
+            put("1+M","1110111");
+
+            put("D+A","0000010");
+            put("A+D","0000010");
+            put("D+M","1000010");
+            put("M+D","1000010");
+
             put("D&A","0000000");
+            put("A&D","0000000");
             put("D&M","1000000");
+            put("M&D","1000000");
             put("D|A","0010101");
+            put("A|D","0010101");
             put("D|M","1010101");
+            put("M|D","1010101");
         }
     };
-    public static final Map<String, String> destCodes = new HashMap<>(){
+    private static final Map<String, String> destCodes = new HashMap<>(){
         {
             put("M","001");
             put("D","010");
@@ -60,12 +73,12 @@ public class Code {
             put("MDA","111");
         }
     };
-    public static final Map<String, String> jumpCodes = new HashMap<>(){
+    private static final Map<String, String> jumpCodes = new HashMap<>(){
         {
             put("JGT","001");
             put("JEQ","010");
             put("JGE","011");
-            put("JLT", "100");
+            put("JLT","100");
             put("JNE","101");
             put("JLE","110");
             put("JMP","111");

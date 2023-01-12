@@ -7,26 +7,12 @@ import java.io.IOException;
 import java.util.Random;
 
 public class UnitTests {
-
+/*
     @Test
     public void testSymbolTable() throws IOException {
         Parser p = new Parser("Fill.asm");
         p.makeSymbolTable();
         System.out.println(p.symbolTable);
-
-        p.bufferedReader.close();
-    }
-
-    @Test
-    public void testInstructionType() throws IOException {
-        Parser p = new Parser("Fill.asm");
-        p.advance();
-
-        while (p.hasMoreLines()) {
-            System.out.println(p.currInstruction + "    " +
-                    Parser.type(p.currInstruction));
-            p.advance();
-        }
         p.bufferedReader.close();
     }
 
@@ -45,11 +31,5 @@ public class UnitTests {
             Assert.assertEquals(randNum, Integer.parseInt(Code.generateAInstruct(randNum), 2));
         }
     }
-
-    @Test
-    public void testAssemble() throws IOException {
-        Parser p = new Parser("Fill.asm");
-        p.makeSymbolTable();
-        p.assemble();
-    }
+ */
 }

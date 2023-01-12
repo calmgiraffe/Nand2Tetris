@@ -7,40 +7,50 @@ import java.util.*;
 Class to parse the input into instructions and instructions into field.
  */
 public class Parser {
-    /* Static variables */
-    public static final String CINSTRUCT = "C_INSTRUCTION";
-    public static final String AINSTRUCT = "A_INSTRUCTION";
-    public static final String LABEL = "LABEL";
-    public static final Set<Character> validCChars = new HashSet<>();
+    // Static variables
+    private static final Set<Character> C_CHARS = new HashSet<>(){
+        {
+            addAll(List.of('0', '1', '-', '+', 'A', 'D', 'M', '!', '&', '|', 'J',
+                    'G', 'T', 'E', 'Q', 'L', 'T', 'N', 'M', 'P', '=', ';'));
+        }
+    };
+    private static final Set<Character> SYMBOL_CHARS = new HashSet<>(){
+        {
+            addAll(List.of('_', '.', '$', ':'));
+        }
+    };
+    private static final Set<String> PREDEFINED = new HashSet<>(){
+        {
+            addAll(List.of(new String[]{"SP", "LCL", "ARG", "THIS", "THAT", "SCREEN", "KBD"}));
+        }
+    };
 
-    /* Instance variables */
-    BufferedReader bufferedReader;
-    final PrintWriter printWriter;
-    final String source;
-    String currInstruction;
-    String byteInstruction;
-    final Map<String, Integer> symbolTable = new HashMap<>();
-    final Set<String> predefined = new HashSet<>();
+    // Instance variables
+    private BufferedReader bufferedReader;
+    private final PrintWriter printWriter;
+    private final String source;
+    private final Map<String, Integer> symbolTable = new HashMap<>();
 
-    /* Constructor */
+    private String currInstruct;
+    private char instructType; // 'C' = C instruction, 'A' = A instruction, 'L' = label
+    private String symbol; // null if instructType = C
+    private String CString;
+    private String byteInstruct;
+
+    // Constructor
     public Parser(String source) throws IOException {
-        // Get the name of the output file
+        // Make the output file name from the source file prefix & initialize BufferedReader
         this.source = source;
-        String output = source.substring(0, source.length() - 4) + ".hack";
-
-        // Initialize BufferedReader
-        FileReader reader = new FileReader(source);
-        this.bufferedReader = new BufferedReader(reader);
-        advance();
+        this.bufferedReader = new BufferedReader(new FileReader(source));
 
         // Initialize PrintReader
-        FileWriter fileWriter = new FileWriter(output);
-        this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
+        String output = source.substring(0, source.length() - 4) + ".hack";
+        this.printWriter = new PrintWriter(new BufferedWriter(new FileWriter(output)));
 
         // Add R0 through R15 in Map
         for (int i = 0; i <= 15; i += 1) {
             symbolTable.put("R" + i, i);
-            predefined.add("R" + i);
+            PREDEFINED.add("R" + i);
         }
         // Add other special symbol in Map
         symbolTable.put("SP", 0);
@@ -50,27 +60,23 @@ public class Parser {
         symbolTable.put("THAT", 4);
         symbolTable.put("SCREEN", 16384);
         symbolTable.put("KBD", 24576);
-
-        // Add predefined symbols to Set
-        predefined.addAll(List.of(new String[]{"SP", "LCL", "ARG", "THIS", "THAT", "SCREEN", "KBD"}));
-
-        // Add valid instruction chars to Set
-        validCChars.addAll(List.of('0', '1', '-', '+', 'A', 'D', 'M', '!', '&', '|'));
-        validCChars.addAll(List.of('J', 'G', 'T', 'E', 'Q', 'L', 'T', 'N', 'M', 'P'));
     }
 
-    /**
+    /*
      * First pass of the assembler, where the symbol table is generated.
+     * Initially advance the parser to the first valid line.
+     * If no more valid lines to parse, currInstruction = null
+     * Todo: this can be made private
      */
-    public void makeSymbolTable() throws IOException {
+    private void makeSymbolTable() throws IOException {
         int lineNum = 1;
-        while (this.hasMoreLines()) {
-            String type = type(currInstruction);
 
-            if (type.equals(LABEL)) {
-                String symbol = symbol(currInstruction);
-                // Throw error if label tag is a predefined special string
-                assert !predefined.contains(symbol);
+        advance();
+        while (currInstruct != null) {
+            if (instructType == 'L') {
+                if (PREDEFINED.contains(symbol)) {
+                    throw new IllegalArgumentException("Symbol cannot be a predefined word");
+                }
                 symbolTable.put(symbol, lineNum - 1);
             } else {
                 lineNum += 1;
@@ -79,42 +85,40 @@ public class Parser {
         }
     }
 
-    /**
-     * Second and final pass of the assembler, where instructions are parsed.
+    /*
+     * Does two passes: one to make symbol table, another to translate to binary.
      */
     public void assemble() throws IOException {
-        // Reinitialize BufferedReader
+        makeSymbolTable();
+
+        // Reinitialize BufferedReader for second pass of input file
         FileReader reader = new FileReader(source);
         this.bufferedReader = new BufferedReader(reader);
         advance();
 
         int variable = 16;
-        while (this.hasMoreLines()) {
-            if (type(currInstruction).equals(AINSTRUCT)) {
+        String dest, comp, jmp;
+        while (currInstruct != null) {
+            if (instructType == 'A') {
 
-                String symbol = symbol(currInstruction);
-                if (symbolTable.containsKey(symbol)) {
-                    // Predefined symbols & label symbols
-                    byteInstruction = Code.generateAInstruct(symbolTable.get(symbol));
+                if (symbolTable.containsKey(symbol)) { // Predefined symbols & label symbols
+                    byteInstruct = Code.generateAInstruct(symbolTable.get(symbol));
 
-                } else if (symbol.matches("[0-9]+")) {
-                    // Integers being assigned to A reg
-                    byteInstruction = Code.generateAInstruct(Integer.parseInt(symbol));
+                } else if (symbol.matches("[0-9]+")) { // Integers being assigned to A reg
+                    byteInstruct = Code.generateAInstruct(Integer.parseInt(symbol));
 
-                } else {
-                    // Variable name
-                    byteInstruction = Code.generateAInstruct(variable);
+                } else { // New variable, starts from 16 and increases by one for each new
+                    byteInstruct = Code.generateAInstruct(variable);
                     symbolTable.put(symbol, variable);
                     variable += 1;
                 }
-                write(byteInstruction);
-            } else if (type(currInstruction).equals(CINSTRUCT)) {
-                String dest = dest(currInstruction);
-                String comp = comp(currInstruction);
-                String jmp = jump(currInstruction);
-                // System.out.println(dest + " " + comp + " " + jmp);
-                byteInstruction = Code.generateCInstruct(dest, comp, jmp);
-                write(byteInstruction);
+                printWriter.println(byteInstruct);
+            } else if (instructType == 'C') {
+                dest = dest(CString);
+                comp = comp(CString);
+                jmp = jump(CString);
+                byteInstruct = Code.generateCInstruct(dest, comp, jmp);
+                printWriter.println(byteInstruct);
             }
             // System.out.println(byteInstruction);
             advance();
@@ -123,154 +127,148 @@ public class Parser {
         printWriter.close();
     }
 
-    /**
-     * Write a line to the target .hack file.
+    /*
+     * Skips through lines of input file until a valid instruction is found, trims leading and
+     * trailing whitespace, and makes it the current instruction. Skips over non-instructions
+     * like comments, i.e., //. If there are no more valid lines to parse, currInstruct is null.
      */
-    public void write(String instruction) {
-        printWriter.println(instruction);
-    }
-
-    /**
-     * Returns true if there are more lines to parse, else return false.
-     * When parser gets to EOF, currInstruction should be null
-     */
-    boolean hasMoreLines() {
-        return currInstruction != null;
-    }
-
-    /**
-     * Skips through lines of input file until a valid instruction is found, trims whitespace,
-     * and makes it the current instruction. Skips over non-instructions like comments.
-     */
-    void advance() throws IOException {
+    private void advance() throws IOException {
         while (true) {
-            currInstruction = bufferedReader.readLine();
-            // Immediately break if EOF
-            if (currInstruction == null) {
+            currInstruct = bufferedReader.readLine();
+            if (currInstruct == null) { // break if EOF
                 break;
             }
-            currInstruction = currInstruction.trim();
-            // If currInstruction is not empty && does not start with //, i.e., is A or C instruct
-            if (!currInstruction.isEmpty() && !currInstruction.startsWith("//")) {
-                break;
-            }
-        }
-    }
-
-    /**
-     * Returns the type of the current instruction.
-     * @return AINSTRUCT, CINSTRUCT, LABEL
-     */
-    public static String type(String instruction) {
-        assert !instruction.startsWith("//");
-
-        if (instruction.startsWith("@")) {
-            return AINSTRUCT;
-        } else if (instruction.startsWith("(")) {
-            return LABEL;
-        } else {
-            return CINSTRUCT;
-        }
-    }
-
-    /**
-     * Assuming the instruction is (xxx) or @xxx, returns the portion of the String that is xxx.
-     */
-    public static String symbol(String instruction) {
-        assert !type(instruction).equals(CINSTRUCT);
-
-        StringBuilder strBuilder = new StringBuilder();
-        for (int i = 0; i < instruction.length(); i += 1) {
-            char currChar = instruction.charAt(i);
-
-            if (Character.isLetterOrDigit(currChar)) {
-                // If alphanumeric, append to StrBuilder
-                strBuilder.append(currChar);
-            } else if (currChar == '/') {
-                // Else if start of comment, break
+            currInstruct = currInstruct.trim();
+            // If currInstruction is not empty && does not start with //, is A or C instruct
+            if (!currInstruct.isEmpty() && !currInstruct.startsWith("//")) {
+                switch (currInstruct.charAt(0)) {
+                    case '@' -> instructType = 'A';
+                    case '(' -> instructType = 'L';
+                    default -> instructType = 'C';
+                }
+                updateSymbol();
+                updateCString();
                 break;
             }
         }
-        return strBuilder.toString();
     }
 
-    /**
-     * Assuming a substring of a C instruction,
-     * returns the portion of the substring that makes up valid instruction components
+    /*
+     * Updates this.symbol to the symbolic portion of currInstruct.
+     * For example, if currInstruct = "@123", symbol is set to "123".
+     * If currInstruct = "(END)", symbol is set to "END".
+     * If this.instructType = 'C', symbol is set to null.
      */
-    private static String cSubstring(String instruction) {
-        StringBuilder strBuilder = new StringBuilder();
-        for (int i = 0; i < instruction.length(); i += 1) {
-            char currChar = instruction.charAt(i);
+    private void updateSymbol() {
+        StringBuilder str = new StringBuilder();
+        int len, i;
+        char currChar;
+        boolean isSymbol = false;
 
-            if (validCChars.contains(currChar)) {
-                // If in approved char set, append to StrBuilder
-                strBuilder.append(currChar);
+        if (instructType == 'C') {
+            symbol = null;
+            return;
+        }
+        len = currInstruct.length();
+        for (i = 0; i < len; i += 1) {
+            currChar = currInstruct.charAt(i);
+            if (Character.isLetterOrDigit(currChar) || SYMBOL_CHARS.contains(currChar)) {
+                str.append(currChar);
+            } else if (currChar == '/' || currChar == ' ') { // start of comment or space
+                break;
+            } else if (currChar == '(' || currChar == ')' || currChar == '@') {
+                continue;
+            } else {
+                throw new IllegalArgumentException("Invalid character for symbol");
             }
         }
-        return strBuilder.toString();
+        symbol = str.toString();
+
+        // checking if this.symbol is a constant like "123" or a symbol
+        len = symbol.length();
+        for (i = 0; i < len; i += 1) {
+            currChar = symbol.charAt(i);
+            if ((SYMBOL_CHARS.contains(currChar))) {
+                isSymbol = true;
+            }
+        }
+        if (isSymbol && Character.isDigit(symbol.charAt(0))) {
+            throw new IllegalArgumentException("Symbol cannot begin with digit");
+        }
     }
 
-    /**
-     * Returns the symbolic dest part of the current C_INSTRUCTION
+    /*
+     * Sets CString to the substring that makes up valid instruction components.
+     * Only appends CChars to intermediate string. Thus, there will be no whitespace in str.
+     * If instructType != 'C', CString set to null.
+     */
+    private void updateCString() {
+        StringBuilder str = new StringBuilder();
+        int len;
+
+        if (instructType != 'C') {
+            CString = null;
+            return;
+        }
+        len = currInstruct.length();
+        for (int i = 0; i < len; i += 1) {
+            char currChar = currInstruct.charAt(i);
+            if (C_CHARS.contains(currChar)) {
+                str.append(currChar);
+            } else if (currChar == '/') { // start of comment or space
+                break;
+            }
+        }
+        CString = str.toString();
+    }
+
+    /*
+     * Returns the symbolic dest part of the current C_INSTRUCTION.
+     * If no symbolic dest part, returns null.
      * Recall: dest = comp; jmp
-     * @return substring that represents comp
      */
-    public static String dest(String instruction) {
-        assert type(instruction).equals(CINSTRUCT);
-
+    private static String dest(String CInstruct) {
         String dest = null;
-        // Trim comments at end, if they exist
-        if (instruction.contains("//")) {
-            instruction = instruction.substring(0, instruction.indexOf('/'));
-        }
+
         // If substring has =, then part before = is dest
-        if (instruction.contains("=")) {
-            dest = cSubstring(instruction.substring(0, instruction.indexOf('=')));
+        if (CInstruct.contains("=")) {
+            dest = CInstruct.substring(0, CInstruct.indexOf('='));
         }
         return dest;
     }
 
-    /**
-     * Returns the symbolic comp part of the current C_INSTRUCTION;
+    /*
+     * Returns the symbolic comp part of the current C_INSTRUCTION.
+     * If no symbolic comp part, returns null.
      * Recall: dest = comp; jmp
-     * @return substring that represents dest
      */
-    public static String comp(String in) {
-        assert type(in).equals(CINSTRUCT);
-
+    private static String comp(String CInstruct) {
         String comp = null;
-        // Trim comments at end, if they exist
-        if (in.contains("//")) {
-            in = in.substring(0, in.indexOf('/'));
-        }
+
         // Determine comp based off whether ; and = exist
-        if (in.contains("=") && in.contains(";")) {
-            comp = cSubstring(in.substring(in.indexOf('='), in.indexOf(';')));
-        } else if (!in.contains("=") && in.contains(";")) {
-            comp = cSubstring(in.substring(0, in.indexOf(';')));
-        } else if (in.contains("=") && !in.contains(";")) {
-            comp = cSubstring(in.substring(in.indexOf('=')));
+        if (CInstruct.contains("=") && CInstruct.contains(";")) { // M = 1; JMP
+            comp = CInstruct.substring(CInstruct.indexOf('='), CInstruct.indexOf(';'));
+
+        } else if (!CInstruct.contains("=") && CInstruct.contains(";")) { // ex: D; JMP
+            comp = CInstruct.substring(0, CInstruct.indexOf(';'));
+
+        } else if (CInstruct.contains("=") && !CInstruct.contains(";")) {
+            comp = CInstruct.substring(CInstruct.indexOf('=') + 1);
         }
         return comp;
     }
 
-    /**
+    /*
      * Returns the symbolic jmp part of the current C_INSTRUCTION;
+     * if no symbolic jmp part, returns null.
      * Recall: dest = comp; jmp
-     * @return substring that represents jmp
      */
-    public static String jump(String instruction) {
-        assert type(instruction).equals(CINSTRUCT);
-
+    private static String jump(String instruction) {
         String jmp = null;
-        // Trim comments at end, if they exist
-        if (instruction.contains("//")) {
-            instruction = instruction.substring(0, instruction.indexOf('/'));
-        }
+
         // All instruction with jmp have ;
         if (instruction.contains(";")) {
-            jmp = cSubstring(instruction.substring(instruction.indexOf(';')));
+            jmp = instruction.substring(instruction.indexOf(';') + 1);
         }
         return jmp;
     }

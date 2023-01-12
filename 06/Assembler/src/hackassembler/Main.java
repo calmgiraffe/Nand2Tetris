@@ -13,7 +13,6 @@ public class Main {
         } else {
             // example: Pong.asm is 195 KB
             Parser parser = new Parser(args[0]);
-            parser.makeSymbolTable();
             parser.assemble();
         }
     }
