@@ -1,4 +1,16 @@
 # Nand2Tetris
+# Nand2Tetris Part 1
 
-Software projects completed:
-  - Assembler (Translating hack assembly language to 16-bit binary instructions)
+### Progress:
+- Logic Gates ✓
+- ALU, adders, incrementer ✓
+- Memory, registers, counter ✓
+- RAM, CPU, computer ✓
+
+# Nand2Tetris Part 2
+
+### Progress:
+- Assembler ✓
+- VM Translator
+- Complier
+- OS
