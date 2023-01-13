@@ -1,5 +1,5 @@
 # Nand2Tetris
-# Nand2Tetris Part 1
+## Nand2Tetris Part 1
 
 ### Progress:
 - Logic Gates ✓
@@ -7,7 +7,7 @@
 - Memory, registers, counter ✓
 - RAM, CPU, computer ✓
 
-# Nand2Tetris Part 2
+## Nand2Tetris Part 2
 
 ### Progress:
 - Assembler ✓
