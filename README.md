@@ -1,4 +1,3 @@
-# Progress
 ## Nand2Tetris Part 1
 
 ### Progress:
