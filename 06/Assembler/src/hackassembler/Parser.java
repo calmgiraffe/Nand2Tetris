@@ -3,9 +3,7 @@ package hackassembler;
 import java.io.*;
 import java.util.*;
 
-/*
-Class to parse the input into instructions and instructions into field.
- */
+
 public class Parser {
     // Static variables
     private static final Set<Character> C_CHARS = new HashSet<>(){
@@ -32,10 +30,9 @@ public class Parser {
     private final Map<String, Integer> symbolTable = new HashMap<>();
 
     private String currInstruct;
-    private char instructType; // 'C' = C instruction, 'A' = A instruction, 'L' = label
-    private String symbol; // null if instructType = C
+    private char instructType;  // 'C' = C instruction, 'A' = A instruction, 'L' = label
+    private String symbol;      // null if instructType = C
     private String CString;
-    private String byteInstruct;
 
     // Constructor
     public Parser(String source) throws IOException {
@@ -66,7 +63,6 @@ public class Parser {
      * First pass of the assembler, where the symbol table is generated.
      * Initially advance the parser to the first valid line.
      * If no more valid lines to parse, currInstruction = null
-     * Todo: this can be made private
      */
     private void makeSymbolTable() throws IOException {
         int lineNum = 1;
@@ -86,6 +82,7 @@ public class Parser {
     }
 
     /*
+     * Main function that translates assembly to machine code.
      * Does two passes: one to make symbol table, another to translate to binary.
      */
     public void assemble() throws IOException {
@@ -97,22 +94,22 @@ public class Parser {
         advance();
 
         int variable = 16;
-        String dest, comp, jmp;
+        String dest, comp, jmp, byteInstruct;
         while (currInstruct != null) {
             if (instructType == 'A') {
-
                 if (symbolTable.containsKey(symbol)) { // Predefined symbols & label symbols
                     byteInstruct = Code.generateAInstruct(symbolTable.get(symbol));
 
-                } else if (symbol.matches("[0-9]+")) { // Integers being assigned to A reg
+                } else if (symbol.matches("[0-9]+")) { // Integer assigned to A reg, ex., @4
                     byteInstruct = Code.generateAInstruct(Integer.parseInt(symbol));
 
-                } else { // New variable, starts from 16 and increases by one for each new
+                } else { // New variable symbol, mapped to RAM[16] and increases by one for each new variable
                     byteInstruct = Code.generateAInstruct(variable);
                     symbolTable.put(symbol, variable);
                     variable += 1;
                 }
                 printWriter.println(byteInstruct);
+
             } else if (instructType == 'C') {
                 dest = dest(CString);
                 comp = comp(CString);
@@ -120,7 +117,6 @@ public class Parser {
                 byteInstruct = Code.generateCInstruct(dest, comp, jmp);
                 printWriter.println(byteInstruct);
             }
-            // System.out.println(byteInstruction);
             advance();
         }
         bufferedReader.close();
@@ -153,17 +149,19 @@ public class Parser {
     }
 
     /*
+     * If (instructType == C):
      * Sets CString to the substring that makes up valid instruction components.
      * Only appends CChars to intermediate string. Thus, there will be no whitespace in str.
-     * symbol set to null in this case.
+     * this.symbol set to null in this case.
 
+     * else:
      * Updates symbol to the symbolic portion of currInstruct.
      * For example, if currInstruct = "@123", symbol is set to "123".
      * If currInstruct = "(END)", symbol is set to "END".
-     * CString set to null in this case.
+     * this.CString set to null in this case.
      */
     private void updateParams() {
-        StringBuilder str = new StringBuilder();
+        StringBuilder newString = new StringBuilder();
         int len = currInstruct.length();
         int i;
         char currChar;
@@ -173,38 +171,41 @@ public class Parser {
             for (i = 0; i < len; i += 1) {
                 currChar = currInstruct.charAt(i);
                 if (C_CHARS.contains(currChar)) {
-                    str.append(currChar);
+                    newString.append(currChar);
                 } else if (currChar == '/') { // start of comment or space
                     break;
                 }
             }
             symbol = null;
-            CString = str.toString();
+            CString = newString.toString();
 
         } else { // instructType = 'A' or 'L'
             for (i = 0; i < len; i += 1) {
+
                 currChar = currInstruct.charAt(i);
-                if (Character.isLetterOrDigit(currChar) || SYMBOL_CHARS.contains(currChar)) {
-                    str.append(currChar);
-                } else if (currChar == '/' || currChar == ' ') { // start of comment or space
+                if (Character.isLetterOrDigit(currChar) || SYMBOL_CHARS.contains(currChar)) { // append if valid char
+                    newString.append(currChar);
+                } else if (currChar == '/' || currChar == ' ') { // start of comment or space, stop appending
                     break;
-                } else if (currChar == '(' || currChar == ')' || currChar == '@') {
+                } else if (currChar == '(' || currChar == ')' || currChar == '@') { // skip these, only want chars between parentheses or after @
                     continue;
                 } else {
                     throw new IllegalArgumentException("Invalid character for symbol");
                 }
             }
-            symbol = str.toString();
+            symbol = newString.toString();
             CString = null;
 
-            // checking if this.symbol is a constant like "123" or a symbol
+            // Checking if this.symbol is a constant like "123" or a symbol like "LOOP_START"
+            // Note: symbols have at least one letter or valid symbol char
             len = symbol.length();
             for (i = 0; i < len; i += 1) {
                 currChar = symbol.charAt(i);
-                if ((SYMBOL_CHARS.contains(currChar))) {
+                if ((SYMBOL_CHARS.contains(currChar)) || Character.isLetter(currChar)) {
                     isSymbol = true;
                 }
             }
+            // If this.symbol is a symbol and not an integer, it cannot begin with a digit
             if (isSymbol && Character.isDigit(symbol.charAt(0))) {
                 throw new IllegalArgumentException("Symbol cannot begin with digit");
             }
@@ -212,7 +213,7 @@ public class Parser {
     }
 
     /*
-     * Returns the symbolic dest part of the current C_INSTRUCTION.
+     * Returns the symbolic dest part of the given C_INSTRUCTION.
      * If no symbolic dest part, returns null.
      * Recall: dest = comp; jmp
      */
@@ -227,7 +228,7 @@ public class Parser {
     }
 
     /*
-     * Returns the symbolic comp part of the current C_INSTRUCTION.
+     * Returns the symbolic comp part of the given C_INSTRUCTION.
      * If no symbolic comp part, returns null.
      * Recall: dest = comp; jmp
      */
@@ -246,9 +247,9 @@ public class Parser {
         }
         return comp;
     }
-
+    
     /*
-     * Returns the symbolic jmp part of the current C_INSTRUCTION;
+     * Returns the symbolic jmp part of the given C_INSTRUCTION;
      * if no symbolic jmp part, returns null.
      * Recall: dest = comp; jmp
      */

@@ -7,7 +7,7 @@ import java.util.List;
 
 /*
 The Parser iterates through the input .vm file, analyzes each VM command,
-and determines what methods to call from the CodeWriter class next.
+and determines what assembly code to write to the output file.
 */
 public class Parser {
     // Static variables
@@ -49,7 +49,7 @@ public class Parser {
     /*
     Advances the parser one line, setting currInstruction to the next valid instruction
     This method skips over comments, i.e., lines that start with //
-    If there are no more valid lines to parse, currInstruct is null
+    If there are no more valid lines to parse, this.currInstruct is null.
     */
     private void advance() throws IOException {
         String[] words;
@@ -59,7 +59,7 @@ public class Parser {
             if (currInstruct == null) { // indicating EOF
                 break;
             }
-            currInstruct = currInstruct.trim();
+            currInstruct = currInstruct.trim(); // trim whitespace
             /*
             If currInstruction is not empty && does not start with //,
             and if the input file is error free, then currInstruction must be a VM command.
@@ -73,10 +73,14 @@ public class Parser {
                     commandType = "arithmetic";
                     arg1 = words[0];
                     arg2 = null;
-                } else {
-                    commandType = words[0];
+                } else if (List.of("push", "pop").contains(words[0])) {
+                    commandType = words[0]; // push, pop
+                    arg1 = words[1]; // will be one of the stack segment names
+                    arg2 = words[2]; // will be positive int
+                } else if (List.of("label", "goto", "if-goto").contains(words[0])) {
+                    commandType = "label";
                     arg1 = words[1];
-                    arg2 = words[2];
+                    arg2 = null;
                 }
                 break;
             }
@@ -84,7 +88,7 @@ public class Parser {
     }
 
     /*
-    General method to translate the source vm file into an asm file. Iterates through the input,
+    Main method to translate the source vm file into an asm file. Iterates through the input,
     analyzes each line of instruction, and call appropriate translation method.
     */
     public void translate() throws IOException {
@@ -110,7 +114,7 @@ public class Parser {
     }
 
     /*
-    Writes to the output file the asm code that implements the given arithmetic-logical command.
+    Writes to the output file the asm code that implements the current arithmetic-logical command.
     Cases: [add, sub, and, or], [not, neg], [eq, gt, lt]
     arg2 = null in the case of arithmetic-logical commands.
     */
@@ -119,9 +123,10 @@ public class Parser {
         String jumpName;
 
         if (ARITHMETIC.contains(arg1)) {
+            // Writing a comment to the asm file; can disable
             printWriter.println("// " + currInstruct);
 
-            if (List.of("add", "sub", "and", "or").contains(arg1)) {
+            if (List.of("add", "sub", "and", "or").contains(arg1)) { // add, sub, and, or
                 printWriter.println("@SP");
                 printWriter.println("AM=M-1");
                 printWriter.println("D=M");
@@ -136,7 +141,7 @@ public class Parser {
                 };
                 printWriter.println("M=M" + op + "D");
 
-            } else if (List.of("not", "neg").contains(arg1)) {
+            } else if (List.of("not", "neg").contains(arg1)) { // not, neg
                 printWriter.println("@SP");
                 printWriter.println("A=M-1");
                 op = switch (arg1) {
@@ -172,16 +177,14 @@ public class Parser {
     }
 
     /*
-    Writes to the output file the asm code that implements the given push or pop command.
+    Writes to the output file the asm code that implements the current push or pop command.
     arg1 cases: [pop, push]
-    arg2 cases: [LCL, ARG, THIS, THAT], [POINTER, TEMP], [CONSTANT], [STATIC]
+    arg2 cases: [local, argument, this, that], [pointer, temp], [constant], [static]
     */
     private void writePushPop() {
         String op;
 
-        if (!commandType.equals("pop") && !commandType.equals("push")) {
-            return;
-        }
+        // Writing a comment to the asm file; can disable
         printWriter.println("// " + currInstruct);
 
         if (commandType.equals("push")) {
@@ -223,7 +226,7 @@ public class Parser {
             printWriter.println("A=M-1");
             printWriter.println("M=D");
 
-        } else { // commandType.equals("pop")
+        } else if (commandType.equals("pop")) {
             if (List.of("argument", "local", "this", "that").contains(arg1)) {
                 printWriter.println("@" + REG_MAP.get(arg1));
                 printWriter.println("D=M");
@@ -231,9 +234,9 @@ public class Parser {
                 printWriter.println("D=D+A");
                 printWriter.println("@R13");
                 printWriter.println("M=D");
-                printWriter.println("@SP");     // These 3 lines are in common with other cases.
-                printWriter.println("AM=M-1");  // but don't have good way to separate them
-                printWriter.println("D=M");     //
+                printWriter.println("@SP");     // These 3 commented lines are in common with other cases,
+                printWriter.println("AM=M-1");  // but I don't have good way to separate them.
+                printWriter.println("D=M");     // :-(
                 printWriter.println("@R13");
                 printWriter.println("A=M");
                 printWriter.println("M=D");
@@ -265,6 +268,21 @@ public class Parser {
                     printWriter.println("M=D");
                 }
             }
+        }
+    }
+
+    /*
+    Writes to the output file the asm code that implements the current label command.
+    arg1 cases: [label, goto, if-goto]
+    arg2 cases:
+    */
+    private void writeLabel() {
+        if (arg1.equals("label")) {
+            
+        } else if (arg1.equals("goto")) {
+
+        } else if (arg1.equals("if-goto")) {
+
         }
     }
 }
