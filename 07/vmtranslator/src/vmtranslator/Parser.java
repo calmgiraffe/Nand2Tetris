@@ -59,28 +59,28 @@ public class Parser {
             if (currInstruct == null) { // indicating EOF
                 break;
             }
-            currInstruct = currInstruct.trim(); // trim whitespace
+            currInstruct = currInstruct.trim();
             /*
             If currInstruction is not empty && does not start with //,
             and if the input file is error free, then currInstruction must be a VM command.
-            Split to list of words, the separator being a space.
+            Split to list of words, the separator being whitespace.
             Finally, set values of commandType, arg1, arg2.
             */
             if (!currInstruct.isEmpty() && !currInstruct.startsWith("//")) {
-                words = currInstruct.split(" ", 3);
+                words = currInstruct.split("\\s+");
 
                 if (ARITHMETIC.contains(words[0])) {
-                    commandType = "arithmetic";
+                    commandType = "arithmetic"; // arithmetic
                     arg1 = words[0];
                     arg2 = null;
                 } else if (List.of("push", "pop").contains(words[0])) {
-                    commandType = words[0]; // push, pop
+                    commandType = words[0]; // push or pop
                     arg1 = words[1]; // will be one of the stack segment names
                     arg2 = words[2]; // will be positive int
                 } else if (List.of("label", "goto", "if-goto").contains(words[0])) {
-                    commandType = "label";
-                    arg1 = words[1];
-                    arg2 = null;
+                    commandType = "label"; // label
+                    arg1 = words[0];
+                    arg2 = words[1];
                 }
                 break;
             }
@@ -97,8 +97,10 @@ public class Parser {
         while (currInstruct != null) { // null if EOF
             if (commandType.equals("arithmetic")) {
                 writeArithmetic();
-            } else if (commandType.equals("push") || commandType.equals("pop")) {
+            } else if (List.of("push", "pop").contains(commandType)) {
                 writePushPop();
+            } else if (commandType.equals("label")) {
+                writeLabel();
             }
             // Todo: add more commandType cases later
             this.advance();
@@ -107,7 +109,7 @@ public class Parser {
         printWriter.println("// infinite loop");
         printWriter.println("(END)");
         printWriter.println("@END");
-        printWriter.println("0;JMP");
+        printWriter.print("0;JMP");
 
         bufferedReader.close();
         printWriter.close();
@@ -122,57 +124,55 @@ public class Parser {
         String op;
         String jumpName;
 
-        if (ARITHMETIC.contains(arg1)) {
-            // Writing a comment to the asm file; can disable
-            printWriter.println("// " + currInstruct);
+        // Writing a comment to the asm file; can disable
+        printWriter.println("// " + currInstruct);
 
-            if (List.of("add", "sub", "and", "or").contains(arg1)) { // add, sub, and, or
-                printWriter.println("@SP");
-                printWriter.println("AM=M-1");
-                printWriter.println("D=M");
-                printWriter.println("@SP");
-                printWriter.println("A=M-1");
-                op = switch (arg1) {
-                    case "add" -> "+";
-                    case "sub" -> "-";
-                    case "and" -> "&";
-                    case "or" -> "|";
-                    case default -> throw new IllegalArgumentException("Unexpected arithmetic op");
-                };
-                printWriter.println("M=M" + op + "D");
+        if (List.of("add", "sub", "and", "or").contains(arg1)) { // add, sub, and, or
+            printWriter.println("@SP");
+            printWriter.println("AM=M-1");
+            printWriter.println("D=M");
+            printWriter.println("@SP");
+            printWriter.println("A=M-1");
+            op = switch (arg1) {
+                case "add" -> "+";
+                case "sub" -> "-";
+                case "and" -> "&";
+                case "or" -> "|";
+                case default -> throw new IllegalArgumentException("Unexpected arithmetic op");
+            };
+            printWriter.println("M=M" + op + "D");
 
-            } else if (List.of("not", "neg").contains(arg1)) { // not, neg
-                printWriter.println("@SP");
-                printWriter.println("A=M-1");
-                op = switch (arg1) {
-                    case "not" -> "!";
-                    case "neg" -> "-";
-                    case default -> throw new IllegalArgumentException("Unexpected negation op");
-                };
-                printWriter.println("M=" + op + "M");
+        } else if (List.of("not", "neg").contains(arg1)) { // not, neg
+            printWriter.println("@SP");
+            printWriter.println("A=M-1");
+            op = switch (arg1) {
+                case "not" -> "!";
+                case "neg" -> "-";
+                case default -> throw new IllegalArgumentException("Unexpected negation op");
+            };
+            printWriter.println("M=" + op + "M");
 
-            } else { // eq, gt, lt
-                jumpName = "EQ_jump" + jumpNum;
-                printWriter.println("@SP");
-                printWriter.println("AM=M-1");
-                printWriter.println("D=M");
-                printWriter.println("A=A-1");
-                printWriter.println("D=M-D");
-                printWriter.println("M=-1");
-                printWriter.println("@" + jumpName);
-                op = switch (arg1) {
-                    case "eq" -> "JEQ";
-                    case "gt" -> "JGT";
-                    case "lt" -> "JLT";
-                    case default -> throw new IllegalArgumentException("Unexpected equality op");
-                };
-                printWriter.println("D;" + op);
-                printWriter.println("@SP");
-                printWriter.println("A=M-1");
-                printWriter.println("M=0");
-                printWriter.println("(" + jumpName + ")");
-                jumpNum += 1;
-            }
+        } else if (List.of("eq", "gt", "lt").contains(arg1)) { // eq, gt, lt
+            jumpName = "EQ_jump" + jumpNum;
+            printWriter.println("@SP");
+            printWriter.println("AM=M-1");
+            printWriter.println("D=M");
+            printWriter.println("A=A-1");
+            printWriter.println("D=M-D");
+            printWriter.println("M=-1");
+            printWriter.println("@" + jumpName);
+            op = switch (arg1) {
+                case "eq" -> "JEQ";
+                case "gt" -> "JGT";
+                case "lt" -> "JLT";
+                case default -> throw new IllegalArgumentException("Unexpected equality op");
+            };
+            printWriter.println("D;" + op);
+            printWriter.println("@SP");
+            printWriter.println("A=M-1");
+            printWriter.println("M=0");
+            printWriter.println("(" + jumpName + ")");
+            jumpNum += 1;
         }
     }
 
@@ -274,15 +274,21 @@ public class Parser {
     /*
     Writes to the output file the asm code that implements the current label command.
     arg1 cases: [label, goto, if-goto]
-    arg2 cases:
+    arg2 cases: label name
     */
     private void writeLabel() {
+        printWriter.println("// " + currInstruct);
         if (arg1.equals("label")) {
-            
-        } else if (arg1.equals("goto")) {
-
-        } else if (arg1.equals("if-goto")) {
-
+            printWriter.println("(" + arg2 + ")");
+        } else if (arg1.equals("goto")) { // unconditional jump
+            printWriter.println("@" + arg2);
+            printWriter.println("0;JMP");
+        } else if (arg1.equals("if-goto")) { // jump if stack's topmost value is not 0
+            printWriter.println("@SP");
+            printWriter.println("AM=M-1");
+            printWriter.println("D=M");
+            printWriter.println("@" + arg2);
+            printWriter.println("D;JNE");
         }
     }
 }
