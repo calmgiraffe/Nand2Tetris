@@ -2,7 +2,6 @@ package vmtranslator;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /*
@@ -11,22 +10,34 @@ and determines what assembly code to write to the output file.
 */
 public class Parser {
     // Static variables
-    private static final HashSet<String> ARITHMETIC = new HashSet<>();
-    private static final HashMap<String, String> REG_MAP = new HashMap<>();
+    private static final HashMap<String, String> REG_MAP = new HashMap<>(){
+        {
+            put("local", "LCL");
+            put("argument", "ARG");
+            put("this", "THIS");
+            put("that", "THAT");
+        }
+    };
     private static final int TMP_OFFSET = 5;
+    private static final char PUSH_POP = 'P';
+    private static final char BRANCHING = 'B';
+    private static final char FUNCTION = 'F';
+    private static final char ARITHMETIC = 'A';
 
     // Instance variables
     private final BufferedReader bufferedReader;
     private final PrintWriter printWriter;
     private final String filePrefix;
-    private String currInstruct;
-    private String commandType;
-    private String arg1;
-    private String arg2;
-    private int jumpNum;
+    private char commandType;
+    private String currInstruct, arg1, arg2, arg3;
+    private String currFunction = "Main";
+    private int jumpNum, callNum;
 
     // Constructor
     public Parser(String source) throws IOException {
+        this.jumpNum = 0;
+        this.callNum = 0;
+
         // Initialize BufferedReader, which stores a line from the source into a 8K buffer
         FileReader reader = new FileReader(source);
         this.bufferedReader = new BufferedReader(reader);
@@ -36,51 +47,57 @@ public class Parser {
         this.filePrefix = source.substring(0, source.length() - 3);
         FileWriter fileWriter = new FileWriter(filePrefix + ".asm");
         this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
-
-        ARITHMETIC.addAll(List.of("add", "sub", "neg", "eq", "gt", "lt", "and", "or", "not"));
-        REG_MAP.put("local", "LCL");
-        REG_MAP.put("argument", "ARG");
-        REG_MAP.put("this", "THIS");
-        REG_MAP.put("that", "THAT");
-
-        this.jumpNum = 0;
     }
 
     /*
-    Advances the parser one line, setting currInstruction to the next valid instruction
+    Advances the parser one line, setting currInstruction to the next valid instruction.
     This method skips over comments, i.e., lines that start with //
-    If there are no more valid lines to parse, this.currInstruct is null.
+    If there are no more valid lines to parse, this.currInstruct = null.
     */
     private void advance() throws IOException {
         String[] words;
 
         while (true) {
             currInstruct = bufferedReader.readLine();
-            if (currInstruct == null) { // indicating EOF
+            if (currInstruct == null) {
                 break;
             }
             currInstruct = currInstruct.trim();
             /*
-            If currInstruction is not empty && does not start with //,
-            and if the input file is error free, then currInstruction must be a VM command.
-            Split to list of words, the separator being whitespace.
-            Finally, set values of commandType, arg1, arg2.
-            */
+            If currInstruction is not empty && does not start with //, then currInstruction must be VM command.
+            Split to list of words about whitespace, then set values of commandType, arg1, arg2.
+
+            Note: assumes that the input VM file has no errors, i.e., only comments, valid commands, or blank lines */
             if (!currInstruct.isEmpty() && !currInstruct.startsWith("//")) {
                 words = currInstruct.split("\\s+");
 
-                if (ARITHMETIC.contains(words[0])) {
-                    commandType = "arithmetic"; // arithmetic
-                    arg1 = words[0];
-                    arg2 = null;
-                } else if (List.of("push", "pop").contains(words[0])) {
-                    commandType = words[0]; // push or pop
-                    arg1 = words[1]; // will be one of the stack segment names
-                    arg2 = words[2]; // will be positive int
+                if (List.of("push", "pop").contains(words[0])) {
+                    commandType = PUSH_POP;
+                    arg1 = words[0];    // push or pop
+                    arg2 = words[1];    // one of the stack segment names
+                    arg3 = words[2];    // positive int
                 } else if (List.of("label", "goto", "if-goto").contains(words[0])) {
-                    commandType = "label"; // label
+                    commandType = BRANCHING;
+                    arg1 = words[0];    // label, goto, if-goto
+                    arg2 = words[1];    // label name
+                    arg3 = null;
+                } else if (List.of("function", "call", "return").contains(words[0])) {
+                    commandType = FUNCTION;
+                    arg1 = words[0];        // function, call, or return
+                    if (arg1.equals("return")) {
+                        arg2 = null;
+                        arg3 = null;
+                    } else {
+                        arg2 = words[1];    // function f
+                        arg3 = words[2];    // nArgs
+                    }
                     arg1 = words[0];
-                    arg2 = words[1];
+
+                } else {
+                    commandType = ARITHMETIC;
+                    arg1 = words[0];    // add, sub, neg, eq, gt, lt, and, or, not
+                    arg2 = null;
+                    arg3 = null;
                 }
                 break;
             }
@@ -92,20 +109,21 @@ public class Parser {
     analyzes each line of instruction, and call appropriate translation method.
     */
     public void translate() throws IOException {
-        // Initially advance to first valid line
-        this.advance();
+        this.advance(); // Initially advance to first valid line
         while (currInstruct != null) { // null if EOF
-            if (commandType.equals("arithmetic")) {
-                writeArithmetic();
-            } else if (List.of("push", "pop").contains(commandType)) {
+
+            if (commandType == PUSH_POP) {
                 writePushPop();
-            } else if (commandType.equals("label")) {
-                writeLabel();
+            } else if (commandType == BRANCHING) {
+                writeBranching();
+            } else if (commandType == FUNCTION) {
+                writeFunction();
+            } else if (commandType == ARITHMETIC) {
+                writeArithmetic();
             }
-            // Todo: add more commandType cases later
             this.advance();
         }
-        // put infinite loop at end of asm file
+        // Put infinite loop at end of asm file
         printWriter.println("// infinite loop");
         printWriter.println("(END)");
         printWriter.println("@END");
@@ -118,7 +136,7 @@ public class Parser {
     /*
     Writes to the output file the asm code that implements the current arithmetic-logical command.
     Cases: [add, sub, and, or], [not, neg], [eq, gt, lt]
-    arg2 = null in the case of arithmetic-logical commands.
+    arg2, arg3 = null in the case of arithmetic-logical commands.
     */
     private void writeArithmetic() {
         String op;
@@ -178,8 +196,9 @@ public class Parser {
 
     /*
     Writes to the output file the asm code that implements the current push or pop command.
-    arg1 cases: [pop, push]
-    arg2 cases: [local, argument, this, that], [pointer, temp], [constant], [static]
+    arg1 = [pop, push]
+    arg2 = [local, argument, this, that], [pointer, temp], [constant], [static]
+    arg3 = some positive int
     */
     private void writePushPop() {
         String op;
@@ -187,14 +206,14 @@ public class Parser {
         // Writing a comment to the asm file; can disable
         printWriter.println("// " + currInstruct);
 
-        if (commandType.equals("push")) {
-            switch (arg1) {
+        if (arg1.equals("push")) {
+            switch (arg2) {
                 case "constant" -> {
-                    printWriter.println("@" + arg2); // arg2 = i
+                    printWriter.println("@" + arg3); // arg3 = i
                     printWriter.println("D=A");
                 }
                 case "pointer" -> {
-                    op = switch (arg2) {
+                    op = switch (arg3) {
                         case "0" -> "THIS";
                         case "1" -> "THAT";
                         case default -> throw new IllegalArgumentException("Unexpected pointer value");
@@ -203,19 +222,19 @@ public class Parser {
                     printWriter.println("D=M");
                 }
                 case "temp" -> {
-                    op = "R" + (Integer.parseInt(arg2) + TMP_OFFSET);
+                    op = "R" + (Integer.parseInt(arg3) + TMP_OFFSET);
                     printWriter.println("@" + op);
                     printWriter.println("D=M");
                 }
                 case "static" -> {
-                    op = filePrefix + "." + arg2;
+                    op = filePrefix + "." + arg3;
                     printWriter.println("@" + op);
                     printWriter.println("D=M");
                 }
                 default -> {  // argument, local, this, that
-                    printWriter.println("@" + REG_MAP.get(arg1));
+                    printWriter.println("@" + REG_MAP.get(arg2));
                     printWriter.println("D=M");
-                    printWriter.println("@" + arg2);
+                    printWriter.println("@" + arg3);
                     printWriter.println("A=D+A");
                     printWriter.println("D=M");
                 }
@@ -226,11 +245,11 @@ public class Parser {
             printWriter.println("A=M-1");
             printWriter.println("M=D");
 
-        } else if (commandType.equals("pop")) {
-            if (List.of("argument", "local", "this", "that").contains(arg1)) {
-                printWriter.println("@" + REG_MAP.get(arg1));
+        } else if (arg1.equals("pop")) {
+            if (List.of("argument", "local", "this", "that").contains(arg2)) {
+                printWriter.println("@" + REG_MAP.get(arg2));
                 printWriter.println("D=M");
-                printWriter.println("@" + arg2);
+                printWriter.println("@" + arg3);
                 printWriter.println("D=D+A");
                 printWriter.println("@R13");
                 printWriter.println("M=D");
@@ -247,9 +266,9 @@ public class Parser {
             printWriter.println("AM=M-1");
             printWriter.println("D=M");
 
-            switch (arg1) {
+            switch (arg2) {
                 case "pointer" -> {
-                    op = switch (arg2) {
+                    op = switch (arg3) {
                         case "0" -> "THIS";
                         case "1" -> "THAT";
                         case default -> throw new IllegalArgumentException("Unexpected pointer value");
@@ -258,12 +277,12 @@ public class Parser {
                     printWriter.println("M=D");
                 }
                 case "temp" -> {
-                    op = "R" + (Integer.parseInt(arg2) + TMP_OFFSET);
+                    op = "R" + (Integer.parseInt(arg3) + TMP_OFFSET);
                     printWriter.println("@" + op);
                     printWriter.println("M=D");
                 }
                 case "static" -> {
-                    op = filePrefix + "." + arg2;
+                    op = filePrefix + "." + arg3;
                     printWriter.println("@" + op);
                     printWriter.println("M=D");
                 }
@@ -272,23 +291,51 @@ public class Parser {
     }
 
     /*
-    Writes to the output file the asm code that implements the current label command.
-    arg1 cases: [label, goto, if-goto]
-    arg2 cases: label name
+    Writes to the output file the asm code that implements the current branching command.
+    arg1 = [label, goto, if-goto]
+    arg2 = label name
+    arg3 = null
     */
-    private void writeLabel() {
+    private void writeBranching() {
         printWriter.println("// " + currInstruct);
-        if (arg1.equals("label")) {
-            printWriter.println("(" + arg2 + ")");
-        } else if (arg1.equals("goto")) { // unconditional jump
-            printWriter.println("@" + arg2);
-            printWriter.println("0;JMP");
-        } else if (arg1.equals("if-goto")) { // jump if stack's topmost value is not 0
-            printWriter.println("@SP");
-            printWriter.println("AM=M-1");
-            printWriter.println("D=M");
-            printWriter.println("@" + arg2);
-            printWriter.println("D;JNE");
+
+        String symbol = filePrefix + "." + currFunction + "$" + arg2;
+        switch (arg1) {
+            case "label" -> printWriter.println("(" + symbol + ")");
+            case "goto" -> {  // unconditional jump
+                printWriter.println("@" + symbol);
+                printWriter.println("0;JMP");
+            }
+            case "if-goto" -> {  // jump if stack's topmost value is not 0
+                printWriter.println("@SP");
+                printWriter.println("AM=M-1");
+                printWriter.println("D=M");
+                printWriter.println("@" + symbol);
+                printWriter.println("D;JNE");
+            }
+        }
+    }
+
+    /*
+    Writes to the output file the asm code that implements the current function command.
+    arg1 = [call, function, return]
+    arg2 = function name
+    arg3 = nArgs
+    */
+    private void writeFunction() {
+        printWriter.println("// " + currInstruct);
+
+        String symbol = filePrefix + "." + currFunction + "$" + arg2;
+        switch (arg1) {
+            case "call" -> {
+
+            }
+            case "function" -> {  // unconditional jump
+
+            }
+            case "return" -> {  // jump if stack's topmost value is not 0
+
+            }
         }
     }
 }
