@@ -1,6 +1,7 @@
 package vmtranslator;
 
 import java.io.*;
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,18 +82,16 @@ public class Parser {
                     arg1 = words[0];    // label, goto, if-goto
                     arg2 = words[1];    // label name
                     arg3 = null;
-                } else if (List.of("function", "call", "return").contains(words[0])) {
+                } else if (List.of("function", "call").contains(words[0])) {
                     commandType = FUNCTION;
-                    arg1 = words[0];        // function, call, or return
-                    if (arg1.equals("return")) {
-                        arg2 = null;
-                        arg3 = null;
-                    } else {
-                        arg2 = words[1];    // function f
-                        arg3 = words[2];    // nArgs
-                    }
-                    arg1 = words[0];
-
+                    arg1 = words[0];    // function or call
+                    arg2 = words[1];    // function f
+                    arg3 = words[2];    // nArgs
+                } else if (words[0].equals("return")) {
+                    commandType = FUNCTION;
+                    arg1 = words[0];    // return
+                    arg2 = null;
+                    arg3 = null;
                 } else {
                     commandType = ARITHMETIC;
                     arg1 = words[0];    // add, sub, neg, eq, gt, lt, and, or, not
@@ -113,7 +112,7 @@ public class Parser {
         while (currInstruct != null) { // null if EOF
 
             if (commandType == PUSH_POP) {
-                writePushPop();
+                writePushPop(this.arg1, this.arg2, this.arg3, true);
             } else if (commandType == BRANCHING) {
                 writeBranching();
             } else if (commandType == FUNCTION) {
@@ -139,12 +138,11 @@ public class Parser {
     arg2, arg3 = null in the case of arithmetic-logical commands.
     */
     private void writeArithmetic() {
-        String op;
-        String jumpName;
-
-        // Writing a comment to the asm file; can disable
+        // Writing a comment to the asm file; can comment out
         printWriter.println("// " + currInstruct);
 
+        String op;
+        String jumpName;
         if (List.of("add", "sub", "and", "or").contains(arg1)) { // add, sub, and, or
             printWriter.println("@SP");
             printWriter.println("AM=M-1");
@@ -200,12 +198,11 @@ public class Parser {
     arg2 = [local, argument, this, that], [pointer, temp], [constant], [static]
     arg3 = some positive int
     */
-    private void writePushPop() {
+    private void writePushPop(String arg1, String arg2, String arg3, boolean enableComments) {
+        if (enableComments) {
+            printWriter.println("// " + currInstruct);
+        }
         String op;
-
-        // Writing a comment to the asm file; can disable
-        printWriter.println("// " + currInstruct);
-
         if (arg1.equals("push")) {
             switch (arg2) {
                 case "constant" -> {
@@ -231,11 +228,15 @@ public class Parser {
                     printWriter.println("@" + op);
                     printWriter.println("D=M");
                 }
-                default -> {  // argument, local, this, that
+                case "argument", "local", "this", "that" -> {
                     printWriter.println("@" + REG_MAP.get(arg2));
                     printWriter.println("D=M");
                     printWriter.println("@" + arg3);
                     printWriter.println("A=D+A");
+                    printWriter.println("D=M");
+                }
+                default -> {  // push returnAddress, push LCL, push ARG, push THIS, push THAT
+                    printWriter.println("@" + arg2);
                     printWriter.println("D=M");
                 }
             }
@@ -260,12 +261,11 @@ public class Parser {
                 printWriter.println("A=M");
                 printWriter.println("M=D");
                 return;
+            } else {    // Else case: pointer, temp, static
+                printWriter.println("@SP");
+                printWriter.println("AM=M-1");
+                printWriter.println("D=M");
             }
-            // Else case: pointer, temp, static
-            printWriter.println("@SP");
-            printWriter.println("AM=M-1");
-            printWriter.println("D=M");
-
             switch (arg2) {
                 case "pointer" -> {
                     op = switch (arg3) {
@@ -299,7 +299,7 @@ public class Parser {
     private void writeBranching() {
         printWriter.println("// " + currInstruct);
 
-        String symbol = filePrefix + "." + currFunction + "$" + arg2;
+        String symbol = String.format("%s.%s$%s", filePrefix, currFunction, arg2);
         switch (arg1) {
             case "label" -> printWriter.println("(" + symbol + ")");
             case "goto" -> {  // unconditional jump
@@ -325,17 +325,99 @@ public class Parser {
     private void writeFunction() {
         printWriter.println("// " + currInstruct);
 
-        String symbol = filePrefix + "." + currFunction + "$" + arg2;
+        String functionName = String.format("%s.%s", filePrefix, arg2);
+        String returnAddress = String.format("%s.%s$ret.%d", filePrefix, currFunction, callNum);
         switch (arg1) {
             case "call" -> {
-
+                // push returnAddress, LCL, ARG, THIS, THAT
+                writePushPop("push", returnAddress, null, false);
+                writePushPop("push", "LCL", null, false);
+                writePushPop("push", "ARG", null, false);
+                writePushPop("push", "THIS", null, false);
+                writePushPop("push", "THAT", null, false);
+                // ARG = SP - 5 - nArgs
+                printWriter.println("@5");
+                printWriter.println("D=A");
+                printWriter.println("@" + arg3);
+                printWriter.println("D=D+A");
+                printWriter.println("@SP");
+                printWriter.println("D=M-D");
+                printWriter.println("@ARG");
+                printWriter.println("M=D");
+                // LCL = SP
+                printWriter.println("@SP");
+                printWriter.println("D=M");
+                printWriter.println("@LCL");
+                printWriter.println("M=D");
+                // goto f
+                printWriter.println("@" + functionName);
+                printWriter.println("0;JMP");
+                // (returnAddress)
+                printWriter.println("(" + returnAddress + ")");
+                // Increment this.callNum
+                this.callNum += 1;
             }
-            case "function" -> {  // unconditional jump
+            case "function" -> { // generate a symbol filePrefix.functionName that labels the entry point of the function's code
+                // At new function block, update currFunction for next potential function VM command
+                this.currFunction = arg2;
 
+                printWriter.println("(" + functionName + ")");
+                // repeat nVar times for nVar local variables
+                int nVars = Integer.parseInt(arg3);
+                for (int i = 0; i < nVars; i++) {
+                    writePushPop("push", "constant", "0", false);
+                }
             }
-            case "return" -> {  // jump if stack's topmost value is not 0
-
+            case "return" -> {
+                // frame = LCL
+                printWriter.println("@LCL");
+                printWriter.println("D=M");
+                printWriter.println("@R13");
+                printWriter.println("M=D");
+                // retAddress = *(frame - 5)
+                dereference("R14", "R13", 5);
+                // *ARG = pop()
+                printWriter.println("@SP");
+                printWriter.println("A=M-1");
+                printWriter.println("D=M");
+                printWriter.println("@ARG");
+                printWriter.println("A=M");
+                printWriter.println("M=D");
+                // SP = ARG + 1
+                printWriter.println("@ARG");
+                printWriter.println("D=M+1");
+                printWriter.println("@SP");
+                printWriter.println("M=D");
+                // THAT = *(frame - 1); THIS = *(frame - 2); ARG = *(frame - 3); LCL = *(frame - 4)
+                dereference("THAT", "R13", 1);
+                dereference("THIS", "R13", 2);
+                dereference("ARG", "R13", 3);
+                dereference("LCL", "R13", 4);
+                // goto retAddress
+                printWriter.println("@R13");
+                printWriter.println("A=M");
+                printWriter.println("0;JMP");
             }
         }
+    }
+
+    /*
+    Helper function for writeFunction(), prints the corresponding asm code for output = *(input - offset)
+    For example, if output = R14 (retAddress), input = R13 (frame), offset = 5, the pseudo-assembly is R14 = *(R13 - 5)
+    Also used for:
+    THAT = *(frame - 1)
+    THIS = *(frame - 2)
+    ARG = *(frame - 3)
+    LCL = *(frame - 4)
+    */
+    private void dereference(String output, String input, int offset) {
+        printWriter.println(String.format("// pseudo-assembly: %s = *(%s - %s)", output, input, offset));
+        printWriter.println("@" + input);
+        printWriter.println("D=M");
+        printWriter.println("@" + offset);
+        printWriter.println("A=D-A");
+        printWriter.println("D=M");
+        printWriter.println("@" + output);
+        printWriter.println("M=D");
     }
 }

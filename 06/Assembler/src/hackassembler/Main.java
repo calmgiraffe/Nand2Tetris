@@ -8,12 +8,14 @@ public class Main {
         If one arg, print error msg
         Else, run the assembler where the arg is the .asm file to be processed
         */
-        if (args.length != 1) {
+        if (args.length == 0) {
             System.out.println("Must have one arg.");
         } else {
             // example: Pong.asm is 195 KB
-            Parser parser = new Parser(args[0]);
-            parser.assemble();
+            for (String arg : args) {
+                Parser parser = new Parser(arg);
+                parser.assemble();
+            }
         }
     }
 }

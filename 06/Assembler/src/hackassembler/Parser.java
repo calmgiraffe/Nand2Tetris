@@ -176,13 +176,13 @@ public class Parser {
                     break;
                 }
             }
-            symbol = null;
-            CString = newString.toString();
+            this.symbol = null;
+            this.CString = newString.toString();
 
         } else { // instructType = 'A' or 'L'
             for (i = 0; i < len; i += 1) {
-
                 currChar = currInstruct.charAt(i);
+
                 if (Character.isLetterOrDigit(currChar) || SYMBOL_CHARS.contains(currChar)) { // append if valid char
                     newString.append(currChar);
                 } else if (currChar == '/' || currChar == ' ') { // start of comment or space, stop appending
@@ -193,8 +193,8 @@ public class Parser {
                     throw new IllegalArgumentException("Invalid character for symbol");
                 }
             }
-            symbol = newString.toString();
-            CString = null;
+            this.symbol = newString.toString();
+            this.CString = null;
 
             // Checking if this.symbol is a constant like "123" or a symbol like "LOOP_START"
             // Note: symbols have at least one letter or valid symbol char
