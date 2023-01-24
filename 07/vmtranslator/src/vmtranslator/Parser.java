@@ -123,12 +123,12 @@ public class Parser {
     analyzes each line of instruction, and call appropriate translation method.
     */
     public void translate() throws IOException {
-        // Bootstrap code: SP = 256; call Sys.init
+        printWriter.println("// Bootstrap code: SP = 256; call Sys.init");
         printWriter.println("@256");
         printWriter.println("D=A");
         printWriter.println("@SP");
         printWriter.println("M=D");
-        writeFunction("call", "Sys.init", null);
+        writeFunction("call", "Sys.init", "0", false);
         printWriter.println("@Sys.init");
         printWriter.println("0;JMP");
 
@@ -147,7 +147,7 @@ public class Parser {
                     writeBranching(this.arg1, this.arg2);
 
                 } else if (commandType == FUNCTION) {
-                    writeFunction(this.arg1, this.arg2, this.arg3);
+                    writeFunction(this.arg1, this.arg2, this.arg3, true);
 
                 } else if (commandType == ARITHMETIC) {
                     writeArithmetic(this.arg1);
@@ -156,14 +156,6 @@ public class Parser {
             }
             bufferedReader.close();
         }
-
-        // Put infinite loop at end of asm file
-        /*
-        printWriter.println("// infinite loop");
-        printWriter.println("(END)");
-        printWriter.println("@END");
-        printWriter.print("0;JMP");
-         */
         printWriter.close();
     }
 
@@ -273,7 +265,7 @@ public class Parser {
                     printWriter.println("@" + arg2);
                     printWriter.println("D=M");
                 }
-                default -> { // returnAddress
+                default -> { // some returnAddress
                     printWriter.println("@" + arg2);
                     printWriter.println("D=A");
                 }
@@ -357,9 +349,10 @@ public class Parser {
     Writes to the output file the asm code that implements the current function command.
     command = [call, function, return]
     */
-    private void writeFunction(String command, String label, String nArgs) {
-        printWriter.println("// " + currInstruct);
-
+    private void writeFunction(String command, String label, String nArgs, boolean enableComments) {
+        if (enableComments) {
+            printWriter.println("// " + currInstruct);
+        }
         String returnAddress = String.format("%s$ret.%d", currFunction, callNum);
         switch (command) {
             case "call" -> {
@@ -442,11 +435,6 @@ public class Parser {
     /*
     Helper function for writeFunction(), prints the corresponding asm code for output = *(input + offset)
     For example, if output = retAddress, input = frame, offset = -5, the pseudo-assembly is retAddress = *(frame - 5)
-    Also used for:
-    THAT = *(frame - 1)
-    THIS = *(frame - 2)
-    ARG = *(frame - 3)
-    LCL = *(frame - 4)
     */
     private void dereference(String output, String input, int offset) {
         printWriter.println(String.format("// pseudo-assembly: %s = *(%s - %s)", output, input, offset));
