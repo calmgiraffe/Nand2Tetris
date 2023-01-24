@@ -1,9 +1,9 @@
 package vmtranslator;
 
 import java.io.*;
-import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /*
 The Parser iterates through the input .vm file, analyzes each VM command,
@@ -26,28 +26,43 @@ public class Parser {
     private static final char ARITHMETIC = 'A';
 
     // Instance variables
-    private final BufferedReader bufferedReader;
+    private BufferedReader bufferedReader;
     private final PrintWriter printWriter;
-    private final String filePrefix;
     private char commandType;
-    private String currInstruct, arg1, arg2, arg3;
-    private String currFunction = "Main";
-    private int jumpNum, callNum;
+    private String currFile;
+    private String currInstruct, currFunction, arg1, arg2, arg3;
+    private final String parentDirectory;
+    private int jumpNum = 0;
+    private int callNum = 0;
+    private final String[] filesList;
 
     // Constructor
     public Parser(String source) throws IOException {
-        this.jumpNum = 0;
-        this.callNum = 0;
+        String outputFileName;
 
-        // Initialize BufferedReader, which stores a line from the source into a 8K buffer
-        FileReader reader = new FileReader(source);
-        this.bufferedReader = new BufferedReader(reader);
+        if (source.endsWith(".vm")) {   // one .vm file -> one .asm file
+            outputFileName = source.substring(0, source.length() - 3);
+            this.filesList = new String[1];
+            filesList[0] = source;
 
-        // Initialize PrintWriter, which write a line to an output file with println() method
-        // Make the output file name from the filename prefix
-        this.filePrefix = source.substring(0, source.length() - 3);
-        FileWriter fileWriter = new FileWriter(filePrefix + ".asm");
-        this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
+            // Initialize PrintWriter, writes lines to output file with println()
+            this.parentDirectory = "./";
+            FileWriter fileWriter = new FileWriter(outputFileName + ".asm");
+            this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
+
+        } else {    // -> multiple .vm files in a specified folder -> one .asm file
+            outputFileName = source;
+            File directoryPath = new File("./" + source);
+            FilenameFilter VMFileFilter = (dir, name) -> {
+                String lowercaseName = name.toLowerCase();
+                return lowercaseName.endsWith(".vm");
+            };
+            this.filesList = directoryPath.list(VMFileFilter);
+
+            this.parentDirectory = "./" + outputFileName + '/';
+            FileWriter fileWriter = new FileWriter(parentDirectory + outputFileName + ".asm");
+            this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
+        }
     }
 
     /*
@@ -108,48 +123,67 @@ public class Parser {
     analyzes each line of instruction, and call appropriate translation method.
     */
     public void translate() throws IOException {
-        this.advance(); // Initially advance to first valid line
-        while (currInstruct != null) { // null if EOF
+        // Bootstrap code: SP = 256; call Sys.init
+        printWriter.println("@256");
+        printWriter.println("D=A");
+        printWriter.println("@SP");
+        printWriter.println("M=D");
+        writeFunction("call", "Sys.init", null);
+        printWriter.println("@Sys.init");
+        printWriter.println("0;JMP");
 
-            if (commandType == PUSH_POP) {
-                writePushPop(this.arg1, this.arg2, this.arg3, true);
-            } else if (commandType == BRANCHING) {
-                writeBranching();
-            } else if (commandType == FUNCTION) {
-                writeFunction();
-            } else if (commandType == ARITHMETIC) {
-                writeArithmetic();
-            }
+        // Initialize new bufferReader for each .vm file, initially advance to first valid instruction,
+        // translate corresponding args, goto next instruct, repeat until no more valid lines or EOF
+        for (String file : filesList) {
+            this.bufferedReader = new BufferedReader(new FileReader(parentDirectory + file));
+            this.currFile = file.substring(0, file.length() - 3);
+
             this.advance();
+            while (currInstruct != null) { // null if EOF
+                if (commandType == PUSH_POP) {
+                    writePushPop(this.arg1, this.arg2, this.arg3, true);
+
+                } else if (commandType == BRANCHING) {
+                    writeBranching(this.arg1, this.arg2);
+
+                } else if (commandType == FUNCTION) {
+                    writeFunction(this.arg1, this.arg2, this.arg3);
+
+                } else if (commandType == ARITHMETIC) {
+                    writeArithmetic(this.arg1);
+                }
+                this.advance();
+            }
+            bufferedReader.close();
         }
+
         // Put infinite loop at end of asm file
+        /*
         printWriter.println("// infinite loop");
         printWriter.println("(END)");
         printWriter.println("@END");
         printWriter.print("0;JMP");
-
-        bufferedReader.close();
+         */
         printWriter.close();
     }
 
     /*
     Writes to the output file the asm code that implements the current arithmetic-logical command.
     Cases: [add, sub, and, or], [not, neg], [eq, gt, lt]
-    arg2, arg3 = null in the case of arithmetic-logical commands.
     */
-    private void writeArithmetic() {
+    private void writeArithmetic(String command) {
         // Writing a comment to the asm file; can comment out
         printWriter.println("// " + currInstruct);
 
         String op;
         String jumpName;
-        if (List.of("add", "sub", "and", "or").contains(arg1)) { // add, sub, and, or
+        if (List.of("add", "sub", "and", "or").contains(command)) { // add, sub, and, or
             printWriter.println("@SP");
             printWriter.println("AM=M-1");
             printWriter.println("D=M");
             printWriter.println("@SP");
             printWriter.println("A=M-1");
-            op = switch (arg1) {
+            op = switch (command) {
                 case "add" -> "+";
                 case "sub" -> "-";
                 case "and" -> "&";
@@ -158,17 +192,17 @@ public class Parser {
             };
             printWriter.println("M=M" + op + "D");
 
-        } else if (List.of("not", "neg").contains(arg1)) { // not, neg
+        } else if (List.of("not", "neg").contains(command)) { // not, neg
             printWriter.println("@SP");
             printWriter.println("A=M-1");
-            op = switch (arg1) {
+            op = switch (command) {
                 case "not" -> "!";
                 case "neg" -> "-";
                 case default -> throw new IllegalArgumentException("Unexpected negation op");
             };
             printWriter.println("M=" + op + "M");
 
-        } else if (List.of("eq", "gt", "lt").contains(arg1)) { // eq, gt, lt
+        } else if (List.of("eq", "gt", "lt").contains(command)) { // eq, gt, lt
             jumpName = "EQ_jump" + jumpNum;
             printWriter.println("@SP");
             printWriter.println("AM=M-1");
@@ -177,7 +211,7 @@ public class Parser {
             printWriter.println("D=M-D");
             printWriter.println("M=-1");
             printWriter.println("@" + jumpName);
-            op = switch (arg1) {
+            op = switch (command) {
                 case "eq" -> "JEQ";
                 case "gt" -> "JGT";
                 case "lt" -> "JLT";
@@ -224,7 +258,7 @@ public class Parser {
                     printWriter.println("D=M");
                 }
                 case "static" -> {
-                    op = filePrefix + "." + arg3;
+                    op = currFile + "." + arg3;
                     printWriter.println("@" + op);
                     printWriter.println("D=M");
                 }
@@ -235,9 +269,13 @@ public class Parser {
                     printWriter.println("A=D+A");
                     printWriter.println("D=M");
                 }
-                default -> {  // push returnAddress, push LCL, push ARG, push THIS, push THAT
+                case "LCL", "ARG", "THIS", "THAT" -> {  // push LCL, push ARG, push THIS, push THAT
                     printWriter.println("@" + arg2);
                     printWriter.println("D=M");
+                }
+                default -> { // returnAddress
+                    printWriter.println("@" + arg2);
+                    printWriter.println("D=A");
                 }
             }
             // All push commands end with these 4 lines
@@ -282,7 +320,7 @@ public class Parser {
                     printWriter.println("M=D");
                 }
                 case "static" -> {
-                    op = filePrefix + "." + arg3;
+                    op = currFile + "." + arg3;
                     printWriter.println("@" + op);
                     printWriter.println("M=D");
                 }
@@ -292,15 +330,14 @@ public class Parser {
 
     /*
     Writes to the output file the asm code that implements the current branching command.
-    arg1 = [label, goto, if-goto]
-    arg2 = label name
-    arg3 = null
+    arg1 command = [label, goto, if-goto]
+    arg2 label = label name
     */
-    private void writeBranching() {
+    private void writeBranching(String command, String label) {
         printWriter.println("// " + currInstruct);
 
-        String symbol = String.format("%s.%s$%s", filePrefix, currFunction, arg2);
-        switch (arg1) {
+        String symbol = String.format("%s$%s", currFunction, label);
+        switch (command) {
             case "label" -> printWriter.println("(" + symbol + ")");
             case "goto" -> {  // unconditional jump
                 printWriter.println("@" + symbol);
@@ -318,16 +355,13 @@ public class Parser {
 
     /*
     Writes to the output file the asm code that implements the current function command.
-    arg1 = [call, function, return]
-    arg2 = function name
-    arg3 = nArgs
+    command = [call, function, return]
     */
-    private void writeFunction() {
+    private void writeFunction(String command, String label, String nArgs) {
         printWriter.println("// " + currInstruct);
 
-        String functionName = String.format("%s.%s", filePrefix, arg2);
-        String returnAddress = String.format("%s.%s$ret.%d", filePrefix, currFunction, callNum);
-        switch (arg1) {
+        String returnAddress = String.format("%s$ret.%d", currFunction, callNum);
+        switch (command) {
             case "call" -> {
                 // push returnAddress, LCL, ARG, THIS, THAT
                 writePushPop("push", returnAddress, null, false);
@@ -338,7 +372,7 @@ public class Parser {
                 // ARG = SP - 5 - nArgs
                 printWriter.println("@5");
                 printWriter.println("D=A");
-                printWriter.println("@" + arg3);
+                printWriter.println("@" + nArgs);
                 printWriter.println("D=D+A");
                 printWriter.println("@SP");
                 printWriter.println("D=M-D");
@@ -350,20 +384,21 @@ public class Parser {
                 printWriter.println("@LCL");
                 printWriter.println("M=D");
                 // goto f
-                printWriter.println("@" + functionName);
+                printWriter.println("@" + label);
                 printWriter.println("0;JMP");
                 // (returnAddress)
                 printWriter.println("(" + returnAddress + ")");
                 // Increment this.callNum
                 this.callNum += 1;
             }
-            case "function" -> { // generate a symbol filePrefix.functionName that labels the entry point of the function's code
+            case "function" -> {
+                // generate a symbol filePrefix.functionName that labels the entry point of the function's code
                 // At new function block, update currFunction for next potential function VM command
-                this.currFunction = arg2;
+                this.currFunction = label;
 
-                printWriter.println("(" + functionName + ")");
+                printWriter.println("(" + label + ")");
                 // repeat nVar times for nVar local variables
-                int nVars = Integer.parseInt(arg3);
+                int nVars = Integer.parseInt(nArgs);
                 for (int i = 0; i < nVars; i++) {
                     writePushPop("push", "constant", "0", false);
                 }
@@ -372,13 +407,13 @@ public class Parser {
                 // frame = LCL
                 printWriter.println("@LCL");
                 printWriter.println("D=M");
-                printWriter.println("@R13");
+                printWriter.println("@frame");
                 printWriter.println("M=D");
                 // retAddress = *(frame - 5)
-                dereference("R14", "R13", 5);
+                dereference("retAddress", "frame", 5);
                 // *ARG = pop()
                 printWriter.println("@SP");
-                printWriter.println("A=M-1");
+                printWriter.println("AM=M-1");
                 printWriter.println("D=M");
                 printWriter.println("@ARG");
                 printWriter.println("A=M");
@@ -388,13 +423,16 @@ public class Parser {
                 printWriter.println("D=M+1");
                 printWriter.println("@SP");
                 printWriter.println("M=D");
-                // THAT = *(frame - 1); THIS = *(frame - 2); ARG = *(frame - 3); LCL = *(frame - 4)
-                dereference("THAT", "R13", 1);
-                dereference("THIS", "R13", 2);
-                dereference("ARG", "R13", 3);
-                dereference("LCL", "R13", 4);
+                // THAT = *(frame - 1);
+                // THIS = *(frame - 2);
+                // ARG = *(frame - 3);
+                // LCL = *(frame - 4)
+                dereference("THAT", "frame", 1);
+                dereference("THIS", "frame", 2);
+                dereference("ARG", "frame", 3);
+                dereference("LCL", "frame", 4);
                 // goto retAddress
-                printWriter.println("@R13");
+                printWriter.println("@retAddress");
                 printWriter.println("A=M");
                 printWriter.println("0;JMP");
             }
@@ -402,8 +440,8 @@ public class Parser {
     }
 
     /*
-    Helper function for writeFunction(), prints the corresponding asm code for output = *(input - offset)
-    For example, if output = R14 (retAddress), input = R13 (frame), offset = 5, the pseudo-assembly is R14 = *(R13 - 5)
+    Helper function for writeFunction(), prints the corresponding asm code for output = *(input + offset)
+    For example, if output = retAddress, input = frame, offset = -5, the pseudo-assembly is retAddress = *(frame - 5)
     Also used for:
     THAT = *(frame - 1)
     THIS = *(frame - 2)

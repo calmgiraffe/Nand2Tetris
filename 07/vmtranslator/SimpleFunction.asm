@@ -1,5 +1,5 @@
 // function SimpleFunction.test 2
-(SimpleFunction.SimpleFunction.test)
+(SimpleFunction.test)
 @0
 D=A
 @SP
@@ -80,18 +80,18 @@ M=M-D
 // return
 @LCL
 D=M
-@R13
+@frame
 M=D
-// pseudo-assembly: R14 = *(R13 - 5)
-@R13
+// pseudo-assembly: retAddress = *(frame - 5)
+@frame
 D=M
 @5
 A=D-A
 D=M
-@R14
+@retAddress
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
@@ -100,39 +100,39 @@ M=D
 D=M+1
 @SP
 M=D
-// pseudo-assembly: THAT = *(R13 - 1)
-@R13
+// pseudo-assembly: THAT = *(frame - 1)
+@frame
 D=M
 @1
 A=D-A
 D=M
 @THAT
 M=D
-// pseudo-assembly: THIS = *(R13 - 2)
-@R13
+// pseudo-assembly: THIS = *(frame - 2)
+@frame
 D=M
 @2
 A=D-A
 D=M
 @THIS
 M=D
-// pseudo-assembly: ARG = *(R13 - 3)
-@R13
+// pseudo-assembly: ARG = *(frame - 3)
+@frame
 D=M
 @3
 A=D-A
 D=M
 @ARG
 M=D
-// pseudo-assembly: LCL = *(R13 - 4)
-@R13
+// pseudo-assembly: LCL = *(frame - 4)
+@frame
 D=M
 @4
 A=D-A
 D=M
 @LCL
 M=D
-@R13
+@retAddress
 A=M
 0;JMP
 // infinite loop
