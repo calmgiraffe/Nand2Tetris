@@ -10,6 +10,6 @@
 
 ### Progress:
 - Assembler ✓
-- VM Translator
+- VM Translator ✓
 - Complier
 - OS
