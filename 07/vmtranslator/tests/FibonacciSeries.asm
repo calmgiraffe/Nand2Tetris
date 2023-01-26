@@ -1,3 +1,55 @@
+// Bootstrap code: SP = 256; call Sys.init
+@256
+D=A
+@SP
+M=D
+@null$ret.0
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+@LCL
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@ARG
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@THIS
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@THAT
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@5
+D=A
+@0
+D=D+A
+@SP
+D=M-D
+@ARG
+M=D
+@SP
+D=M
+@LCL
+M=D
+@Sys.init
+0;JMP
+(null$ret.0)
+@Sys.init
+0;JMP
 // push argument 1
 @ARG
 D=M
@@ -223,7 +275,3 @@ M=D
 0;JMP
 // label END_PROGRAM
 (null$END_PROGRAM)
-// infinite loop
-(END)
-@END
-0;JMP
