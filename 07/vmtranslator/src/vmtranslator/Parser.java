@@ -10,7 +10,7 @@ The Parser iterates through the input .vm file, analyzes each VM command,
 and determines what assembly code to write to the output file.
 */
 public class Parser {
-    /* Static variables */
+    // Static variables
     private static final HashMap<String, String> REG_MAP = new HashMap<>(){
         {
             put("local", "LCL");
@@ -25,19 +25,19 @@ public class Parser {
     private static final char FUNCTION = 'F';
     private static final char ARITHMETIC = 'A';
 
-    /* Instance variables */
+    // Instance variables
     private BufferedReader bufferedReader;
     private final PrintWriter printWriter;
     private char commandType;
-    private String currFile, currInstruct, currFunction, arg1, arg2, arg3;
+    private String currFile;
+    private String currInstruct, currFunction, arg1, arg2, arg3;
     private final String parentDirectory;
-    private int jumpNum, callNum;
+    private int jumpNum = 0;
+    private int callNum = 0;
     private final String[] filesList;
 
-    /* Constructor */
+    // Constructor
     public Parser(String source) throws IOException {
-        this.jumpNum = 0;
-        this.callNum = 0;
         String outputFileName;
 
         if (source.endsWith(".vm")) {   // one .vm file -> one .asm file
@@ -50,7 +50,7 @@ public class Parser {
             FileWriter fileWriter = new FileWriter(outputFileName + ".asm");
             this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
 
-        } else {    // multiple .vm files in a specified folder -> one .asm file
+        } else {    // -> multiple .vm files in a specified folder -> one .asm file
             outputFileName = source;
             File directoryPath = new File("./" + source);
             FilenameFilter VMFileFilter = (dir, name) -> {
@@ -63,49 +63,13 @@ public class Parser {
             FileWriter fileWriter = new FileWriter(parentDirectory + outputFileName + ".asm");
             this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
         }
-        this.advance(); // advance to first valid line
     }
 
     /*
-    Main method to translate the source vm file into an asm file. Iterates through the input,
-    analyzes each line of instruction, and call appropriate translation method. */
-    public void translate() throws IOException {
-        printWriter.println("// Bootstrap code: SP = 256; call Sys.init");
-        printWriter.println("@256");
-        printWriter.println("D=A");
-        printWriter.println("@SP");
-        printWriter.println("M=D");
-        writeFunction("call", "Sys.init", "0", false);
-        printWriter.println("@Sys.init");
-        printWriter.println("0;JMP");
-
-        // Initialize new bufferReader for each .vm file, initially advance to first valid instruction,
-        // translate corresponding args, goto next instruct, repeat until no more valid lines or EOF
-        for (String file : filesList) {
-            this.bufferedReader = new BufferedReader(new FileReader(parentDirectory + file));
-            this.currFile = file.substring(0, file.length() - 3);
-
-            while (currInstruct != null) { // null if EOF
-                if (commandType == PUSH_POP) {
-                    writePushPop(this.arg1, this.arg2, this.arg3, true);
-                } else if (commandType == BRANCHING) {
-                    writeBranching(this.arg1, this.arg2);
-                } else if (commandType == FUNCTION) {
-                    writeFunction(this.arg1, this.arg2, this.arg3, true);
-                } else if (commandType == ARITHMETIC) {
-                    writeArithmetic(this.arg1);
-                }
-                this.advance();
-            }
-            bufferedReader.close();
-        }
-        printWriter.close();
-    }
-
-    /*
-   Advances the parser one line, setting currInstruction to the next valid instruction.
-   This method skips over comments, i.e., lines that start with //
-   If there are no more valid lines to parse, this.currInstruct = null. */
+    Advances the parser one line, setting currInstruction to the next valid instruction.
+    This method skips over comments, i.e., lines that start with //
+    If there are no more valid lines to parse, this.currInstruct = null.
+    */
     private void advance() throws IOException {
         String[] words;
 
@@ -118,7 +82,6 @@ public class Parser {
             /*
             If currInstruction is not empty && does not start with //, then currInstruction must be VM command.
             Split to list of words about whitespace, then set values of commandType, arg1, arg2.
-
             Note: assumes that the input VM file has no errors, i.e., only comments, valid commands, or blank lines */
             if (!currInstruct.isEmpty() && !currInstruct.startsWith("//")) {
                 words = currInstruct.split("\\s+");
@@ -155,10 +118,53 @@ public class Parser {
     }
 
     /*
+    Main method to translate the source vm file into an asm file. Iterates through the input,
+    analyzes each line of instruction, and call appropriate translation method.
+    */
+    public void translate() throws IOException {
+        printWriter.println("// Bootstrap code: SP = 256; call Sys.init");
+        printWriter.println("@256");
+        printWriter.println("D=A");
+        printWriter.println("@SP");
+        printWriter.println("M=D");
+        writeFunction("call", "Sys.init", "0", false);
+        printWriter.println("@Sys.init");
+        printWriter.println("0;JMP");
+
+        // Initialize new bufferReader for each .vm file, initially advance to first valid instruction,
+        // translate corresponding args, goto next instruct, repeat until no more valid lines or EOF
+        for (String file : filesList) {
+            this.bufferedReader = new BufferedReader(new FileReader(parentDirectory + file));
+            this.currFile = file.substring(0, file.length() - 3);
+
+            this.advance();
+            while (currInstruct != null) { // null if EOF
+                if (commandType == PUSH_POP) {
+                    writePushPop(this.arg1, this.arg2, this.arg3, true);
+
+                } else if (commandType == BRANCHING) {
+                    writeBranching(this.arg1, this.arg2);
+
+                } else if (commandType == FUNCTION) {
+                    writeFunction(this.arg1, this.arg2, this.arg3, true);
+
+                } else if (commandType == ARITHMETIC) {
+                    writeArithmetic(this.arg1);
+                }
+                this.advance();
+            }
+            bufferedReader.close();
+        }
+        printWriter.close();
+    }
+
+    /*
     Writes to the output file the asm code that implements the current arithmetic-logical command.
-    Cases: [add, sub, and, or], [not, neg], [eq, gt, lt] */
+    Cases: [add, sub, and, or], [not, neg], [eq, gt, lt]
+    */
     private void writeArithmetic(String command) {
-        printWriter.println("// " + currInstruct); // Writing comment to the asm file; can comment out
+        // Writing a comment to the asm file; can comment out
+        printWriter.println("// " + currInstruct);
 
         String op;
         String jumpName;
@@ -215,7 +221,8 @@ public class Parser {
     Writes to the output file the asm code that implements the current push or pop command.
     arg1 = [pop, push]
     arg2 = [local, argument, this, that], [pointer, temp], [constant], [static]
-    arg3 = some positive int */
+    arg3 = some positive int
+    */
     private void writePushPop(String arg1, String arg2, String arg3, boolean enableComments) {
         if (enableComments) {
             printWriter.println("// " + currInstruct);
@@ -267,8 +274,8 @@ public class Parser {
             printWriter.println("M=M+1");
             printWriter.println("A=M-1");
             printWriter.println("M=D");
-        }
-        else if (arg1.equals("pop")) {
+
+        } else if (arg1.equals("pop")) {
             if (List.of("argument", "local", "this", "that").contains(arg2)) {
                 printWriter.println("@" + REG_MAP.get(arg2));
                 printWriter.println("D=M");
@@ -315,7 +322,8 @@ public class Parser {
     /*
     Writes to the output file the asm code that implements the current branching command.
     arg1 command = [label, goto, if-goto]
-    arg2 label = label name */
+    arg2 label = label name
+    */
     private void writeBranching(String command, String label) {
         printWriter.println("// " + currInstruct);
 
@@ -338,7 +346,8 @@ public class Parser {
 
     /*
     Writes to the output file the asm code that implements the current function command.
-    command = [call, function, return] */
+    command = [call, function, return]
+    */
     private void writeFunction(String command, String label, String nArgs, boolean enableComments) {
         if (enableComments) {
             printWriter.println("// " + currInstruct);
@@ -424,10 +433,10 @@ public class Parser {
 
     /*
     Helper function for writeFunction(), prints the corresponding asm code for output = *(input + offset)
-    For example, if output = retAddress, input = frame, offset = -5, the pseudo-assembly is retAddress = *(frame - 5) */
+    For example, if output = retAddress, input = frame, offset = -5, the pseudo-assembly is retAddress = *(frame - 5)
+    */
     private void dereference(String output, String input, int offset) {
-        printWriter.println(
-                String.format("// pseudo-assembly: %s = *(%s - %s)", output, input, offset));
+        printWriter.println(String.format("// pseudo-assembly: %s = *(%s - %s)", output, input, offset));
         printWriter.println("@" + input);
         printWriter.println("D=M");
         printWriter.println("@" + offset);
