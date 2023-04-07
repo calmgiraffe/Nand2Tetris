@@ -81,7 +81,7 @@ public class Parser {
         }
     }
 
-    /*
+    /**
      * Main function that translates assembly to machine code.
      * Does two passes: one to make symbol table, another to translate to binary.
      */

@@ -1,0 +1,56 @@
+class Pong {
+    field Paddle playerPaddle, opponentPaddle;
+    field HUD hud;
+    field Ball ball;
+
+    constructor Pong new() {
+        do Paddle.initialize();
+        do HUD.initialize();
+        do Ball.initialize();
+
+        let playerPaddle = Paddle.new(0, 100);
+        let opponentPaddle = Paddle.new(512 - Paddle.width(), 100);
+        let hud = HUD.new();
+        let ball = Ball.new();
+
+        return this;
+    }
+
+    method void run() {
+        var int ballX, ballY;
+        var char key;
+        var boolean gameOver;
+
+        let gameOver = false;
+
+        while (~gameOver) { // loop has controller logic
+            // Update player
+            let key = Keyboard.keyPressed();
+            do playerPaddle.update(key);
+            do opponentPaddle.track(ball);
+            do ball.update(playerPaddle, opponentPaddle);
+
+            if (ball.isTouchingPlayer(playerPaddle)) {
+                do hud.incrementPoints();
+            }
+            if (ball.isTouchingSides()) {
+                let gameOver = true;
+            }
+            do Sys.wait(5);
+        }
+        do hud.gameOver();
+        do Sys.wait(3000);
+
+        return;
+    }
+
+    method void dispose() {
+        do playerPaddle.dispose();
+        do opponentPaddle.dispose();
+        do hud.dispose();
+        do ball.dispose();
+        do Memory.deAlloc(this);
+
+        return;
+    }
+}

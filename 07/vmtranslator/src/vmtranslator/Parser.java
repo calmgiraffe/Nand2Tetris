@@ -50,7 +50,7 @@ public class Parser {
             FileWriter fileWriter = new FileWriter(outputFileName + ".asm");
             this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
 
-        } else {    // -> multiple .vm files in a specified folder -> one .asm file
+        } else {    // multiple .vm files in a specified folder -> one .asm file
             outputFileName = source;
             File directoryPath = new File("./" + source);
             FilenameFilter VMFileFilter = (dir, name) -> {
@@ -63,6 +63,7 @@ public class Parser {
             FileWriter fileWriter = new FileWriter(parentDirectory + outputFileName + ".asm");
             this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
         }
+        this.advance(); // advance to first valid line
     }
 
     /*
@@ -84,17 +85,13 @@ public class Parser {
             this.bufferedReader = new BufferedReader(new FileReader(parentDirectory + file));
             this.currFile = file.substring(0, file.length() - 3);
 
-            this.advance();
             while (currInstruct != null) { // null if EOF
                 if (commandType == PUSH_POP) {
                     writePushPop(this.arg1, this.arg2, this.arg3, true);
-
                 } else if (commandType == BRANCHING) {
                     writeBranching(this.arg1, this.arg2);
-
                 } else if (commandType == FUNCTION) {
                     writeFunction(this.arg1, this.arg2, this.arg3, true);
-
                 } else if (commandType == ARITHMETIC) {
                     writeArithmetic(this.arg1);
                 }
@@ -270,8 +267,8 @@ public class Parser {
             printWriter.println("M=M+1");
             printWriter.println("A=M-1");
             printWriter.println("M=D");
-
-        } else if (arg1.equals("pop")) {
+        }
+        else if (arg1.equals("pop")) {
             if (List.of("argument", "local", "this", "that").contains(arg2)) {
                 printWriter.println("@" + REG_MAP.get(arg2));
                 printWriter.println("D=M");

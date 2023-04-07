@@ -40,7 +40,7 @@ class Square {
 
     /** Increments the square size by 2 pixels. */
    method void incSize() {
-      if (((y + size) < 254) & ((x + size) < 510)) {
+      if (((y + size) = 254) & ((x + size) < 510)) {
          do erase();
          let size = size + 2;
          do draw();

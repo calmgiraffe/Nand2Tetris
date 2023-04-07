@@ -1,0 +1,52 @@
+class HUD {
+    static int lastRowText;
+    static int yStart;
+    static int xStartPoints;
+    field boolean gameOver;
+    field int points;
+
+    function void initialize() {
+        let lastRowText = 22;
+        let yStart = 237;
+        let xStartPoints = 4;
+        return;
+    }
+
+    constructor HUD new() {
+        let gameOver = false;
+        let points = 0;
+        do draw();
+        return this;
+    }
+
+    method void draw() {
+        do Screen.drawLine(0, yStart , 511, yStart);
+        do Output.moveCursor(lastRowText, xStartPoints);
+        do Output.printString("Points: ");
+        do Output.moveCursor(lastRowText, xStartPoints + String.length("Points: "));
+        do Output.printInt(points);
+        return;
+    }
+
+    method void incrementPoints() {
+        do Output.moveCursor(22, 12);
+        let points = points + 1;
+        do Output.printInt(points);
+        return;
+    }
+
+    method void gameOver() {
+        do Output.moveCursor(lastRowText, 27);
+        do Output.printString("GAME OVER");
+        return;
+    }
+
+    function int getYStart() {
+        return yStart;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

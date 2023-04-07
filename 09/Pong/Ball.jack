@@ -1,0 +1,106 @@
+class Ball {
+    static int xVel, yVel, size;
+    field int x1, x2, y1, y2;
+
+    function void initialize() {
+        let xVel = 1;
+        let yVel = 1;
+        let size = 7;
+        return;
+    }
+
+    constructor Ball new() {
+        let x1 = 250; // upper left corner x
+        let y1 = 120; // upper left corner y
+        let x2 = x1 + size - 1; // lower right corner x
+        let y2 = y1 + size - 1; // lower right corner y
+        do draw();
+        return this;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
+    method void undraw() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
+    method boolean isTouchingPlayer(Paddle player) {
+        if (player.getX2() = x1) {
+            if ((y2 < player.getY1()) | (y1 > player.getY2())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    method boolean isTouchingOpponent(Paddle opponent) {
+        if (opponent.getX1() = x2) {
+            if ((y2 < opponent.getY1()) | (y1 > opponent.getY2())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    method boolean isTouchingTopEdge() {
+        return ((y1 = 0) | (y2 = 236));
+    }
+
+    method boolean isTouchingSides() {
+        return ((x1 = 0) | (x2 = 511));
+    }
+
+    method void update(Paddle player, Paddle opponent) {
+        // Update the ball
+        do undraw();
+        let x1 = x1 + xVel;
+        let x2 = x2 + xVel;
+        let y1 = y1 + yVel;
+        let y2 = y2 + yVel;
+        /*
+        if (yVel > 0) {
+            let y2 = Math.min(y1 + yVel, 236);
+            let y1 = y2 - 4;
+        }
+        if (yVel < 0) {
+            let y1 = Math.max(y1 + yVel, 0);
+            let y2 = y1 + 4;
+        }
+        */
+        do draw();
+
+        if (isTouchingPlayer(player)) {
+            let xVel = xVel * -1;
+            //let yVel = yVel + player.getVel();
+        }
+        if (isTouchingOpponent(opponent)) {
+            let xVel = xVel * -1;
+            //let yVel = yVel + opponent.getVel();
+        }
+        if (isTouchingTopEdge()) {
+            let yVel = yVel * -1;
+        }
+        return;
+    }
+
+    method int getX1() { return x1; }
+    method int getY1() { return y1; }
+    method int getX2() { return x2; }
+    method int getY2() { return y2; }
+    method int getY() { return (y1 + y2) / 2; }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

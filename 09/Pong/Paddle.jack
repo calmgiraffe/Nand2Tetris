@@ -1,0 +1,85 @@
+class Paddle {
+    static int width, height;
+    field int x1, x2; // x1 = position of top left corner
+    field int y1, y2; // y1 = position of top edge
+    field int currVel;
+
+    function void initialize() {
+        let width = 8;
+        let height = 40;
+        return;
+    }
+
+    function int width() {
+        return width;
+    }
+
+    constructor Paddle new(int Ax, int Ay) {
+        let x1 = Ax;
+        let x2 = Ax + width - 1;
+        let y1 = Ay;
+        let y2 = Ay + height - 1;
+        let currVel = 0;
+        do draw();
+        return this;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
+    method void undraw() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
+    method void update(int key) {
+        if (key = 131) { do moveUp(); }
+        if (key = 133) { do moveDown(); }
+        else { let currVel = 0; }
+        return;
+    }
+
+    method void track(Ball ball) {
+        if (ball.getY() < getY()) { do moveUp(); }
+        if (ball.getY() > getY()) { do moveDown(); }
+        return;
+    }
+
+    method void moveUp() {
+        if (y1 > 0) {
+            do undraw();
+            let y1 = y1 - 1;
+            let y2 = y2 - 1;
+            let currVel = -1;
+            do draw();
+        }
+        return;
+    }
+
+    method void moveDown() {
+        if (y2 < 236) {
+            do undraw();
+            let y1 = y1 + 1;
+            let y2 = y2 + 1;
+            let currVel = 1;
+            do draw();
+        }
+        return;
+    }
+
+    method int getX1() { return x1; }
+    method int getY1() { return y1; }
+    method int getX2() { return x2; }
+    method int getY2() { return y2; }
+    method int getY() { return (y1 + y2) / 2; }
+    method int getVel() { return currVel; }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}
