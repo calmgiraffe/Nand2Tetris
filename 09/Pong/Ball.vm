@@ -67,6 +67,8 @@ pop pointer 0
 push argument 1
 call Paddle.getX2 1
 push this 0
+push constant 1
+sub
 eq
 if-goto IF_TRUE0
 goto IF_FALSE0
@@ -100,6 +102,8 @@ pop pointer 0
 push argument 1
 call Paddle.getX1 1
 push this 1
+push constant 1
+add
 eq
 if-goto IF_TRUE0
 goto IF_FALSE0

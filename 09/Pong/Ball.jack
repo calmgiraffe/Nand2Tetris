@@ -31,7 +31,7 @@ class Ball {
     }
 
     method boolean isTouchingPlayer(Paddle player) {
-        if (player.getX2() = x1) {
+        if (player.getX2() = (x1 - 1)) {
             if ((y2 < player.getY1()) | (y1 > player.getY2())) {
                 return false;
             } else {
@@ -42,7 +42,7 @@ class Ball {
     }
 
     method boolean isTouchingOpponent(Paddle opponent) {
-        if (opponent.getX1() = x2) {
+        if (opponent.getX1() = (x2 + 1)) {
             if ((y2 < opponent.getY1()) | (y1 > opponent.getY2())) {
                 return false;
             } else {
@@ -67,16 +67,6 @@ class Ball {
         let x2 = x2 + xVel;
         let y1 = y1 + yVel;
         let y2 = y2 + yVel;
-        /*
-        if (yVel > 0) {
-            let y2 = Math.min(y1 + yVel, 236);
-            let y1 = y2 - 4;
-        }
-        if (yVel < 0) {
-            let y1 = Math.max(y1 + yVel, 0);
-            let y2 = y1 + 4;
-        }
-        */
         do draw();
 
         if (isTouchingPlayer(player)) {
