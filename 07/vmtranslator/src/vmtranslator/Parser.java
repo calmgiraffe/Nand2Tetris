@@ -10,7 +10,7 @@ The Parser iterates through the input .vm file, analyzes each VM command,
 and determines what assembly code to write to the output file.
 */
 public class Parser {
-    // Static variables
+    /* Static variables */
     private static final HashMap<String, String> REG_MAP = new HashMap<>(){
         {
             put("local", "LCL");
