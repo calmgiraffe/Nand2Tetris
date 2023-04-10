@@ -1,16 +1,15 @@
 package vmtranslator;
 
 import java.io.*;
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /*
 The Parser iterates through the input .vm file, analyzes each VM command,
 and determines what assembly code to write to the output file.
 */
 public class Parser {
-    /* Static variables */
     private static final HashMap<String, String> REG_MAP = new HashMap<>(){
         {
             put("local", "LCL");
@@ -19,51 +18,49 @@ public class Parser {
             put("that", "THAT");
         }
     };
-
-    
+    private enum Command {
+        PUSH_POP,
+        BRANCHING,
+        FUNCTION,
+        ARITHMETIC
+    }
     private static final int TMP_OFFSET = 5;
-    private static final char PUSH_POP = 'P';
-    private static final char BRANCHING = 'B';
-    private static final char FUNCTION = 'F';
-    private static final char ARITHMETIC = 'A';
+    private static final boolean enableComments = true;
 
     // Instance variables
     private BufferedReader bufferedReader;
     private final PrintWriter printWriter;
-    private char commandType;
+    private Command commandType;
     private String currFile;
     private String currInstruct, currFunction, arg1, arg2, arg3;
     private final String parentDirectory;
-    private int jumpNum = 0;
-    private int callNum = 0;
-    private final String[] filesList;
+    private int jumpNum = 0, callNum = 0;
+    private final ArrayDeque<String> files = new ArrayDeque<>();
 
-    // Constructor
     public Parser(String source) throws IOException {
         String outputFileName;
 
-        if (source.endsWith(".vm")) {   // one .vm file -> one .asm file
+        if (source.endsWith(".vm")) { // one .vm file -> one .asm file
             outputFileName = source.substring(0, source.length() - 3);
-            this.filesList = new String[1];
-            filesList[0] = source;
+            files.add(source);
 
             // Initialize PrintWriter, writes lines to output file with println()
-            this.parentDirectory = "./";
-            FileWriter fileWriter = new FileWriter(outputFileName + ".asm");
-            this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
+            parentDirectory = "./";
+            printWriter = new PrintWriter(new BufferedWriter(
+                    new FileWriter(outputFileName + ".asm")));
 
-        } else {    // -> multiple .vm files in a specified folder -> one .asm file
+        } else { // -> multiple .vm files in a specified folder -> one .asm file
             outputFileName = source;
             File directoryPath = new File("./" + source);
             FilenameFilter VMFileFilter = (dir, name) -> {
                 String lowercaseName = name.toLowerCase();
                 return lowercaseName.endsWith(".vm");
             };
-            this.filesList = directoryPath.list(VMFileFilter);
+            files.addAll(List.of(directoryPath.list(VMFileFilter)));
 
-            this.parentDirectory = "./" + outputFileName + '/';
-            FileWriter fileWriter = new FileWriter(parentDirectory + outputFileName + ".asm");
-            this.printWriter = new PrintWriter(new BufferedWriter(fileWriter));
+            parentDirectory = "./" + outputFileName + '/';
+            printWriter = new PrintWriter(new BufferedWriter(
+                    new FileWriter(parentDirectory + outputFileName + ".asm")));
         }
     }
 
@@ -75,41 +72,38 @@ public class Parser {
     private void advance() throws IOException {
         String[] words;
 
-        while (true) {
-            currInstruct = bufferedReader.readLine();
-            if (currInstruct == null) {
-                break;
-            }
+        while ((currInstruct = bufferedReader.readLine()) != null) {
             currInstruct = currInstruct.trim();
             /*
             If currInstruction is not empty && does not start with //, then currInstruction must be VM command.
             Split to list of words about whitespace, then set values of commandType, arg1, arg2.
-            Note: assumes that the input VM file has no errors, i.e., only comments, valid commands, or blank lines */
+            Note: assumes that the input VM file has no errors, i.e., only comments, valid commands, or blank lines
+            */
             if (!currInstruct.isEmpty() && !currInstruct.startsWith("//")) {
                 words = currInstruct.split("\\s+");
 
                 if (List.of("push", "pop").contains(words[0])) {
-                    commandType = PUSH_POP;
+                    commandType = Command.PUSH_POP;
                     arg1 = words[0];    // push or pop
                     arg2 = words[1];    // one of the stack segment names
                     arg3 = words[2];    // positive int
                 } else if (List.of("label", "goto", "if-goto").contains(words[0])) {
-                    commandType = BRANCHING;
+                    commandType = Command.BRANCHING;
                     arg1 = words[0];    // label, goto, if-goto
                     arg2 = words[1];    // label name
                     arg3 = null;
                 } else if (List.of("function", "call").contains(words[0])) {
-                    commandType = FUNCTION;
+                    commandType = Command.FUNCTION;
                     arg1 = words[0];    // function or call
                     arg2 = words[1];    // function f
                     arg3 = words[2];    // nArgs
                 } else if (words[0].equals("return")) {
-                    commandType = FUNCTION;
+                    commandType = Command.FUNCTION;
                     arg1 = words[0];    // return
                     arg2 = null;
                     arg3 = null;
                 } else {
-                    commandType = ARITHMETIC;
+                    commandType = Command.ARITHMETIC;
                     arg1 = words[0];    // add, sub, neg, eq, gt, lt, and, or, not
                     arg2 = null;
                     arg3 = null;
@@ -129,31 +123,31 @@ public class Parser {
         printWriter.println("D=A");
         printWriter.println("@SP");
         printWriter.println("M=D");
-        writeFunction("call", "Sys.init", "0", false);
+        writeFunction("call", "Sys.init", "0");
         printWriter.println("@Sys.init");
         printWriter.println("0;JMP");
 
         // Initialize new bufferReader for each .vm file, initially advance to first valid instruction,
         // translate corresponding args, goto next instruct, repeat until no more valid lines or EOF
-        for (String file : filesList) {
-            this.bufferedReader = new BufferedReader(new FileReader(parentDirectory + file));
-            this.currFile = file.substring(0, file.length() - 3);
+        for (String file : files) {
+            bufferedReader = new BufferedReader(new FileReader(parentDirectory + file));
+            currFile = file.substring(0, file.length() - 3);
 
-            this.advance();
+            advance();
             while (currInstruct != null) { // null if EOF
-                if (commandType == PUSH_POP) {
-                    writePushPop(this.arg1, this.arg2, this.arg3, true);
-
-                } else if (commandType == BRANCHING) {
-                    writeBranching(this.arg1, this.arg2);
-
-                } else if (commandType == FUNCTION) {
-                    writeFunction(this.arg1, this.arg2, this.arg3, true);
-
-                } else if (commandType == ARITHMETIC) {
-                    writeArithmetic(this.arg1);
+                if (enableComments) {
+                    printWriter.println("// " + currInstruct);
                 }
-                this.advance();
+                switch (commandType) {
+                    case PUSH_POP -> writePushPop(arg1, arg2, arg3);
+                    case BRANCHING -> writeBranching(arg1, arg2);
+                    case FUNCTION -> writeFunction(arg1, arg2, arg3);
+                    case ARITHMETIC -> writeArithmetic(arg1);
+                    default -> {
+                        // Handle unexpected command type
+                    }
+                }
+                advance();
             }
             bufferedReader.close();
         }
@@ -165,11 +159,7 @@ public class Parser {
     Cases: [add, sub, and, or], [not, neg], [eq, gt, lt]
     */
     private void writeArithmetic(String command) {
-        // Writing a comment to the asm file; can comment out
-        printWriter.println("// " + currInstruct);
-
-        String op;
-        String jumpName;
+        String op, jumpName;
         if (List.of("add", "sub", "and", "or").contains(command)) { // add, sub, and, or
             printWriter.println("@SP");
             printWriter.println("AM=M-1");
@@ -225,10 +215,7 @@ public class Parser {
     arg2 = [local, argument, this, that], [pointer, temp], [constant], [static]
     arg3 = some positive int
     */
-    private void writePushPop(String arg1, String arg2, String arg3, boolean enableComments) {
-        if (enableComments) {
-            printWriter.println("// " + currInstruct);
-        }
+    private void writePushPop(String arg1, String arg2, String arg3) {
         String op;
         if (arg1.equals("push")) {
             switch (arg2) {
@@ -327,8 +314,6 @@ public class Parser {
     arg2 label = label name
     */
     private void writeBranching(String command, String label) {
-        printWriter.println("// " + currInstruct);
-
         String symbol = String.format("%s$%s", currFunction, label);
         switch (command) {
             case "label" -> printWriter.println("(" + symbol + ")");
@@ -350,19 +335,16 @@ public class Parser {
     Writes to the output file the asm code that implements the current function command.
     command = [call, function, return]
     */
-    private void writeFunction(String command, String label, String nArgs, boolean enableComments) {
-        if (enableComments) {
-            printWriter.println("// " + currInstruct);
-        }
+    private void writeFunction(String command, String label, String nArgs) {
         String returnAddress = String.format("%s$ret.%d", currFunction, callNum);
         switch (command) {
             case "call" -> {
                 // push returnAddress, LCL, ARG, THIS, THAT
-                writePushPop("push", returnAddress, null, false);
-                writePushPop("push", "LCL", null, false);
-                writePushPop("push", "ARG", null, false);
-                writePushPop("push", "THIS", null, false);
-                writePushPop("push", "THAT", null, false);
+                writePushPop("push", returnAddress, null);
+                writePushPop("push", "LCL", null);
+                writePushPop("push", "ARG", null);
+                writePushPop("push", "THIS", null);
+                writePushPop("push", "THAT", null);
                 // ARG = SP - 5 - nArgs
                 printWriter.println("@5");
                 printWriter.println("D=A");
@@ -394,7 +376,7 @@ public class Parser {
                 // repeat nVar times for nVar local variables
                 int nVars = Integer.parseInt(nArgs);
                 for (int i = 0; i < nVars; i++) {
-                    writePushPop("push", "constant", "0", false);
+                    writePushPop("push", "constant", "0");
                 }
             }
             case "return" -> {
