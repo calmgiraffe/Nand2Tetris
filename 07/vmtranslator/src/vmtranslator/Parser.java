@@ -19,6 +19,8 @@ public class Parser {
             put("that", "THAT");
         }
     };
+
+    
     private static final int TMP_OFFSET = 5;
     private static final char PUSH_POP = 'P';
     private static final char BRANCHING = 'B';

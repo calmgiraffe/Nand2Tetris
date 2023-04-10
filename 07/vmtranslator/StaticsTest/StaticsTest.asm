@@ -1,8 +1,8 @@
+// Bootstrap code: SP = 256; call Sys.init
 @256
 D=A
 @SP
 M=D
-// null
 @null$ret.0
 D=A
 @SP
