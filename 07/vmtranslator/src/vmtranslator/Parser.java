@@ -25,9 +25,8 @@ public class Parser {
         ARITHMETIC
     }
     private static final int TMP_OFFSET = 5;
-    private static final boolean enableComments = true;
+    private static final boolean ENABLE_COMMENTS = true;
 
-    // Instance variables
     private BufferedReader bufferedReader;
     private final PrintWriter printWriter;
     private Command commandType;
@@ -135,7 +134,7 @@ public class Parser {
 
             advance();
             while (currInstruct != null) { // null if EOF
-                if (enableComments) {
+                if (ENABLE_COMMENTS) {
                     printWriter.println("// " + currInstruct);
                 }
                 switch (commandType) {
