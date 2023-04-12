@@ -23,6 +23,7 @@ public class UnitTest {
         };
         for (String str : outputStrings1) {
             tk.advance();
+            System.out.println(tk.getCurrToken());
             Assert.assertEquals("Output strings do not match", str, tk.getCurrToken());
         }
     }

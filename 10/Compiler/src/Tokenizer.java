@@ -3,11 +3,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
 
 public class Tokenizer {
+    public enum State {
+        LINE_COMMENT, BLOCK_COMMENT, STRING_CONST, OTHER
+    }
     public enum TokenType {
         KEYWORD, SYMBOL, IDENTIFIER, INT_CONST, STRING_CONST
     }
@@ -55,10 +57,11 @@ public class Tokenizer {
         char curr, next;
         boolean lineComment = false;
         boolean blockComment = false;
+        boolean strConstant = false;
         StringBuilder buffer = new StringBuilder();
 
         /* No more tokens. Need to add more to queue */
-        while (hasMoreTokens) { // read the next char(s) if first char read was ok
+        while (hasMoreTokens) {
             curr = (char) bufferedReader.read();
 
             /* Terminating condition */
@@ -66,58 +69,71 @@ public class Tokenizer {
                 hasMoreTokens = false;
                 break;
             }
-
-
-
-
-
-
-            /* Logic for handling comments */
-            if (curr == '/') { // If '/', read the next char and evaluate
-                next = (char) bufferedReader.read();
-                if (next == '/') { // start of line comment
-                    lineComment = true;
-                    continue;
-                } else if (next == '*') { // start of block comment
-                    blockComment = true;
-                    continue;
+            if (lineComment) {
+                if (curr == 0x0D) {
+                    bufferedReader.read();
+                    lineComment = false;
                 }
-
-            } else if (curr == 0x0D) { // If /r, skip next char, reset flag, and do next iter
-                bufferedReader.read();
-                lineComment = false;
-                continue;
-
-            } else if (curr == '*' && blockComment) { // If '*' and in block comment, read next char and evaluate
-                next = (char) bufferedReader.read();
-                if (next == '/') {
-                    blockComment = false;
-                }
-                continue;
             }
-
-            /* Logic for handling non-comments */
-            if (!lineComment && !blockComment) {
+            else if (blockComment) {
+                if (curr == '*') {
+                    next = (char) bufferedReader.read();
+                    if (next == '/') {
+                        blockComment = false;
+                    }
+                }
+            }
+            else if (strConstant) {
+                if (curr == '"') {
+                    strConstant = false;
+                    tokens.addLast(buffer.toString());
+                    continue;
+                }
+                buffer.append(curr);
+            }
+            else {
                 if (Character.isWhitespace(curr)) {
                     if (!buffer.isEmpty()) {
                         tokens.addLast(buffer.toString());
                         break;
-                    } else {
-                        continue;
+                    }
+                    continue;
+
+                } else if (curr == '/') {
+                    // '/' has to be a symbol or start of comment, so add current buffer to queue
+                    if (!buffer.isEmpty()) {
+                        tokens.addLast(buffer.toString());
+                        buffer.delete(0, buffer.length());
+                    }
+                    next = (char) bufferedReader.read();
+                    if (next == -1) {
+                        hasMoreTokens = false;
+                        break;
+                    } else if (next == '/') { // start of line comment
+                        lineComment = true;
+                    } else if (next == '*') { // start of block comment
+                        blockComment = true;
+                    } else { // next is not '/' or '*'
+                        buffer.append(next);
                     }
 
-                } else if (SYMBOLS.contains((char) curr)) {
+                } else if (SYMBOLS.contains(curr)) { // symbols other than '/'
                     if (!buffer.isEmpty()) {
                         tokens.addLast(buffer.toString());
                     }
                     tokens.addLast(Character.toString(curr));
                     break;
+
+                } else if (curr == '"') {
+                    if (!buffer.isEmpty()) {
+                        tokens.addLast(buffer.toString());
+                        buffer.delete(0, buffer.length());
+                    }
+                    strConstant = true;
+
+                } else { // curr is not whitespace, a symbol, quotation mark, or '/'
+                    buffer.append(curr);
                 }
-            }
-
-
-            if (!lineComment && !blockComment) {
-                buffer.append((char) curr);
             }
         }
         currToken = tokens.removeFirst();
