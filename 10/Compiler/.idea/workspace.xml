@@ -3,10 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Tokenizer$Keyword.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Tokenizer$Keyword.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Tokenizer$TokenType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Tokenizer$TokenType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Test2.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Test2.jack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/Tokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Tokenizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test2.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test2.jack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTest.java" afterDir="false" />
     </list>
@@ -75,16 +75,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Tokenizer.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

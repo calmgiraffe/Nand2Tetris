@@ -1,0 +1,5 @@
+class Main {
+    static boolean flagred = false;
+    static boolean flagblue=true;
+    static   boolean flag2=(1<2);
+}

@@ -24,7 +24,7 @@ public class Tokenizer {
     private String parentDirectory;
     private String currToken;
     private BufferedReader bufferedReader;
-    private ArrayDeque<String> tokens = new ArrayDeque<>();
+    private ArrayDeque<String> queue = new ArrayDeque<>();
     private ArrayDeque<String> files = new ArrayDeque<>();
 
     public Tokenizer(String source) throws FileNotFoundException {
@@ -50,8 +50,8 @@ public class Tokenizer {
         // Note: Handling /* will also handle the case of /**
 
         /* At least one token in the queue, remove the first one */
-        if (!tokens.isEmpty()) {
-            currToken = tokens.removeFirst();
+        if (!queue.isEmpty()) {
+            currToken = queue.removeFirst();
             return;
         }
         char curr, next;
@@ -86,23 +86,21 @@ public class Tokenizer {
             else if (strConstant) {
                 if (curr == '"') {
                     strConstant = false;
-                    tokens.addLast(buffer.toString());
-                    continue;
+                    queue.addLast(buffer.toString());
+                    break;
                 }
                 buffer.append(curr);
             }
             else {
                 if (Character.isWhitespace(curr)) {
                     if (!buffer.isEmpty()) {
-                        tokens.addLast(buffer.toString());
+                        queue.addLast(buffer.toString());
                         break;
                     }
-                    continue;
-
                 } else if (curr == '/') {
                     // '/' has to be a symbol or start of comment, so add current buffer to queue
                     if (!buffer.isEmpty()) {
-                        tokens.addLast(buffer.toString());
+                        queue.addLast(buffer.toString());
                         buffer.delete(0, buffer.length());
                     }
                     next = (char) bufferedReader.read();
@@ -111,32 +109,35 @@ public class Tokenizer {
                         break;
                     } else if (next == '/') { // start of line comment
                         lineComment = true;
+                        continue;
                     } else if (next == '*') { // start of block comment
                         blockComment = true;
-                    } else { // next is not '/' or '*'
-                        buffer.append(next);
+                        continue;
                     }
-
+                    queue.addLast(Character.toString(curr));
+                    if (!Character.isWhitespace(next)) {
+                        buffer.append(next);
+                    } else {
+                        break;
+                    }
                 } else if (SYMBOLS.contains(curr)) { // symbols other than '/'
                     if (!buffer.isEmpty()) {
-                        tokens.addLast(buffer.toString());
+                        queue.addLast(buffer.toString());
                     }
-                    tokens.addLast(Character.toString(curr));
+                    queue.addLast(Character.toString(curr));
                     break;
-
                 } else if (curr == '"') {
                     if (!buffer.isEmpty()) {
-                        tokens.addLast(buffer.toString());
-                        buffer.delete(0, buffer.length());
+                        queue.addLast(buffer.toString());
+                        break;
                     }
                     strConstant = true;
-
                 } else { // curr is not whitespace, a symbol, quotation mark, or '/'
                     buffer.append(curr);
                 }
             }
         }
-        currToken = tokens.removeFirst();
+        currToken = queue.removeFirst();
     }
 
     public String getCurrToken() {
