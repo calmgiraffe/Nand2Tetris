@@ -44,10 +44,10 @@ public class UnitTest {
                 "static", "boolean", "flagblue", "=", "true", ";",
                 "static", "boolean", "flag2", "=", "(", "1", "<", "2", ")", ";"
         };
-        Tokenizer tk1 = new Tokenizer("./src/Test1.jack");
-        Tokenizer tk2 = new Tokenizer("./src/Test2.jack");
-        Tokenizer tk3 = new Tokenizer("./src/Test3.jack");
-        Tokenizer tk4 = new Tokenizer("./src/Test4.jack");
+        Tokenizer tk1 = new Tokenizer("./src/Tests/Test1.jack");
+        Tokenizer tk2 = new Tokenizer("./src/Tests/Test2.jack");
+        Tokenizer tk3 = new Tokenizer("./src/Tests/Test3.jack");
+        Tokenizer tk4 = new Tokenizer("./src/Tests/Test4.jack");
 
         for (String str : outputStrings1) {
             tk1.advance();

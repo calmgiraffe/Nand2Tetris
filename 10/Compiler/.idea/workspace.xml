@@ -2,11 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Tests/Test1.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Tests/Test2.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Tests/Test3.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Tests/Test4.jack" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Test2.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Test2.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Test1.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Test2.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Test3.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Test4.jack" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/Tokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Tokenizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Test2.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test2.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test1.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test2.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test3.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test4.jack" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTest.java" afterDir="false" />
     </list>

@@ -7,18 +7,20 @@ import java.util.ArrayDeque;
 import java.util.Set;
 
 public class Tokenizer {
-    public enum State {
-        LINE_COMMENT, BLOCK_COMMENT, STRING_CONST, OTHER
-    }
+    private static final int EOF = -1;
     public enum TokenType {
         KEYWORD, SYMBOL, IDENTIFIER, INT_CONST, STRING_CONST
     }
-    public enum Keyword {
-        CLASS, METHOD, FUNCTION, CONSTRUCTOR, INT, BOOLEAN, CHAR, VOID, VAR, STATIC, FIELD, LET,
-        DO, IF, ELSE, WHILE, RETURN, TRUE, FALSE, NULL, THIS
+    private enum State {
+        LINE_COMMENT, BLOCK_COMMENT, STRING_CONST, OTHER, END
     }
-    private static final Set<Character> SYMBOLS = Set.of('{', '}', '(', ')', '[', ']', '.', ',',
-            ';', '+', '-', '*', '/', '&', '|', '<', '>', '=', '~');
+
+    private static final Set<String> KEYWORDS = Set.of(
+            "class","method","function","constructor","int","boolean","char","void", "var","static",
+            "field","let","do","if","else","while","return","true","false","null","this");
+
+    private static final Set<Character> SYMBOLS = Set.of(
+            '{', '}', '(', ')', '[', ']', '.', ',', ';', '+', '-', '*', '/', '&', '|', '<', '>', '=', '~');
 
     private boolean hasMoreTokens = true;
     private String parentDirectory;
@@ -54,7 +56,7 @@ public class Tokenizer {
             currToken = queue.removeFirst();
             return;
         }
-        char curr, next;
+        int curr, next;
         boolean lineComment = false;
         boolean blockComment = false;
         boolean strConstant = false;
@@ -62,15 +64,15 @@ public class Tokenizer {
 
         /* No more tokens. Need to add more to queue */
         while (hasMoreTokens) {
-            curr = (char) bufferedReader.read();
+            curr = bufferedReader.read();
 
             /* Terminating condition */
-            if (curr == -1) {
+            if (curr == EOF) {
                 hasMoreTokens = false;
                 break;
             }
             if (lineComment) {
-                if (curr == 0x0D) {
+                if (curr == 0x0D) { // carriage return
                     bufferedReader.read();
                     lineComment = false;
                 }
@@ -85,13 +87,12 @@ public class Tokenizer {
             }
             else if (strConstant) {
                 if (curr == '"') {
-                    strConstant = false;
                     queue.addLast(buffer.toString());
                     break;
                 }
-                buffer.append(curr);
+                buffer.append((char) curr);
             }
-            else {
+            else { // none of the above
                 if (Character.isWhitespace(curr)) {
                     if (!buffer.isEmpty()) {
                         queue.addLast(buffer.toString());
@@ -103,8 +104,8 @@ public class Tokenizer {
                         queue.addLast(buffer.toString());
                         buffer.delete(0, buffer.length());
                     }
-                    next = (char) bufferedReader.read();
-                    if (next == -1) {
+                    next = bufferedReader.read();
+                    if (next == EOF) {
                         hasMoreTokens = false;
                         break;
                     } else if (next == '/') { // start of line comment
@@ -116,11 +117,11 @@ public class Tokenizer {
                     }
                     queue.addLast(Character.toString(curr));
                     if (!Character.isWhitespace(next)) {
-                        buffer.append(next);
+                        buffer.append((char) next);
                     } else {
                         break;
                     }
-                } else if (SYMBOLS.contains(curr)) { // symbols other than '/'
+                } else if (SYMBOLS.contains((char) curr)) { // symbols other than '/'
                     if (!buffer.isEmpty()) {
                         queue.addLast(buffer.toString());
                     }
@@ -133,7 +134,7 @@ public class Tokenizer {
                     }
                     strConstant = true;
                 } else { // curr is not whitespace, a symbol, quotation mark, or '/'
-                    buffer.append(curr);
+                    buffer.append((char) curr);
                 }
             }
         }
@@ -145,31 +146,6 @@ public class Tokenizer {
     }
 
     /* Returns the type of the current token as a constant */
-    public TokenType tokenType() {
-        return null;
-    }
+    public TokenType tokenType() {return null;}
 
-    public Keyword keyword() {
-        return null;
-    }
-
-    public char symbol() {
-        return 0;
-    }
-
-    public String identifier() {
-        // a sequence of letters, digits, and underscore, not starting with a digit
-        return null;
-    }
-
-    public int intVal() {
-        // Return a decimal integer in the range 0..32767
-        return 0;
-    }
-
-    public String stringVal() {
-        // A sequence of characters, not including double quote or newline
-        // ex. let sign = "negative"
-        return null;
-    }
 }
