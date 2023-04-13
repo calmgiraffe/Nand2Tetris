@@ -7,23 +7,37 @@ import java.util.ArrayDeque;
 import java.util.Set;
 
 public class Tokenizer {
-    private static final int EOF = -1;
-    private static final int CARRIAGE_RETURN = 0x0d;
     public enum TokenType {
         KEYWORD, SYMBOL, IDENTIFIER, INT_CONST, STRING_CONST
     }
+    private static class Pair {
+        String token;
+        TokenType type;
+
+        Pair(String token, TokenType type) {
+            this.token = token;
+            this.type = type;
+        }
+        String getToken() {
+            return token;
+        }
+        TokenType getType() {
+            return type;
+        }
+    }
+    private static final int EOF = -1;
+    private static final int CARRIAGE_RETURN = 0x0d;
     private static final Set<String> KEYWORDS = Set.of(
             "class","method","function","constructor","int","boolean","char","void", "var","static",
             "field","let","do","if","else","while","return","true","false","null","this");
-
     private static final Set<Character> SYMBOLS = Set.of(
             '{', '}', '(', ')', '[', ']', '.', ',', ';', '+', '-', '*', '/', '&', '|', '<', '>', '=', '~');
 
     private boolean hasMoreTokens = true;
     private String parentDirectory;
-    private String currToken;
+    private Pair currPair;
     private BufferedReader bufferedReader;
-    private ArrayDeque<String> queue = new ArrayDeque<>();
+    private ArrayDeque<Pair> queue = new ArrayDeque<>();
     private ArrayDeque<String> files = new ArrayDeque<>();
 
     public Tokenizer(String source) throws FileNotFoundException {
@@ -34,7 +48,7 @@ public class Tokenizer {
 
     /* Returns true if there are more tokens in the input */
     public boolean hasMoreTokens() {
-        return hasMoreTokens;
+        return !queue.isEmpty() || hasMoreTokens;
     }
 
     /* Gets the next token from the input, and makes it the current token.
@@ -47,7 +61,7 @@ public class Tokenizer {
     public void advance() throws IOException, InterruptedException {
         /* At least one token in the queue, remove the first one */
         if (!queue.isEmpty()) {
-            currToken = queue.removeFirst();
+            currPair = queue.removeFirst();
             return;
         }
         int curr, next;
@@ -59,6 +73,7 @@ public class Tokenizer {
         /* No more tokens. Need to add more to queue */
         while (hasMoreTokens) {
             curr = bufferedReader.read();
+            char tmp = (char) curr;
 
             /* Terminating condition */
             if (curr == EOF) {
@@ -80,7 +95,7 @@ public class Tokenizer {
             }
             else if (strConstant) {
                 if (curr == '"') {
-                    queue.addLast(buffer.toString());
+                    queue.addLast(new Pair(buffer.toString(), TokenType.STRING_CONST));
                     break;
                 }
                 buffer.append((char) curr);
@@ -100,7 +115,7 @@ public class Tokenizer {
                     } else if (next == '*') { // start of block comment
                         blockComment = true;
                     } else {                  // '/' is thus a symbol
-                        queue.addLast(Character.toString(curr));
+                        queue.addLast(new Pair(Character.toString(curr), TokenType.SYMBOL));
                         if (!Character.isWhitespace(next)) {
                             buffer.append((char) next);
                         }
@@ -108,7 +123,7 @@ public class Tokenizer {
                 }
                 else if (SYMBOLS.contains((char) curr)) { // symbols other than '/'
                     addToQueue(buffer);
-                    queue.addLast(Character.toString(curr));
+                    queue.addLast(new Pair(Character.toString(curr), TokenType.SYMBOL));
                 }
                 else if (curr == '"') {
                     addToQueue(buffer);
@@ -119,22 +134,32 @@ public class Tokenizer {
                 }
             }
         }
-        currToken = queue.removeFirst();
+        currPair = queue.removeFirst();
     }
 
     public void addToQueue(StringBuilder buffer) {
         if (!buffer.isEmpty()) {
-            queue.addLast(buffer.toString());
+            String token = buffer.toString();
+            TokenType type;
+            if (token.matches("\\d+")) {
+                type = TokenType.INT_CONST;
+            } else if (KEYWORDS.contains(token)) {
+                type = TokenType.KEYWORD;
+            } else {
+                type = TokenType.IDENTIFIER;
+            }
+            queue.addLast(new Pair(token, type));
             buffer.delete(0, buffer.length());
         }
     }
 
+    /* Returns the current token as a string */
     public String getCurrToken() {
-        return currToken;
+        return currPair.getToken();
     }
 
-    /* Returns the type of the current token as a constant */
-    public TokenType tokenType() {
-        return null;
+    /* Returns the type of the current token as a constant of TokenType */
+    public TokenType getTokenType() {
+        return currPair.getType();
     }
 }
