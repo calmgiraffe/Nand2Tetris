@@ -64,7 +64,7 @@ public class Tokenizer {
             if (curr == EOF) {
                 hasMoreTokens = false;
             }
-            if (lineComment) {
+            else if (lineComment) {
                 if (curr == CARRIAGE_RETURN) {
                     bufferedReader.read();
                     lineComment = false;
@@ -90,7 +90,7 @@ public class Tokenizer {
                     addToQueue(buffer);
                 }
                 else if (curr == '/') {
-                    // '/' has to be a symbol or start of comment, so add current buffer to queue
+                    /* '/' has to be a symbol or start of comment, so add current buffer to queue */
                     addToQueue(buffer);
                     next = bufferedReader.read();
                     if (next == EOF) {
