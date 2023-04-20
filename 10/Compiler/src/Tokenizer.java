@@ -137,7 +137,10 @@ public class Tokenizer {
         currPair = queue.removeFirst();
     }
 
-    public void addToQueue(StringBuilder buffer) {
+    /* Abstraction to handle the current buffer (even if buffer is empty)
+    * Doesn't do anything if buffer is empty, but if it's not, determines whether the string in the
+    * buffer is an INT_CONST, KEYWORD, or IDENTIFIER */
+    private void addToQueue(StringBuilder buffer) {
         if (!buffer.isEmpty()) {
             String token = buffer.toString();
             TokenType type;
