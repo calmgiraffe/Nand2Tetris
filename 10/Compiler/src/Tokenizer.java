@@ -31,7 +31,6 @@ public class Tokenizer {
     private BufferedReader bufferedReader;
     private String filePrefix;
     private final ArrayDeque<Pair> queue = new ArrayDeque<>();
-    private int lineNum = 1;
 
     Tokenizer(String source) throws FileNotFoundException {
         if (source.endsWith(".jack")) {
@@ -93,7 +92,7 @@ public class Tokenizer {
         /* No more tokens. Need to add more to queue */
         while (dataIsRemaining) {
             curr = bufferedReader.read();
-            char tmp = (char) curr;
+            // char tmp = (char) curr;
 
             /* Terminating condition */
             if (curr == EOF) {
@@ -105,7 +104,6 @@ public class Tokenizer {
                         bufferedReader.read();
                     }
                     lineComment = false;
-                    lineNum++;
                 }
             }
             else if (blockComment) {
