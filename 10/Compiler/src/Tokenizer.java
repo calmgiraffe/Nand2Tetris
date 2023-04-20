@@ -12,6 +12,7 @@ public class Tokenizer {
     private record Pair(String token, TokenType type) {
     }
     private static final int EOF = -1;
+    private static final int NEWLINE = 0x0a;
     private static final int CARRIAGE_RETURN = 0x0d;
     private static final Set<String> KEYWORDS = Set.of(
             "class","method","function","constructor","int","boolean","char","void", "var","static",
@@ -28,18 +29,20 @@ public class Tokenizer {
     private boolean dataIsRemaining = true;
     private Pair currPair;
     private BufferedReader bufferedReader;
-    private String outputXMLFile;
+    private String filePrefix;
     private final ArrayDeque<Pair> queue = new ArrayDeque<>();
+    private int lineNum = 1;
 
     Tokenizer(String source) throws FileNotFoundException {
         if (source.endsWith(".jack")) {
-            outputXMLFile = source.substring(0, source.length() - 4) + "xml";
+            filePrefix = source.substring(0, source.length() - 5);
             bufferedReader = new BufferedReader(new FileReader(source));
         }
     }
 
     /** Output an XML file with the tokens and their type. Used for testing correctness of tokenizer. */
     public void printToXML() throws IOException {
+        String outputXMLFile = filePrefix + "T_User.xml";
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(outputXMLFile)));
         writer.println("<tokens>");
         while (hasMoreTokens()) {
@@ -90,16 +93,19 @@ public class Tokenizer {
         /* No more tokens. Need to add more to queue */
         while (dataIsRemaining) {
             curr = bufferedReader.read();
-            // char tmp = (char) curr;
+            char tmp = (char) curr;
 
             /* Terminating condition */
             if (curr == EOF) {
                 dataIsRemaining = false;
             }
             else if (lineComment) {
-                if (curr == CARRIAGE_RETURN) {
-                    bufferedReader.read();
+                if (curr == CARRIAGE_RETURN || curr == NEWLINE) {
+                    if(curr == CARRIAGE_RETURN){
+                        bufferedReader.read();
+                    }
                     lineComment = false;
+                    lineNum++;
                 }
             }
             else if (blockComment) {

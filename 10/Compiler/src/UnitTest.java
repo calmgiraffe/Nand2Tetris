@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class UnitTest {
@@ -79,12 +80,28 @@ public class UnitTest {
     }
 
     @Test
-    public void XMLExpressionLessSquare() {
-        Tokenizer tk1;
+    public void XMLExpressionLessSquare() throws IOException {
+        Tokenizer tk1 = new Tokenizer("./src/TestFiles/ExpressionLessSquare/Main.jack");
+        Tokenizer tk2 = new Tokenizer("./src/TestFiles/ExpressionLessSquare/Square.jack");
+        Tokenizer tk3 = new Tokenizer("./src/TestFiles/ExpressionLessSquare/SquareGame.jack");
+        tk1.printToXML();
+        tk2.printToXML();
+        tk3.printToXML();
+        tk1.close();
+        tk2.close();
+        tk3.close();
     }
 
     @Test
-    public void XMLSquare() {
-        Tokenizer tk1;
+    public void XMLSquare() throws IOException {
+        Tokenizer tk1 = new Tokenizer("./src/TestFiles/Square/Main.jack");
+        Tokenizer tk2 = new Tokenizer("./src/TestFiles/Square/Square.jack");
+        Tokenizer tk3 = new Tokenizer("./src/TestFiles/Square/SquareGame.jack");
+        tk1.printToXML();
+        tk2.printToXML();
+        tk3.printToXML();
+        tk1.close();
+        tk2.close();
+        tk3.close();
     }
 }
