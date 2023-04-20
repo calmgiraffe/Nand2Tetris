@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/CompilationEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tests/SquareGame.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/SquareGame.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tests/Test1.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test1.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tests/Test2.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test2.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tests/Test3.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test3.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tests/Test4.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test4.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/SquareGame.jack" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +50,17 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.UnitTest.testTokenType">
+  <component name="RunManager" selected="JUnit.UnitTest.XMLArrayTest">
+    <configuration name="UnitTest.XMLArrayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Compiler" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="UnitTest" />
+      <option name="METHOD_NAME" value="XMLArrayTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UnitTest.testTokenType" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
@@ -75,6 +83,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UnitTest.XMLArrayTest" />
         <item itemvalue="JUnit.UnitTest.testTokenType" />
         <item itemvalue="JUnit.UnitTest.testTokenization" />
       </list>

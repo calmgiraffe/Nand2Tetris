@@ -43,11 +43,11 @@ public class UnitTest {
     };
 
     @Test
-    public void testTokenization() throws IOException, InterruptedException {
-        Tokenizer tk1 = new Tokenizer("./src/Tests/Test1.jack");
-        Tokenizer tk2 = new Tokenizer("./src/Tests/Test2.jack");
-        Tokenizer tk3 = new Tokenizer("./src/Tests/Test3.jack");
-        Tokenizer tk4 = new Tokenizer("./src/Tests/Test4.jack");
+    public void testTokenization() throws IOException {
+        Tokenizer tk1 = new Tokenizer("./src/TestFiles/Test1.jack");
+        Tokenizer tk2 = new Tokenizer("./src/TestFiles/Test2.jack");
+        Tokenizer tk3 = new Tokenizer("./src/TestFiles/Test3.jack");
+        Tokenizer tk4 = new Tokenizer("./src/TestFiles/Test4.jack");
 
         for (String str : outputStrings1) {
             tk1.advance();
@@ -65,15 +65,26 @@ public class UnitTest {
             //System.out.println(tk2.getCurrToken());
             Assert.assertEquals("Output strings do not match", str, tk3.getCurrToken());
         }
+        tk1.close();
+        tk2.close();
+        tk3.close();
+        tk4.close();
     }
+
     @Test
-    public void testTokenType() throws IOException, InterruptedException {
-        Tokenizer tk1 = new Tokenizer("./src/Tests/SquareGame.jack");
-        while (tk1.hasMoreTokens()) {
-            tk1.advance();
-            System.out.print(tk1.getCurrToken());
-            System.out.print(" ");
-            System.out.println(tk1.getTokenType());
-        }
+    public void XMLArrayTest() throws IOException {
+        Tokenizer tk1 = new Tokenizer("./src/TestFiles/ArrayTest/Main.jack");
+        tk1.printToXML();
+        tk1.close();
+    }
+
+    @Test
+    public void XMLExpressionLessSquare() {
+        Tokenizer tk1;
+    }
+
+    @Test
+    public void XMLSquare() {
+        Tokenizer tk1;
     }
 }

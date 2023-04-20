@@ -1,64 +1,81 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayDeque;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class Tokenizer {
     public enum TokenType {
-        KEYWORD, SYMBOL, IDENTIFIER, INT_CONST, STRING_CONST
+        keyword, symbol, identifier, integerConstant, stringConstant
     }
-    private static class Pair {
-        String token;
-        TokenType type;
-
-        Pair(String token, TokenType type) {
-            this.token = token;
-            this.type = type;
-        }
-        String getToken() {
-            return token;
-        }
-        TokenType getType() {
-            return type;
-        }
+    private record Pair(String token, TokenType type) {
     }
     private static final int EOF = -1;
     private static final int CARRIAGE_RETURN = 0x0d;
     private static final Set<String> KEYWORDS = Set.of(
             "class","method","function","constructor","int","boolean","char","void", "var","static",
             "field","let","do","if","else","while","return","true","false","null","this");
+    private static final Map<String, String> XML_EXCEPTIONS = new HashMap<>() {{
+        put("<", "&lt;");
+        put(">", "&gt;");
+        put("&", "&amp;");
+        put("\"", "&quot;");
+    }};
     private static final Set<Character> SYMBOLS = Set.of(
             '{', '}', '(', ')', '[', ']', '.', ',', ';', '+', '-', '*', '/', '&', '|', '<', '>', '=', '~');
 
-    private boolean hasMoreTokens = true;
-    private String parentDirectory;
+    private boolean dataIsRemaining = true;
     private Pair currPair;
     private BufferedReader bufferedReader;
-    private ArrayDeque<Pair> queue = new ArrayDeque<>();
-    private ArrayDeque<String> files = new ArrayDeque<>();
+    private String outputXMLFile;
+    private final ArrayDeque<Pair> queue = new ArrayDeque<>();
 
-    public Tokenizer(String source) throws FileNotFoundException {
+    Tokenizer(String source) throws FileNotFoundException {
         if (source.endsWith(".jack")) {
-            bufferedReader = new BufferedReader(new FileReader("./" + source));
+            outputXMLFile = source.substring(0, source.length() - 4) + "xml";
+            bufferedReader = new BufferedReader(new FileReader(source));
         }
     }
 
-    /* Returns true if there are more tokens in the input */
-    public boolean hasMoreTokens() {
-        return !queue.isEmpty() || hasMoreTokens;
+    /** Output an XML file with the tokens and their type. Used for testing correctness of tokenizer. */
+    public void printToXML() throws IOException {
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(outputXMLFile)));
+        writer.println("<tokens>");
+        while (hasMoreTokens()) {
+            advance();
+            writer.print("<" + currPair.type + "> ");
+            if (XML_EXCEPTIONS.containsKey(currPair.token)) {
+                writer.print(XML_EXCEPTIONS.get(currPair.token));
+            }
+            else {
+                writer.print(currPair.token);
+            }
+            writer.println(" </" + currPair.type + ">");
+        }
+        writer.println("</tokens>");
+        writer.close();
     }
 
-    /* Gets the next token from the input, and makes it the current token.
+    /** Frees all resources used by Tokenizer */
+    public void close() throws IOException {
+        bufferedReader.close();
+    }
+
+    /** Returns true if there are more tokens in the input */
+    public boolean hasMoreTokens() {
+        // queue is not empty OR dataIsRemaining = true
+        return !queue.isEmpty() || dataIsRemaining;
+    }
+
+    /** Gets the next token from the input, and makes it the current token.
     * Should ignore whitespace and comments
     * If encountered a symbol (single char), should consider this as one token
     * If encountered //, should ignore everything until after newline
     * If encountered /*, should ignore everything between start and terminating * and /
     * Note: Handling /* will also handle the case of /**
     */
-    public void advance() throws IOException, InterruptedException {
+    public void advance() throws IOException {
         /* At least one token in the queue, remove the first one */
         if (!queue.isEmpty()) {
             currPair = queue.removeFirst();
@@ -71,13 +88,13 @@ public class Tokenizer {
         StringBuilder buffer = new StringBuilder();
 
         /* No more tokens. Need to add more to queue */
-        while (hasMoreTokens) {
+        while (dataIsRemaining) {
             curr = bufferedReader.read();
-            char tmp = (char) curr;
+            // char tmp = (char) curr;
 
             /* Terminating condition */
             if (curr == EOF) {
-                hasMoreTokens = false;
+                dataIsRemaining = false;
             }
             else if (lineComment) {
                 if (curr == CARRIAGE_RETURN) {
@@ -95,7 +112,7 @@ public class Tokenizer {
             }
             else if (strConstant) {
                 if (curr == '"') {
-                    queue.addLast(new Pair(buffer.toString(), TokenType.STRING_CONST));
+                    queue.addLast(new Pair(buffer.toString(), TokenType.stringConstant));
                     break;
                 }
                 buffer.append((char) curr);
@@ -109,13 +126,13 @@ public class Tokenizer {
                     addToQueue(buffer);
                     next = bufferedReader.read();
                     if (next == EOF) {
-                        hasMoreTokens = false;
+                        dataIsRemaining = false;
                     } else if (next == '/') { // start of line comment
                         lineComment = true;
                     } else if (next == '*') { // start of block comment
                         blockComment = true;
                     } else {                  // '/' is thus a symbol
-                        queue.addLast(new Pair(Character.toString(curr), TokenType.SYMBOL));
+                        queue.addLast(new Pair(Character.toString(curr), TokenType.symbol));
                         if (!Character.isWhitespace(next)) {
                             buffer.append((char) next);
                         }
@@ -123,7 +140,7 @@ public class Tokenizer {
                 }
                 else if (SYMBOLS.contains((char) curr)) { // symbols other than '/'
                     addToQueue(buffer);
-                    queue.addLast(new Pair(Character.toString(curr), TokenType.SYMBOL));
+                    queue.addLast(new Pair(Character.toString(curr), TokenType.symbol));
                 }
                 else if (curr == '"') {
                     addToQueue(buffer);
@@ -145,24 +162,24 @@ public class Tokenizer {
             String token = buffer.toString();
             TokenType type;
             if (token.matches("\\d+")) {
-                type = TokenType.INT_CONST;
+                type = TokenType.integerConstant;
             } else if (KEYWORDS.contains(token)) {
-                type = TokenType.KEYWORD;
+                type = TokenType.keyword;
             } else {
-                type = TokenType.IDENTIFIER;
+                type = TokenType.identifier;
             }
             queue.addLast(new Pair(token, type));
             buffer.delete(0, buffer.length());
         }
     }
 
-    /* Returns the current token as a string */
+    /** Returns the current token as a string */
     public String getCurrToken() {
-        return currPair.getToken();
+        return currPair.token();
     }
 
-    /* Returns the type of the current token as a constant of TokenType */
+    /** Returns the type of the current token as a constant of TokenType */
     public TokenType getTokenType() {
-        return currPair.getType();
+        return currPair.type();
     }
 }
