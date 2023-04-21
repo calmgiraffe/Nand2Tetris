@@ -1,3 +1,5 @@
+package Core;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -25,6 +27,7 @@ public class Main {
         /* Iterate through sourceFiles and compile */
         for (String file : sourceFiles) {
             CompilationEngine compiler = new CompilationEngine(file);
+            compiler.compileClass(1);
         }
     }
 }

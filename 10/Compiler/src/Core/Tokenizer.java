@@ -1,3 +1,5 @@
+package Core;
+
 import java.io.*;
 import java.util.ArrayDeque;
 
@@ -14,6 +16,7 @@ public class Tokenizer {
     private static final int EOF = -1;
     private static final int NEWLINE = 0x0a;
     private static final int CARRIAGE_RETURN = 0x0d;
+    private static  Set<String> TOKEN_TYPES;
     private static final Set<String> KEYWORDS = Set.of(
             "class","method","function","constructor","int","boolean","char","void", "var","static",
             "field","let","do","if","else","while","return","true","false","null","this");
@@ -31,7 +34,7 @@ public class Tokenizer {
     private String filePrefix;
     private final ArrayDeque<Pair> queue = new ArrayDeque<>();
 
-    Tokenizer(String source) throws IOException {
+    public Tokenizer(String source) throws IOException {
         if (source.endsWith(".jack")) {
             filePrefix = source.substring(0, source.length() - 5);
             bufferedReader = new BufferedReader(new FileReader(source));
@@ -41,7 +44,7 @@ public class Tokenizer {
 
     /** Output an XML file with the tokens and their type. Used for testing correctness of tokenizer. */
     public void printToXML() throws IOException {
-        String outputXMLFile = filePrefix + "T_User.xml";
+        String outputXMLFile = filePrefix + "T_test.xml";
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(outputXMLFile)));
 
         writer.println("<tokens>");
@@ -60,7 +63,7 @@ public class Tokenizer {
         writer.close();
     }
 
-    /** Frees all resources used by Tokenizer */
+    /** Frees all resources used by Core.Tokenizer */
     public void close() throws IOException {
         bufferedReader.close();
     }

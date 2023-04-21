@@ -1,3 +1,4 @@
+import Core.Tokenizer;
 import org.junit.Assert;
 import org.junit.Test;
 

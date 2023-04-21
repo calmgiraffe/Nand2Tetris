@@ -2,15 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/empty.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/empty.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Tokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Tokenizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/New Text Document (2).txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/New Text Document.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/empty.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/empty.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CompilationEngine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT_User.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT_User.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT_User.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT_User.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/MainT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT_User.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/MainT_User.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test1.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test1.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test2.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test2.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test3.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test3.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test4.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test4.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Tokenizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,8 +65,8 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.UnitTest.testTokenization">
-    <configuration name="UnitTest.XMLArrayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.UnitTest.XMLSquare">
+    <configuration name="UnitTest.XMLArrayTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="UnitTest" />
@@ -85,7 +96,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTest.testEmptyFile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTest.testEmptyFile (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="UnitTest" />
@@ -95,7 +106,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTest.testTokenization" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTest.testTokenization (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="UnitTest" />
@@ -107,11 +118,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UnitTest.testTokenization" />
-        <item itemvalue="JUnit.UnitTest.testEmptyFile" />
-        <item itemvalue="JUnit.UnitTest.XMLArrayTest" />
         <item itemvalue="JUnit.UnitTest.XMLSquare" />
         <item itemvalue="JUnit.UnitTest.XMLExpressionLessSquare" />
+        <item itemvalue="JUnit.UnitTest.XMLArrayTest (1)" />
+        <item itemvalue="JUnit.UnitTest.testTokenization (1)" />
+        <item itemvalue="JUnit.UnitTest.testEmptyFile (1)" />
       </list>
     </recent_temporary>
   </component>
