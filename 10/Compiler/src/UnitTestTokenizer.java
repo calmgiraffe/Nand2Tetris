@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class UnitTest {
+public class UnitTestTokenizer {
     private static String[] outputStrings1 = new String[]{
             "class", "Main", "{",
             "static", "boolean", "test", ";",
@@ -45,17 +45,17 @@ public class UnitTest {
 
     @Test
     public void testEmptyFile() throws IOException {
-        Tokenizer tk1 = new Tokenizer("./src/TestFiles/empty.jack");
+        Tokenizer tk1 = new Tokenizer("./src/TestFiles/TokenizerTests/empty.jack");
         tk1.printToXML();
         tk1.close();
     }
 
     @Test
     public void testTokenization() throws IOException {
-        Tokenizer tk1 = new Tokenizer("./src/TestFiles/Test1.jack");
-        Tokenizer tk2 = new Tokenizer("./src/TestFiles/Test2.jack");
-        Tokenizer tk3 = new Tokenizer("./src/TestFiles/Test3.jack");
-        Tokenizer tk4 = new Tokenizer("./src/TestFiles/Test4.jack");
+        Tokenizer tk1 = new Tokenizer("./src/TestFiles/TokenizerTests/Test1.jack");
+        Tokenizer tk2 = new Tokenizer("./src/TestFiles/TokenizerTests/Test2.jack");
+        Tokenizer tk3 = new Tokenizer("./src/TestFiles/TokenizerTests/Test3.jack");
+        Tokenizer tk4 = new Tokenizer("./src/TestFiles/TokenizerTests/Test4.jack");
 
         for (String str : outputStrings1) {
             //System.out.println(tk1.getCurrToken());

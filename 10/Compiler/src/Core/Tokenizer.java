@@ -16,11 +16,10 @@ public class Tokenizer {
     private static final int EOF = -1;
     private static final int NEWLINE = 0x0a;
     private static final int CARRIAGE_RETURN = 0x0d;
-    private static  Set<String> TOKEN_TYPES;
     private static final Set<String> KEYWORDS = Set.of(
             "class","method","function","constructor","int","boolean","char","void", "var","static",
             "field","let","do","if","else","while","return","true","false","null","this");
-    private static final Map<String, String> XML_EXCEPTIONS = new HashMap<>() {{
+    public static final Map<String, String> XML_EXCEPTIONS = new HashMap<>() {{
         put("<", "&lt;");
         put(">", "&gt;");
         put("&", "&amp;");

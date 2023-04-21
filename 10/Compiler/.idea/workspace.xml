@@ -2,27 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CompilationEngine.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT_User.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/MainT_User.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT_User.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/MainT_User.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/MainT.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT_User.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/MainT_User.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test1.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test1.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test2.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test2.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test3.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test3.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test4.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Test4.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Tokenizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/mainTest1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/maintest1.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/TokenizerTests/Test1.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/TokenizerTests/Test2.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/TokenizerTests/Test3.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/TokenizerTests/Test4.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/TokenizerTests/empty.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/TokenizerTests/emptyT_test.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UnitTestCompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/Tokenizer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/Tokenizer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/Tokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/Tokenizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Test1.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Test2.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Test3.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Test4.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/empty.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Tokenizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test1.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test2.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test3.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Test4.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/empty.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTestTokenizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,51 +72,51 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.UnitTest.XMLSquare">
-    <configuration name="UnitTest.XMLArrayTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.UnitTestCompilationEngine.basicClassTest">
+    <configuration name="UnitTestCompilationEngine.basicClassTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTest" />
-      <option name="METHOD_NAME" value="XMLArrayTest" />
+      <option name="MAIN_CLASS_NAME" value="UnitTestCompilationEngine" />
+      <option name="METHOD_NAME" value="basicClassTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTest.XMLExpressionLessSquare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTestTokenizer.XMLExpressionLessSquare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTest" />
+      <option name="MAIN_CLASS_NAME" value="UnitTestTokenizer" />
       <option name="METHOD_NAME" value="XMLExpressionLessSquare" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTest.XMLSquare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTestTokenizer.XMLSquare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTest" />
+      <option name="MAIN_CLASS_NAME" value="UnitTestTokenizer" />
       <option name="METHOD_NAME" value="XMLSquare" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTest.testEmptyFile (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTestTokenizer.testEmptyFile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTest" />
+      <option name="MAIN_CLASS_NAME" value="UnitTestTokenizer" />
       <option name="METHOD_NAME" value="testEmptyFile" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTest.testTokenization (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTestTokenizer.testTokenization" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTest" />
+      <option name="MAIN_CLASS_NAME" value="UnitTestTokenizer" />
       <option name="METHOD_NAME" value="testTokenization" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -118,11 +125,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UnitTest.XMLSquare" />
-        <item itemvalue="JUnit.UnitTest.XMLExpressionLessSquare" />
-        <item itemvalue="JUnit.UnitTest.XMLArrayTest (1)" />
-        <item itemvalue="JUnit.UnitTest.testTokenization (1)" />
-        <item itemvalue="JUnit.UnitTest.testEmptyFile (1)" />
+        <item itemvalue="JUnit.UnitTestCompilationEngine.basicClassTest" />
+        <item itemvalue="JUnit.UnitTestTokenizer.testTokenization" />
+        <item itemvalue="JUnit.UnitTestTokenizer.testEmptyFile" />
+        <item itemvalue="JUnit.UnitTestTokenizer.XMLSquare" />
+        <item itemvalue="JUnit.UnitTestTokenizer.XMLExpressionLessSquare" />
       </list>
     </recent_temporary>
   </component>
@@ -150,5 +157,21 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Core/CompilationEngine.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Core/CompilationEngine.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
