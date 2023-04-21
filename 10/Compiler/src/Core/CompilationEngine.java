@@ -11,6 +11,7 @@ and emit a structured representation of the source code in a xml file */
 public class CompilationEngine {
     private static final String INDENT = "    ";
     private static final Set<String> PRIMITIVE_TYPES = Set.of("int","char","boolean");
+    private static final Set<String> STATEMENT_TYPES = Set.of("let","if","while","do","return");
     private final Tokenizer tk;
     private final PrintWriter writer;
 
@@ -191,14 +192,14 @@ public class CompilationEngine {
         compileSubroutineDec(indentLevel);
     }
 
-    /* Method for compiling parameterList within subroutineDec
+    /* Method for compiling 0 or 1 parameterList within subroutineDec
     ex., int x, int y, boolean flag */
     private void compileParameterList(int indentLevel) throws IOException {
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
 
-        // Immediately return if not type -> returns in case of closing ')')
+        // Immediately return if not type -> 0 parameterList
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!PRIMITIVE_TYPES.contains(token) && type != identifier) {
             return;
@@ -343,10 +344,251 @@ public class CompilationEngine {
         compileVarDec(indentLevel);
     }
 
-    private void compileStatements(int indentLevel) {
-        //
+    /* Compile a let, if, while, do, or return statement */
+    private void compileStatements(int indentLevel) throws IOException {
+        String token = tk.getCurrToken();
+        String headerIndent = INDENT.repeat(indentLevel - 1);
+
+        // Header
+        writer.println(headerIndent + "<statements>");
+
+        // If token is one of the valid statement types
+        // Implicit assumption that tokenizer advances to next valid token after each call
+        while (STATEMENT_TYPES.contains(token)) {
+            switch (token) {
+                case "let" -> compileLet(indentLevel + 1);
+                case "if" -> compileIf(indentLevel + 1);
+                case "while" -> compileWhile(indentLevel + 1);
+                case "do" -> compileDo(indentLevel + 1);
+                case "return" -> compileReturn(indentLevel + 1);
+            }
+        }
+        // Footer
+        writer.println(headerIndent + "</statements>");
     }
 
+    private void compileLet(int indentLevel) throws IOException {
+        String token; TokenType type;
+        String headerIndent = INDENT.repeat(indentLevel - 1);
+        String indent = INDENT.repeat(indentLevel);
+
+        // Header
+        writer.println(headerIndent + "<letStatement>");
+
+        // "let" keyword
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("let")) { throwRuntimeException("'let'", keyword, token, type); }
+        writer.println(indent + "<keyword> " + token + " </keyword>");
+        tk.advance();
+
+        // varName identifier
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
+        writer.println(indent + "<identifier> " + token + " </identifier>");
+        tk.advance();
+
+        // 0 or 1 ('[' expression ']')
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("=")) {
+            if (!token.equals("[")) {
+                throwRuntimeException("'[' or '='", symbol, token, type);
+            }
+            // '[' symbol
+            writer.println(indent + "<symbol> " + token + " </symbol>");
+            tk.advance();
+
+            compileExpression(indentLevel + 1); // expression
+
+            // ']' symbol
+            token = tk.getCurrToken();
+            if (!token.equals("]")) { throwRuntimeException("']'", symbol, token, type); }
+            writer.println(indent + "<symbol> " + token + " </symbol>");
+            tk.advance();
+
+            // '=' symbol
+            token = tk.getCurrToken();
+            if (!token.equals("=")) { throwRuntimeException("'='", symbol, token, type); }
+        }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        compileExpression(indentLevel + 1); // expression
+
+        // terminating ';' symbol
+        token = tk.getCurrToken();
+        if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // Footer
+        writer.println(headerIndent + "</letStatement>");
+    }
+
+    private void compileIf(int indentLevel) throws IOException {
+        String token; TokenType type;
+        String headerIndent = INDENT.repeat(indentLevel - 1);
+        String indent = INDENT.repeat(indentLevel);
+
+        // Header
+        writer.println(headerIndent + "<ifStatement>");
+
+        // "if" keyword
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("if")) { throwRuntimeException("'if'", keyword, token, type); }
+        writer.println(indent + "<keyword> " + token + " </keyword>");
+        tk.advance();
+
+        // '(' symbol
+        token = tk.getCurrToken();
+        if (!token.equals("(")) { throwRuntimeException("'('", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        compileExpression(indentLevel + 1); // expression
+
+        // ')' symbol
+        token = tk.getCurrToken();
+        if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // "{" symbol
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        compileStatements(indentLevel + 1); // statements (0 or more statement)
+
+        // "}" symbol
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // ('else' '{' statements '}')?
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (token.equals("else")) {
+            writer.println(indent + "<keyword> " + token + " </keyword>");
+            tk.advance();
+
+            // "{" symbol
+            token = tk.getCurrToken();
+            if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
+            writer.println(indent + "<symbol> " + token + " </symbol>");
+            tk.advance();
+
+            compileStatements(indentLevel + 1); // statements (0 or more statement)
+
+            // "}" symbol
+            token = tk.getCurrToken(); type = tk.getCurrType();
+            if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
+            writer.println(indent + "<symbol> " + token + " </symbol>");
+            tk.advance();
+        }
+        // Footer
+        writer.println(headerIndent + "</ifStatement>");
+    }
+
+    private void compileWhile(int indentLevel) throws IOException {
+        String token; TokenType type;
+        String headerIndent = INDENT.repeat(indentLevel - 1);
+        String indent = INDENT.repeat(indentLevel);
+
+        // Header
+        writer.println(headerIndent + "<whileStatement>");
+
+        // "while" keyword
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("while")) { throwRuntimeException("'while'", keyword, token, type); }
+        writer.println(indent + "<keyword> " + token + " </keyword>");
+        tk.advance();
+
+        // '(' symbol
+        token = tk.getCurrToken();
+        if (!token.equals("(")) { throwRuntimeException("'('", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        compileExpression(indentLevel + 1); // expression
+
+        // ')' symbol
+        token = tk.getCurrToken();
+        if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // "{" symbol
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        compileStatements(indentLevel + 1); // statements (0 or more statement)
+
+        // "}" symbol
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // Footer
+        writer.println(headerIndent + "</whileStatement>");
+    }
+
+    private void compileDo(int indentLevel) throws IOException {
+        String token; TokenType type;
+        String headerIndent = INDENT.repeat(indentLevel - 1);
+        String indent = INDENT.repeat(indentLevel);
+
+        // Header
+        writer.println(headerIndent + "<doStatement>");
+
+        // "do" keyword
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("do")) { throwRuntimeException("'do'", keyword, token, type); }
+        writer.println(indent + "<keyword> " + token + " </keyword>");
+        tk.advance();
+
+        // subroutineCall //
+
+        // terminating ';' symbol
+        token = tk.getCurrToken();
+        if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // Footer
+        writer.println(headerIndent + "</doStatement>");
+    }
+
+    private void compileReturn(int indentLevel) throws IOException {
+        String token; TokenType type;
+        String headerIndent = INDENT.repeat(indentLevel - 1);
+        String indent = INDENT.repeat(indentLevel);
+
+        // Header
+        writer.println(headerIndent + "<returnStatement>");
+
+        // "return" keyword
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!token.equals("return")) { throwRuntimeException("'return'", keyword, token, type); }
+        writer.println(indent + "<keyword> " + token + " </keyword>");
+        tk.advance();
+
+        // expression
+
+        // terminating ';' symbol
+        token = tk.getCurrToken();
+        if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // Footer
+        writer.println(headerIndent + "</returnStatement>");
+    }
+
+    private void compileExpression(int indentLevel) {}
 
     private void throwRuntimeException(String expected, String expectedType, String actual, TokenType actualType) throws IOException {
         tk.close();
