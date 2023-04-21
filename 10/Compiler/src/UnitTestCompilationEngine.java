@@ -5,8 +5,14 @@ import java.io.IOException;
 
 public class UnitTestCompilationEngine {
     @Test
-    public void basicClassTest() throws IOException {
-        CompilationEngine ce = new CompilationEngine("./src/TestFiles/CompilationEngineTests/mainTest1.jack");
+    public void simpleClassTest() throws IOException {
+        CompilationEngine ce = new CompilationEngine("./src/TestFiles/CompilationEngineTests/simpleClass.jack");
+        ce.compile();
+    }
+
+    @Test
+    public void classVarDecTest() throws IOException {
+        CompilationEngine ce = new CompilationEngine("./src/TestFiles/CompilationEngineTests/classVarDec.jack");
         ce.compile();
     }
 }
