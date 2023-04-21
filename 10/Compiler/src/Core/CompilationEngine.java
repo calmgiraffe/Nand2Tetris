@@ -30,7 +30,7 @@ public class CompilationEngine {
 
     /* Method for compiling class, ex., class Main {...} */
     public void compileClass(int indentLevel) throws IOException {
-        /* "class" className "{" classVarDec* subroutineDec* ")" */
+        // "class" className "{" classVarDec* subroutineDec* ")"
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
@@ -128,6 +128,7 @@ public class CompilationEngine {
         // Footer
         writer.println(headerIndent + "</classVarDec>");
 
+        // 0 or more classVarDec in class -> recursive call
         compileClassVarDec(indentLevel);
     }
 
@@ -180,23 +181,24 @@ public class CompilationEngine {
         writer.println(indent + "<symbol> " + token + " </symbol>");
         tk.advance();
 
-        // subroutineBody
+        // subroutineBody (contains at least "{}")
         compileSubroutineBody(indentLevel + 1);
 
         // Footer
         writer.println(headerIndent + "</subroutineDec>");
 
-        // 0 or more subroutineDec
+        // 0 or more subroutineDec in class -> recursive call
         compileSubroutineDec(indentLevel);
     }
 
-
+    /* Method for compiling parameterList within subroutineDec
+    ex., int x, int y, boolean flag */
     private void compileParameterList(int indentLevel) throws IOException {
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
 
-        // Immediately return if not type (includes case of closing ')')
+        // Immediately return if not type -> returns in case of closing ')')
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!PRIMITIVE_TYPES.contains(token) && type != identifier) {
             return;
@@ -216,7 +218,7 @@ public class CompilationEngine {
         writer.println(indent + "<identifier> " + token + " </identifier>");
         tk.advance();
 
-        // (',' type varName)*
+        // 0 or more (',' type varName)
         token = tk.getCurrToken();
         while (token.equals(",")) {
             // token has to equal ',' -> print it
@@ -249,11 +251,19 @@ public class CompilationEngine {
         writer.println(headerIndent + "</parameterList>");
     }
 
+    /* Method for compiling subroutine body, ex., {
+      let x = Ax;
+      let y = Ay;
+      let size = Asize;
+      do draw();
+      return this;
+    } */
     private void compileSubroutineBody(int indentLevel) throws IOException {
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
 
+        // Header
         writer.println(headerIndent + "<subroutineBody>");
 
         // "{" symbol
@@ -262,13 +272,26 @@ public class CompilationEngine {
         writer.println(indent + "<symbol> " + token + " </symbol>");
         tk.advance();
 
+        compileVarDec(indentLevel + 1); // varDec*
+        compileStatements(indentLevel + 1); // statements
+
         // "}" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
         writer.println(indent + "<symbol> " + token + " </symbol>");
         tk.advance();
 
+        // Footer
         writer.println(headerIndent + "</subroutineBody>");
+    }
+
+    private void compileVarDec(int indentLevel) {
+
+
+    }
+
+    private void compileStatements(int indentLevel) {
+
     }
 
 
