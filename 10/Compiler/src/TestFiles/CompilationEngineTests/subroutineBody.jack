@@ -1,0 +1,18 @@
+class Main {
+    static int x, y, z;
+    field int a, b, c;
+    
+    constructor Square new(int Ax, int Ay, int Asize) {
+      let x = Ax;
+      let y = Ay;
+      let size = Asize;
+      do draw();
+      return this;
+   }
+
+   /** Disposes this square. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+}

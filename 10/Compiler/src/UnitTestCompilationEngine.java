@@ -15,4 +15,10 @@ public class UnitTestCompilationEngine {
         CompilationEngine ce = new CompilationEngine("./src/TestFiles/CompilationEngineTests/classVarDec.jack");
         ce.compile();
     }
+
+    @Test
+    public void subroutineDecAndParameterListTest() throws IOException {
+        CompilationEngine ce = new CompilationEngine("./src/TestFiles/CompilationEngineTests/subroutineDec.jack");
+        ce.compile();
+    }
 }

@@ -1,0 +1,79 @@
+<class>
+    <keyword> class </keyword>
+    <identifier> Main </identifier>
+    <symbol> { </symbol>
+    <classVarDec>
+        <keyword> static </keyword>
+        <keyword> int </keyword>
+        <identifier> x </identifier>
+        <symbol> , </symbol>
+        <identifier> y </identifier>
+        <symbol> , </symbol>
+        <identifier> z </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> field </keyword>
+        <keyword> int </keyword>
+        <identifier> a </identifier>
+        <symbol> , </symbol>
+        <identifier> b </identifier>
+        <symbol> , </symbol>
+        <identifier> c </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <subroutineDec>
+        <keyword> constructor </keyword>
+        <identifier> Square </identifier>
+        <identifier> new </identifier>
+        <symbol> ( </symbol>
+        <parameterList>
+            <keyword> int </keyword>
+            <identifier> Ax </identifier>
+            <symbol> , </symbol>
+            <keyword> int </keyword>
+            <identifier> Ay </identifier>
+            <symbol> , </symbol>
+            <keyword> int </keyword>
+            <identifier> Asize </identifier>
+        </parameterList>
+        <symbol> ) </symbol>
+        <subroutineBody>
+            <symbol> { </symbol>
+            <symbol> } </symbol>
+        </subroutineBody>
+    </subroutineDec>
+    <subroutineDec>
+        <keyword> method </keyword>
+        <keyword> void </keyword>
+        <identifier> dispose </identifier>
+        <symbol> ( </symbol>
+        <symbol> ) </symbol>
+        <subroutineBody>
+            <symbol> { </symbol>
+            <symbol> } </symbol>
+        </subroutineBody>
+    </subroutineDec>
+    <subroutineDec>
+        <keyword> method </keyword>
+        <keyword> boolean </keyword>
+        <identifier> move </identifier>
+        <symbol> ( </symbol>
+        <parameterList>
+            <keyword> int </keyword>
+            <identifier> x </identifier>
+            <symbol> , </symbol>
+            <keyword> int </keyword>
+            <identifier> y </identifier>
+            <symbol> , </symbol>
+            <keyword> char </keyword>
+            <identifier> str </identifier>
+        </parameterList>
+        <symbol> ) </symbol>
+        <subroutineBody>
+            <symbol> { </symbol>
+            <symbol> } </symbol>
+        </subroutineBody>
+    </subroutineDec>
+    <symbol> } </symbol>
+</class>

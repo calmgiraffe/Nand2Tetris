@@ -1,0 +1,10 @@
+class Main {
+    static int x, y, z;
+    field int a, b, c;
+    
+    constructor Square new(int Ax, int Ay, int Asize) {}
+
+    method void dispose() {}
+
+    method boolean move(int x, int y, char str) {}
+}
