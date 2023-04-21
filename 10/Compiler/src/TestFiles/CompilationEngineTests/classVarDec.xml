@@ -12,5 +12,55 @@
         <identifier> z </identifier>
         <symbol> ; </symbol>
     </classVarDec>
+    <classVarDec>
+        <keyword> static </keyword>
+        <keyword> boolean </keyword>
+        <identifier> flag1 </identifier>
+        <symbol> , </symbol>
+        <identifier> flag2 </identifier>
+        <symbol> , </symbol>
+        <identifier> flag3 </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> static </keyword>
+        <keyword> char </keyword>
+        <identifier> ch1 </identifier>
+        <symbol> , </symbol>
+        <identifier> ch2 </identifier>
+        <symbol> , </symbol>
+        <identifier> ch3 </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> field </keyword>
+        <keyword> int </keyword>
+        <identifier> a </identifier>
+        <symbol> , </symbol>
+        <identifier> b </identifier>
+        <symbol> , </symbol>
+        <identifier> c </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> field </keyword>
+        <keyword> boolean </keyword>
+        <identifier> sign1 </identifier>
+        <symbol> , </symbol>
+        <identifier> sign2 </identifier>
+        <symbol> , </symbol>
+        <identifier> sign3 </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
+    <classVarDec>
+        <keyword> field </keyword>
+        <keyword> char </keyword>
+        <identifier> str1 </identifier>
+        <symbol> , </symbol>
+        <identifier> str2 </identifier>
+        <symbol> , </symbol>
+        <identifier> str3 </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
     <symbol> } </symbol>
 </class>

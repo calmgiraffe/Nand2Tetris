@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/classVarDec.jack" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/classVarDec.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/simpleClass.jack" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/simpleClass.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/CompilationEngineTests/mainTest1.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/CompilationEngineTests/mainTest1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTestCompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTestCompilationEngine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/mainTest1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/maintest1.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UnitTestCompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTestCompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/classVarDec.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/classVarDec.jack" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -21,13 +21,15 @@ public class CompilationEngine {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + ".xml")));
     }
 
+    /** Analyze the grammar of the source file and output a structured representation to an XML file */
     public void compile() throws IOException {
         compileClass(1);
         tk.close();
         writer.close();
     }
 
-    /** Analyze the grammar of the source file and output a structured representation to an XML file */
+    /* Method for compiling class
+    example: class Main {...} */
     public void compileClass(int indentLevel) throws IOException {
         /* "class" className "{" classVarDec* subroutineDec* ")" */
         String token; Tokenizer.TokenType type;
@@ -68,6 +70,8 @@ public class CompilationEngine {
         writer.println(headerIndent + "</class>");
     }
 
+    /* Method for compiling static or non-static variables of object
+    example: field int x, y, z */
     private void compileClassVarDec(int indentLevel) throws IOException {
         /* ('static' | 'field') type varName (',' varName)* ';' */
         String token; Tokenizer.TokenType type;
@@ -124,7 +128,10 @@ public class CompilationEngine {
 
         // Footer
         writer.println(headerIndent + "</classVarDec>");
+
+        compileClassVarDec(indentLevel);
     }
+
 
     private void compileSubroutineDec(int indentLevel) throws IOException {
         String token; Tokenizer.TokenType type;

@@ -2,13 +2,25 @@
     <keyword> class </keyword>
     <identifier> Main </identifier>
     <symbol> { </symbol>
-<classVarDec>
+    <classVarDec>
         <keyword> static </keyword>
         <keyword> int </keyword>
         <identifier> x </identifier>
         <symbol> , </symbol>
         <identifier> y </identifier>
+        <symbol> , </symbol>
+        <identifier> z </identifier>
         <symbol> ; </symbol>
-</classVarDec>
+    </classVarDec>
+    <classVarDec>
+        <keyword> static </keyword>
+        <keyword> boolean </keyword>
+        <identifier> flag1 </identifier>
+        <symbol> , </symbol>
+        <identifier> flag2 </identifier>
+        <symbol> , </symbol>
+        <identifier> flag3 </identifier>
+        <symbol> ; </symbol>
+    </classVarDec>
     <symbol> } </symbol>
 </class>
