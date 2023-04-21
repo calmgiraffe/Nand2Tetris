@@ -40,6 +40,30 @@
         <symbol> ) </symbol>
         <subroutineBody>
             <symbol> { </symbol>
+            <varDec>
+                <var> var </var>
+                <identifier> Square </identifier>
+                <identifier> square1 </identifier>
+                <symbol> , </symbol>
+                <identifier> square2 </identifier>
+                <symbol> ; </symbol>
+            <varDec>
+            <varDec>
+                <var> var </var>
+                <keyword> int </keyword>
+                <identifier> x </identifier>
+                <symbol> , </symbol>
+                <identifier> y </identifier>
+                <symbol> ; </symbol>
+            <varDec>
+            <varDec>
+                <var> var </var>
+                <keyword> boolean </keyword>
+                <identifier> flag1 </identifier>
+                <symbol> , </symbol>
+                <identifier> flag2 </identifier>
+                <symbol> ; </symbol>
+            <varDec>
             <symbol> } </symbol>
         </subroutineBody>
     </subroutineDec>
@@ -51,6 +75,14 @@
         <symbol> ) </symbol>
         <subroutineBody>
             <symbol> { </symbol>
+            <varDec>
+                <var> var </var>
+                <keyword> char </keyword>
+                <identifier> ch1 </identifier>
+                <symbol> , </symbol>
+                <identifier> ch2 </identifier>
+                <symbol> ; </symbol>
+            <varDec>
             <symbol> } </symbol>
         </subroutineBody>
     </subroutineDec>

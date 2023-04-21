@@ -115,9 +115,9 @@ public class CompilationEngine {
             token = tk.getCurrToken(); type = tk.getCurrType();
             if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
             writer.println(indent + "<identifier> " + token + " </identifier>");
+            tk.advance();
 
             // Prepare next token
-            tk.advance();
             token = tk.getCurrToken(); type = tk.getCurrType();
         }
         // Terminating semicolon
@@ -241,23 +241,16 @@ public class CompilationEngine {
             token = tk.getCurrToken(); type = tk.getCurrType();
             if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
             writer.println(indent + "<identifier> " + token + " </identifier>");
+            tk.advance();
 
             // Prepare next token
-            tk.advance();
             token = tk.getCurrToken();
         }
-
         // Footer
         writer.println(headerIndent + "</parameterList>");
     }
 
-    /* Method for compiling subroutine body, ex., {
-      let x = Ax;
-      let y = Ay;
-      let size = Asize;
-      do draw();
-      return this;
-    } */
+    /* Method for compiling subroutine body, i.e., { varDec* statement* } */
     private void compileSubroutineBody(int indentLevel) throws IOException {
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
@@ -272,8 +265,8 @@ public class CompilationEngine {
         writer.println(indent + "<symbol> " + token + " </symbol>");
         tk.advance();
 
-        compileVarDec(indentLevel + 1); // varDec*
-        compileStatements(indentLevel + 1); // statements
+        compileVarDec(indentLevel + 1); // 0 or more varDec
+        compileStatements(indentLevel + 1); // statements (0 or more statement)
 
         // "}" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
@@ -285,13 +278,73 @@ public class CompilationEngine {
         writer.println(headerIndent + "</subroutineBody>");
     }
 
-    private void compileVarDec(int indentLevel) {
+    /* Method for compiling varDec, ex., {
+    var char key;
+    var boolean exit;
+    ... } */
+    private void compileVarDec(int indentLevel) throws IOException {
+        String token; Tokenizer.TokenType type;
+        String headerIndent = INDENT.repeat(indentLevel - 1);
+        String indent = INDENT.repeat(indentLevel);
 
+        // Immediately return if not var
+        token = tk.getCurrToken();
+        if (!token.equals("var")) {
+            return;
+        }
+        // Header & var
+        writer.println(headerIndent + "<varDec>");
+        writer.println(indent + "<var> " + token + " </var>");
+        tk.advance();
 
+        // Primitive type or className (type)
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (!PRIMITIVE_TYPES.contains(token)) {
+            if (type != identifier) {
+                throwRuntimeException("type", keyword + ", " + identifier, token, type);
+            }
+            writer.println(indent + "<identifier> " + token + " </identifier>");
+        } else {
+            writer.println(indent + "<keyword> " + token + " </keyword>");
+        }
+        tk.advance();
+
+        // varName identifier
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
+        writer.println(indent + "<identifier> " + token + " </identifier>");
+        tk.advance();
+
+        // Zero or more (',' varName)
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        while (token.equals(",")) {
+            // token has to equal ',' -> print it
+            writer.println(indent + "<symbol> " + token + " </symbol>");
+            tk.advance();
+
+            // varName identifier must follow ','
+            token = tk.getCurrToken(); type = tk.getCurrType();
+            if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
+            writer.println(indent + "<identifier> " + token + " </identifier>");
+            tk.advance();
+
+            // Prepare next token
+            token = tk.getCurrToken(); type = tk.getCurrType();
+        }
+        // Terminating semicolon
+        if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
+        writer.println(indent + "<symbol> " + token + " </symbol>");
+        tk.advance();
+
+        // Footer
+        writer.println(headerIndent + "</varDec>");
+
+        // 0 or more varDec in subroutineDec -> recursive call
+        compileVarDec(indentLevel);
     }
 
     private void compileStatements(int indentLevel) {
-
+        //
     }
 
 

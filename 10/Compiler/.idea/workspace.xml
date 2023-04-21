@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/varDec.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/CompilationEngineTests/varDec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/CompilationEngineTests/subroutineDec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/CompilationEngineTests/subroutineDec.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTestCompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTestCompilationEngine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UnitTestCompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTestCompilationEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +52,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.UnitTestCompilationEngine.subroutineDecAndParameterListTest">
+  <component name="RunManager" selected="JUnit.UnitTestCompilationEngine.varDecTest">
     <configuration name="UnitTestCompilationEngine.basicClassTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
@@ -87,11 +93,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTestTokenizer.testTokenization" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTestCompilationEngine.varDecTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTestTokenizer" />
-      <option name="METHOD_NAME" value="testTokenization" />
+      <option name="MAIN_CLASS_NAME" value="UnitTestCompilationEngine" />
+      <option name="METHOD_NAME" value="varDecTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -99,11 +105,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UnitTestCompilationEngine.varDecTest" />
         <item itemvalue="JUnit.UnitTestCompilationEngine.subroutineDecAndParameterListTest" />
         <item itemvalue="JUnit.UnitTestCompilationEngine.classVarDecTest" />
         <item itemvalue="JUnit.UnitTestCompilationEngine.simpleClassTest" />
         <item itemvalue="JUnit.UnitTestCompilationEngine.basicClassTest" />
-        <item itemvalue="JUnit.UnitTestTokenizer.testTokenization" />
       </list>
     </recent_temporary>
   </component>
