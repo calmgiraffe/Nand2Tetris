@@ -1,7 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class UnitTest {
@@ -44,6 +43,13 @@ public class UnitTest {
     };
 
     @Test
+    public void testEmptyFile() throws IOException {
+        Tokenizer tk1 = new Tokenizer("./src/TestFiles/empty.jack");
+        tk1.printToXML();
+        tk1.close();
+    }
+
+    @Test
     public void testTokenization() throws IOException {
         Tokenizer tk1 = new Tokenizer("./src/TestFiles/Test1.jack");
         Tokenizer tk2 = new Tokenizer("./src/TestFiles/Test2.jack");
@@ -51,20 +57,19 @@ public class UnitTest {
         Tokenizer tk4 = new Tokenizer("./src/TestFiles/Test4.jack");
 
         for (String str : outputStrings1) {
-            tk1.advance();
             //System.out.println(tk1.getCurrToken());
             Assert.assertEquals("Output strings do not match", str, tk1.getCurrToken());
+            tk1.advance();
         }
         for (String str : outputStrings2) {
-            tk2.advance();
-            tk4.advance();
             Assert.assertEquals("Output strings do not match", str, tk2.getCurrToken());
             Assert.assertEquals("Output strings do not match", str, tk4.getCurrToken());
+            tk2.advance();
+            tk4.advance();
         }
         for (String str : outputStrings3) {
-            tk3.advance();
-            //System.out.println(tk2.getCurrToken());
             Assert.assertEquals("Output strings do not match", str, tk3.getCurrToken());
+            tk3.advance();
         }
         tk1.close();
         tk2.close();

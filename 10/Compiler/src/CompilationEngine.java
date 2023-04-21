@@ -17,7 +17,7 @@ public class CompilationEngine {
     /** Analyze the grammar of the source file and output a structured representation to an XML file */
     public void printToXML() throws IOException {
         tk.advance();
-        Tokenizer.TokenType type = tk.getTokenType();
+        Tokenizer.TokenType type = tk.getCurrType();
 
 
     }

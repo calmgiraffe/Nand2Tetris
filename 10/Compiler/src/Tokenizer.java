@@ -27,15 +27,15 @@ public class Tokenizer {
             '{', '}', '(', ')', '[', ']', '.', ',', ';', '+', '-', '*', '/', '&', '|', '<', '>', '=', '~');
 
     private boolean dataIsRemaining = true;
-    private Pair currPair;
     private BufferedReader bufferedReader;
     private String filePrefix;
     private final ArrayDeque<Pair> queue = new ArrayDeque<>();
 
-    Tokenizer(String source) throws FileNotFoundException {
+    Tokenizer(String source) throws IOException {
         if (source.endsWith(".jack")) {
             filePrefix = source.substring(0, source.length() - 5);
             bufferedReader = new BufferedReader(new FileReader(source));
+            advance(); // initially point to first token, if it exists
         }
     }
 
@@ -43,17 +43,18 @@ public class Tokenizer {
     public void printToXML() throws IOException {
         String outputXMLFile = filePrefix + "T_User.xml";
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(outputXMLFile)));
+
         writer.println("<tokens>");
         while (hasMoreTokens()) {
-            advance();
-            writer.print("<" + currPair.type + "> ");
-            if (XML_EXCEPTIONS.containsKey(currPair.token)) {
-                writer.print(XML_EXCEPTIONS.get(currPair.token));
+            writer.print("<" + getCurrType() + "> ");
+            if (XML_EXCEPTIONS.containsKey(getCurrToken())) {
+                writer.print(XML_EXCEPTIONS.get(getCurrToken()));
             }
             else {
-                writer.print(currPair.token);
+                writer.print(getCurrToken());
             }
-            writer.println(" </" + currPair.type + ">");
+            writer.println(" </" + getCurrType() + ">");
+            advance();
         }
         writer.println("</tokens>");
         writer.close();
@@ -78,19 +79,18 @@ public class Tokenizer {
     * Note: Handling /* will also handle the case of /**
     */
     public void advance() throws IOException {
-        /* At least one token in the queue, remove the first one */
-        if (!queue.isEmpty()) {
-            currPair = queue.removeFirst();
+        queue.poll(); // initially remove the head of the queue
+        if (!queue.isEmpty()) { // at least one token in the queue, remove the first one
             return;
         }
+        /* If the queue is empty, need to read file and get more tokens */
         int curr, next;
         boolean lineComment = false;
         boolean blockComment = false;
         boolean strConstant = false;
         StringBuilder buffer = new StringBuilder();
 
-        /* No more tokens. Need to add more to queue */
-        while (dataIsRemaining) {
+        while (dataIsRemaining) { // loop breaks if EOF or string constant found
             curr = bufferedReader.read();
             // char tmp = (char) curr;
 
@@ -155,7 +155,6 @@ public class Tokenizer {
                 }
             }
         }
-        currPair = queue.removeFirst();
     }
 
     /* Abstraction to handle the current buffer (even if buffer is empty)
@@ -179,11 +178,11 @@ public class Tokenizer {
 
     /** Returns the current token as a string */
     public String getCurrToken() {
-        return currPair.token();
+        return queue.peek().token();
     }
 
     /** Returns the type of the current token as a constant of TokenType */
-    public TokenType getTokenType() {
-        return currPair.type();
+    public TokenType getCurrType() {
+        return queue.peek().type();
     }
 }
