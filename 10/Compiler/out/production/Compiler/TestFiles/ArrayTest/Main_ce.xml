@@ -2,8 +2,6 @@
     <keyword> class </keyword>
     <identifier> Main </identifier>
     <symbol> { </symbol>
-    <classVarDec>
-    </classVarDec>
     <subroutineDec>
         <keyword> function </keyword>
         <keyword> void </keyword>
@@ -33,8 +31,6 @@
                 <symbol> , </symbol>
                 <identifier> sum </identifier>
                 <symbol> ; </symbol>
-            </varDec>
-            <varDec>
             </varDec>
             <statements>
                 <letStatement>
@@ -99,7 +95,7 @@
                         <term>
                             <identifier> i </identifier>
                         </term>
-                        <symbol> < </symbol>
+                        <symbol> &lt; </symbol>
                         <term>
                             <identifier> length </identifier>
                         </term>
@@ -183,7 +179,7 @@
                         <term>
                             <identifier> i </identifier>
                         </term>
-                        <symbol> < </symbol>
+                        <symbol> &lt; </symbol>
                         <term>
                             <identifier> length </identifier>
                         </term>
@@ -292,5 +288,12 @@
                 </doStatement>
                 <returnStatement>
                     <keyword> return </keyword>
-                    <expression>
-                        <term>
+                    <symbol> ; </symbol>
+                </returnStatement>
+            </statements>
+            <symbol> } </symbol>
+        </subroutineBody>
+    </subroutineDec>
+    </subroutineDec>
+    <symbol> } </symbol>
+</class>
