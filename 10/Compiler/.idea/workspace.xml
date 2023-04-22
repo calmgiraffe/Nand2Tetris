@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ArrayTest/Main_ce.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

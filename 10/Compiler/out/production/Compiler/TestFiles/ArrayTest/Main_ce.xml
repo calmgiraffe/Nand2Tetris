@@ -292,13 +292,5 @@
                 </doStatement>
                 <returnStatement>
                     <keyword> return </keyword>
-                    <symbol> ; </symbol>
-                </returnStatement>
-            </statements>
-            <symbol> } </symbol>
-        </subroutineBody>
-    </subroutineDec>
-    <subroutineDec>
-    </subroutineDec>
-    <symbol> } </symbol>
-</class>
+                    <expression>
+                        <term>

@@ -375,6 +375,8 @@ public class CompilationEngine {
                 case "do" -> compileDo(indentLevel + 1);
                 case "return" -> compileReturn(indentLevel + 1);
             }
+            // Prepare next token
+            token = tk.getCurrToken();
         }
         // Footer
         writer.println(headerIndent + "</statements>");
@@ -596,7 +598,7 @@ public class CompilationEngine {
         tk.advance();
 
         token = tk.getCurrToken();
-        if (!token.equals(';')) {
+        if (!token.equals(";")) {
             compileExpression(indentLevel + 1);
         }
         token = tk.getCurrToken();
@@ -625,6 +627,9 @@ public class CompilationEngine {
             tk.advance();
 
             compileTerm(indentLevel + 1);
+
+            // Prepare next token
+            token = tk.getCurrToken();
         }
         // Footer
         writer.println(headerIndent + "</expression>");
