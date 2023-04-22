@@ -93,7 +93,6 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-            <term>
               <identifier> i </identifier>
             </term>
             <symbol> &lt; </symbol>
@@ -139,7 +138,6 @@
               <symbol> = </symbol>
               <expression>
                 <term>
-                <term>
                   <identifier> i </identifier>
                 </term>
                 <symbol> + </symbol>
@@ -179,7 +177,6 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-            <term>
               <identifier> i </identifier>
             </term>
             <symbol> &lt; </symbol>
@@ -196,11 +193,9 @@
               <symbol> = </symbol>
               <expression>
                 <term>
-                <term>
                   <identifier> sum </identifier>
                 </term>
                 <symbol> + </symbol>
-                <term>
                 <term>
                   <identifier> a </identifier>
                   <symbol> [ </symbol>
@@ -220,7 +215,6 @@
               <symbol> = </symbol>
               <expression>
                 <term>
-                <term>
                   <identifier> i </identifier>
                 </term>
                 <symbol> + </symbol>
@@ -235,56 +229,49 @@
         </whileStatement>
         <doStatement>
           <keyword> do </keyword>
-          <term>
-            <identifier> Output </identifier>
-            <symbol> . </symbol>
-            <identifier> printString </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <stringConstant> THE AVERAGE IS:  </stringConstant>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </term>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> printString </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <stringConstant> THE AVERAGE IS:  </stringConstant>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <term>
-            <identifier> Output </identifier>
-            <symbol> . </symbol>
-            <identifier> printInt </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                <term>
-                  <identifier> sum </identifier>
-                </term>
-                <symbol> / </symbol>
-                <term>
-                  <identifier> length </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </term>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> printInt </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> sum </identifier>
+              </term>
+              <symbol> / </symbol>
+              <term>
+                <identifier> length </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <term>
-            <identifier> Output </identifier>
-            <symbol> . </symbol>
-            <identifier> println </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-            </expressionList>
-            <symbol> ) </symbol>
-          </term>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> println </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -294,7 +281,6 @@
       </statements>
       <symbol> } </symbol>
     </subroutineBody>
-  </subroutineDec>
   </subroutineDec>
   <symbol> } </symbol>
 </class>

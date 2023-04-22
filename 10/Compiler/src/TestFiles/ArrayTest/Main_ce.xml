@@ -13,19 +13,19 @@
     <subroutineBody>
       <symbol> { </symbol>
       <varDec>
-        <var> var </var>
+        <keyword> var </keyword>
         <identifier> Array </identifier>
         <identifier> a </identifier>
         <symbol> ; </symbol>
       </varDec>
       <varDec>
-        <var> var </var>
+        <keyword> var </keyword>
         <keyword> int </keyword>
         <identifier> length </identifier>
         <symbol> ; </symbol>
       </varDec>
       <varDec>
-        <var> var </var>
+        <keyword> var </keyword>
         <keyword> int </keyword>
         <identifier> i </identifier>
         <symbol> , </symbol>
@@ -229,55 +229,49 @@
         </whileStatement>
         <doStatement>
           <keyword> do </keyword>
-          <term>
-            <identifier> Output </identifier>
-            <symbol> . </symbol>
-            <identifier> printString </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <stringConstant> THE AVERAGE IS:  </stringConstant>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </term>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> printString </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <stringConstant> THE AVERAGE IS:  </stringConstant>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <term>
-            <identifier> Output </identifier>
-            <symbol> . </symbol>
-            <identifier> printInt </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> sum </identifier>
-                </term>
-                <symbol> / </symbol>
-                <term>
-                  <identifier> length </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </term>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> printInt </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> sum </identifier>
+              </term>
+              <symbol> / </symbol>
+              <term>
+                <identifier> length </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <term>
-            <identifier> Output </identifier>
-            <symbol> . </symbol>
-            <identifier> println </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-            </expressionList>
-            <symbol> ) </symbol>
-          </term>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> println </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -287,7 +281,6 @@
       </statements>
       <symbol> } </symbol>
     </subroutineBody>
-  </subroutineDec>
   </subroutineDec>
   <symbol> } </symbol>
 </class>
