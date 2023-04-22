@@ -19,7 +19,7 @@ public class Tokenizer {
     private static final Set<String> KEYWORDS = Set.of(
             "class","method","function","constructor","int","boolean","char","void", "var","static",
             "field","let","do","if","else","while","return","true","false","null","this");
-    public static final Map<String, String> XML_EXCEPTIONS = new HashMap<>() {{
+    public static final Map<String, String> XML_EXCEP = new HashMap<>() {{
         put("<", "&lt;");
         put(">", "&gt;");
         put("&", "&amp;");
@@ -49,8 +49,8 @@ public class Tokenizer {
         writer.println("<tokens>");
         while (hasMoreTokens()) {
             writer.print("<" + getCurrType() + "> ");
-            if (XML_EXCEPTIONS.containsKey(getCurrToken())) {
-                writer.print(XML_EXCEPTIONS.get(getCurrToken()));
+            if (XML_EXCEP.containsKey(getCurrToken())) {
+                writer.print(XML_EXCEP.get(getCurrToken()));
             }
             else {
                 writer.print(getCurrToken());

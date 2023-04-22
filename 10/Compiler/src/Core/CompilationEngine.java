@@ -5,7 +5,7 @@ import java.util.Set;
 
 import static Core.Tokenizer.TokenType;
 import static Core.Tokenizer.TokenType.*;
-import static Core.Tokenizer.XML_EXCEPTIONS;
+import static Core.Tokenizer.XML_EXCEP;
 
 /* The Core.CompilationEngine should grab tokens from the tokenizer one-by-one, analyze the grammar,
 and emit a structured representation of the source code in a xml file */
@@ -58,7 +58,7 @@ public class CompilationEngine {
         // "{" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         compileClassVarDec(indentLevel + 1); // classVarDec*
@@ -67,7 +67,7 @@ public class CompilationEngine {
         // "}" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // Footer
@@ -113,7 +113,7 @@ public class CompilationEngine {
         token = tk.getCurrToken(); type = tk.getCurrType();
         while (token.equals(",")) {
             // token has to equal ',' -> print it
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             // varName identifier must follow ','
@@ -127,7 +127,7 @@ public class CompilationEngine {
         }
         // Terminating semicolon
         if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // Footer
@@ -175,7 +175,7 @@ public class CompilationEngine {
         // "(" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("(")) { throwRuntimeException("'('", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // 0 or 1 parameterList
@@ -184,7 +184,7 @@ public class CompilationEngine {
         // ")" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // subroutineBody (contains at least "{}")
@@ -231,7 +231,7 @@ public class CompilationEngine {
         token = tk.getCurrToken();
         while (token.equals(",")) {
             // token has to equal ',' -> print it
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             // primitive or className (type)
@@ -271,7 +271,7 @@ public class CompilationEngine {
         // "{" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         compileVarDec(indentLevel + 1); // 0 or more varDec
@@ -280,7 +280,7 @@ public class CompilationEngine {
         // "}" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // Footer
@@ -328,7 +328,7 @@ public class CompilationEngine {
         token = tk.getCurrToken(); type = tk.getCurrType();
         while (token.equals(",")) {
             // token has to equal ',' -> print it
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             // varName identifier must follow ','
@@ -342,7 +342,7 @@ public class CompilationEngine {
         }
         // Terminating semicolon
         if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // Footer
@@ -405,7 +405,7 @@ public class CompilationEngine {
                 throwRuntimeException("'[' or '='", symbol, token, type);
             }
             // '[' symbol
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             compileExpression(indentLevel + 1); // expression
@@ -413,14 +413,14 @@ public class CompilationEngine {
             // ']' symbol
             token = tk.getCurrToken();
             if (!token.equals("]")) { throwRuntimeException("']'", symbol, token, type); }
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             // '=' symbol
             token = tk.getCurrToken();
             if (!token.equals("=")) { throwRuntimeException("'='", symbol, token, type); }
         }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         compileExpression(indentLevel + 1);
@@ -428,7 +428,7 @@ public class CompilationEngine {
         // terminating ';' symbol
         token = tk.getCurrToken();
         if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // footer
@@ -453,7 +453,7 @@ public class CompilationEngine {
         // '(' symbol
         token = tk.getCurrToken();
         if (!token.equals("(")) { throwRuntimeException("'('", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         compileExpression(indentLevel + 1); // expression
@@ -461,13 +461,13 @@ public class CompilationEngine {
         // ')' symbol
         token = tk.getCurrToken();
         if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // "{" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         compileStatements(indentLevel + 1); // statements (0 or more statement)
@@ -475,7 +475,7 @@ public class CompilationEngine {
         // "}" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // ('else' '{' statements '}')?
@@ -487,7 +487,7 @@ public class CompilationEngine {
             // "{" symbol
             token = tk.getCurrToken();
             if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             compileStatements(indentLevel + 1); // statements (0 or more statement)
@@ -495,7 +495,7 @@ public class CompilationEngine {
             // "}" symbol
             token = tk.getCurrToken(); type = tk.getCurrType();
             if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
         }
         // Footer
@@ -520,7 +520,7 @@ public class CompilationEngine {
         // '(' symbol
         token = tk.getCurrToken();
         if (!token.equals("(")) { throwRuntimeException("'('", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         compileExpression(indentLevel + 1); // expression
@@ -528,13 +528,13 @@ public class CompilationEngine {
         // ')' symbol
         token = tk.getCurrToken();
         if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // "{" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("{")) { throwRuntimeException("'{'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         compileStatements(indentLevel + 1); // statements (0 or more statement)
@@ -542,7 +542,7 @@ public class CompilationEngine {
         // "}" symbol
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("}")) { throwRuntimeException("'}'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // Footer
@@ -570,7 +570,7 @@ public class CompilationEngine {
         // ';' symbol
         token = tk.getCurrToken();
         if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // Footer
@@ -597,7 +597,7 @@ public class CompilationEngine {
             compileExpression(indentLevel + 1);
         }
         token = tk.getCurrToken();
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
 
         // Footer
@@ -618,7 +618,7 @@ public class CompilationEngine {
         // 0 or more (op term)
         token = tk.getCurrToken();
         while (OPS.contains(token)) {
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>"); // op symbol
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>"); // op symbol
             tk.advance();
 
             compileTerm(indentLevel + 1);
@@ -654,7 +654,7 @@ public class CompilationEngine {
             tk.advance();
         }
         else if (token.equals("(")) { // '(' expression ')'
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             compileExpression(indentLevel + 1);
@@ -662,11 +662,11 @@ public class CompilationEngine {
             // ")" symbol
             token = tk.getCurrToken(); type = tk.getCurrType();
             if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
         }
         else if (UNARY_OPS.contains(token)) { // (unaryOp term)
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             compileTerm(indentLevel + 1);
@@ -677,7 +677,7 @@ public class CompilationEngine {
 
             token = tk.getCurrToken();
             if (token.equals("[")) { // identifier '[' expression ']'
-                writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+                writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
                 tk.advance();
 
                 compileExpression(indentLevel + 1);
@@ -685,11 +685,11 @@ public class CompilationEngine {
                 // "]" symbol
                 token = tk.getCurrToken(); type = tk.getCurrType();
                 if (!token.equals("]")) { throwRuntimeException("']'", symbol, token, type); }
-                writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+                writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
                 tk.advance();
             }
             else if (token.equals("(")) {
-                writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+                writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
                 tk.advance();
 
                 compileExpressionList(indentLevel + 1);
@@ -697,11 +697,11 @@ public class CompilationEngine {
                 // ")" symbol
                 token = tk.getCurrToken(); type = tk.getCurrType();
                 if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
-                writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+                writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
                 tk.advance();
             }
             else if (token.equals(".")) {
-                writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+                writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
                 tk.advance();
 
                 // subroutineName
@@ -715,7 +715,7 @@ public class CompilationEngine {
                 // "(" symbol
                 token = tk.getCurrToken(); type = tk.getCurrType();
                 if (!token.equals("(")) { throwRuntimeException("'('", symbol, token, type); }
-                writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+                writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
                 tk.advance();
 
                 compileExpressionList(indentLevel + 1);
@@ -723,7 +723,7 @@ public class CompilationEngine {
                 // ")" symbol
                 token = tk.getCurrToken(); type = tk.getCurrType();
                 if (!token.equals(")")) { throwRuntimeException("')'", symbol, token, type); }
-                writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+                writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
                 tk.advance();
             }
         }
@@ -754,7 +754,7 @@ public class CompilationEngine {
         token = tk.getCurrToken();
         while (token.equals(",")) {
             // token has to equal ',' -> print it
-            writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+            writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
             tk.advance();
 
             // expression
@@ -790,7 +790,7 @@ public class CompilationEngine {
         if (!token.equals(expected)) {
             throwRuntimeException("'" + expected + "'", expectedType, token, type);
         }
-        writer.println(indent + "<symbol> " + XML_EXCEPTIONS.getOrDefault(token, token) + " </symbol>");
+        writer.println(indent + "<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>");
         tk.advance();
     }
 }
