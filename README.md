@@ -1,7 +1,7 @@
 ## Nand2Tetris Part 1
 
 ### Progress:
-- Logic Gates ✓
+- Logic gates ✓
 - ALU, adders, incrementer ✓
 - Memory, registers, counter ✓
 - RAM, CPU, computer ✓
@@ -10,6 +10,7 @@
 
 ### Progress:
 - Assembler ✓
-- VM Translator ✓
-- Complier
+- Virtual machine translator ✓
+- Tokenizer & syntax analyzer ✓
+- Code generator
 - OS
