@@ -47,15 +47,23 @@
                 <symbol> , </symbol>
                 <identifier> square2 </identifier>
                 <symbol> ; </symbol>
-            <varDec>
+            </varDec>
             <varDec>
                 <var> var </var>
                 <keyword> int </keyword>
                 <identifier> x </identifier>
                 <symbol> , </symbol>
                 <identifier> y </identifier>
+                <symbol> , </symbol>
+                <identifier> z </identifier>
+                <symbol> , </symbol>
+                <identifier> a </identifier>
+                <symbol> , </symbol>
+                <identifier> b </identifier>
+                <symbol> , </symbol>
+                <identifier> c </identifier>
                 <symbol> ; </symbol>
-            <varDec>
+            </varDec>
             <varDec>
                 <var> var </var>
                 <keyword> boolean </keyword>
@@ -63,7 +71,9 @@
                 <symbol> , </symbol>
                 <identifier> flag2 </identifier>
                 <symbol> ; </symbol>
-            <varDec>
+            </varDec>
+            <statements>
+            </statements>
             <symbol> } </symbol>
         </subroutineBody>
     </subroutineDec>
@@ -82,7 +92,9 @@
                 <symbol> , </symbol>
                 <identifier> ch2 </identifier>
                 <symbol> ; </symbol>
-            <varDec>
+            </varDec>
+            <statements>
+            </statements>
             <symbol> } </symbol>
         </subroutineBody>
     </subroutineDec>
@@ -104,6 +116,8 @@
         <symbol> ) </symbol>
         <subroutineBody>
             <symbol> { </symbol>
+            <statements>
+            </statements>
             <symbol> } </symbol>
         </subroutineBody>
     </subroutineDec>

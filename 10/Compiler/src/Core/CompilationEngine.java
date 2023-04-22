@@ -22,7 +22,7 @@ public class CompilationEngine {
     public CompilationEngine(String source) throws IOException {
         tk = new Tokenizer(source);
         String prefix = source.substring(0, source.length() - 5);
-        writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + ".xml")));
+        writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + "_ce.xml")));
     }
 
     /** Analyze the grammar of the source file and output a structured representation to an XML file */
@@ -380,6 +380,7 @@ public class CompilationEngine {
         writer.println(headerIndent + "</statements>");
     }
 
+    /* 'let' varName ('[' expression ']')? '=' expression ';' */
     private void compileLet(int indentLevel) throws IOException {
         String token; TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
@@ -425,7 +426,7 @@ public class CompilationEngine {
         writer.println(indent + "<symbol> " + token + " </symbol>");
         tk.advance();
 
-        compileExpression(indentLevel + 1); // expression
+        compileExpression(indentLevel + 1);
 
         // terminating ';' symbol
         token = tk.getCurrToken();
@@ -433,10 +434,11 @@ public class CompilationEngine {
         writer.println(indent + "<symbol> " + token + " </symbol>");
         tk.advance();
 
-        // Footer
+        // footer
         writer.println(headerIndent + "</letStatement>");
     }
 
+    /* 'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')? */
     private void compileIf(int indentLevel) throws IOException {
         String token; TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
@@ -577,6 +579,7 @@ public class CompilationEngine {
         writer.println(headerIndent + "</doStatement>");
     }
 
+    /* 'return' expression? ';' */
     private void compileReturn(int indentLevel) throws IOException {
         String token; TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
@@ -591,11 +594,11 @@ public class CompilationEngine {
         writer.println(indent + "<keyword> " + token + " </keyword>");
         tk.advance();
 
-        compileExpression(indentLevel + 1);
-
-        // ';' symbol
         token = tk.getCurrToken();
-        if (!token.equals(";")) { throwRuntimeException("';'", symbol, token, type); }
+        if (!token.equals(';')) {
+            compileExpression(indentLevel + 1);
+        }
+        token = tk.getCurrToken();
         writer.println(indent + "<symbol> " + token + " </symbol>");
         tk.advance();
 
@@ -694,6 +697,7 @@ public class CompilationEngine {
         writer.println(headerIndent + "</term>");
     }
 
+    /* ( expression (',' expression)* )? */
     private void compileExpressionList(int indentLevel) throws IOException {
         String token; TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);

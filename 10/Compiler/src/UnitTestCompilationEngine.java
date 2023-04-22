@@ -27,4 +27,10 @@ public class UnitTestCompilationEngine {
         CompilationEngine ce = new CompilationEngine("./src/TestFiles/CompilationEngineTests/varDec.jack");
         ce.compile();
     }
+
+    @Test
+    public void arrayTest() throws IOException {
+        CompilationEngine ce = new CompilationEngine("./src/TestFiles/ArrayTest/Main.jack");
+        ce.compile();
+    }
 }

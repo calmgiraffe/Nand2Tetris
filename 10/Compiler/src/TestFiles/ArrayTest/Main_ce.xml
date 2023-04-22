@@ -1,0 +1,48 @@
+<class>
+    <keyword> class </keyword>
+    <identifier> Main </identifier>
+    <symbol> { </symbol>
+    <classVarDec>
+    </classVarDec>
+    <subroutineDec>
+        <keyword> function </keyword>
+        <keyword> void </keyword>
+        <identifier> main </identifier>
+        <symbol> ( </symbol>
+        <parameterList>
+        </parameterList>
+        <symbol> ) </symbol>
+        <subroutineBody>
+            <symbol> { </symbol>
+            <varDec>
+                <var> var </var>
+                <identifier> Array </identifier>
+                <identifier> a </identifier>
+                <symbol> ; </symbol>
+            </varDec>
+            <varDec>
+                <var> var </var>
+                <keyword> int </keyword>
+                <identifier> length </identifier>
+                <symbol> ; </symbol>
+            </varDec>
+            <varDec>
+                <var> var </var>
+                <keyword> int </keyword>
+                <identifier> i </identifier>
+                <symbol> , </symbol>
+                <identifier> sum </identifier>
+                <symbol> ; </symbol>
+            </varDec>
+            <varDec>
+            </varDec>
+            <statements>
+                <letStatement>
+                    <keyword> let </keyword>
+                    <identifier> length </identifier>
+                    <symbol> = </symbol>
+                    <expression>
+                        <term>
+                            <identifier> Keyboard </identifier>
+                        </term>
+                    </expression>
