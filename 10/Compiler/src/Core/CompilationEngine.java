@@ -582,6 +582,7 @@ public class CompilationEngine {
         throw new RuntimeException("Expected " + expectedStr  + " but found " + actualStr);
     }
 
+    /* Helper method for writing specific symbols and keywords */
     private void write(String expected, String indent) throws IOException {
         String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
 
