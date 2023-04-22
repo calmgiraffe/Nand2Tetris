@@ -43,4 +43,14 @@ public class UnitTestCompilationEngine {
         ce2.compile();
         ce3.compile();
     }
+
+    @Test
+    public void squareTest() throws IOException {
+        CompilationEngine ce1 = new CompilationEngine("./src/TestFiles/Square/Main.jack");
+        CompilationEngine ce2 = new CompilationEngine("./src/TestFiles/Square/Square.jack");
+        CompilationEngine ce3 = new CompilationEngine("./src/TestFiles/Square/SquareGame.jack");
+        ce1.compile();
+        ce2.compile();
+        ce3.compile();
+    }
 }
