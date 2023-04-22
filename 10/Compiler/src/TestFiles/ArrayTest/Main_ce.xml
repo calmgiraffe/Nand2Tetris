@@ -229,61 +229,55 @@
         </whileStatement>
         <doStatement>
           <keyword> do </keyword>
-          <expression>
-            <term>
-              <identifier> Output </identifier>
-              <symbol> . </symbol>
-              <identifier> printString </identifier>
-              <symbol> ( </symbol>
-              <expressionList>
-                <expression>
-                  <term>
-                    <stringConstant> THE AVERAGE IS:  </stringConstant>
-                  </term>
-                </expression>
-              </expressionList>
-              <symbol> ) </symbol>
-            </term>
-          </expression>
+          <term>
+            <identifier> Output </identifier>
+            <symbol> . </symbol>
+            <identifier> printString </identifier>
+            <symbol> ( </symbol>
+            <expressionList>
+              <expression>
+                <term>
+                  <stringConstant> THE AVERAGE IS:  </stringConstant>
+                </term>
+              </expression>
+            </expressionList>
+            <symbol> ) </symbol>
+          </term>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <expression>
-            <term>
-              <identifier> Output </identifier>
-              <symbol> . </symbol>
-              <identifier> printInt </identifier>
-              <symbol> ( </symbol>
-              <expressionList>
-                <expression>
-                  <term>
-                    <identifier> sum </identifier>
-                  </term>
-                  <symbol> / </symbol>
-                  <term>
-                    <identifier> length </identifier>
-                  </term>
-                </expression>
-              </expressionList>
-              <symbol> ) </symbol>
-            </term>
-          </expression>
+          <term>
+            <identifier> Output </identifier>
+            <symbol> . </symbol>
+            <identifier> printInt </identifier>
+            <symbol> ( </symbol>
+            <expressionList>
+              <expression>
+                <term>
+                  <identifier> sum </identifier>
+                </term>
+                <symbol> / </symbol>
+                <term>
+                  <identifier> length </identifier>
+                </term>
+              </expression>
+            </expressionList>
+            <symbol> ) </symbol>
+          </term>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <expression>
-            <term>
-              <identifier> Output </identifier>
-              <symbol> . </symbol>
-              <identifier> println </identifier>
-              <symbol> ( </symbol>
-              <expressionList>
-              </expressionList>
-              <symbol> ) </symbol>
-            </term>
-          </expression>
+          <term>
+            <identifier> Output </identifier>
+            <symbol> . </symbol>
+            <identifier> println </identifier>
+            <symbol> ( </symbol>
+            <expressionList>
+            </expressionList>
+            <symbol> ) </symbol>
+          </term>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
