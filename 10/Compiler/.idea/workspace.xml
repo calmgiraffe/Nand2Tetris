@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTestCompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTestCompilationEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UnitTestCompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTestCompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Tokenizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,8 +102,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.UnitTestCompilationEngine.squareTest" />
-        <item itemvalue="JUnit.UnitTestCompilationEngine.expressionlessSquareTest" />
         <item itemvalue="JUnit.UnitTestCompilationEngine.arrayTest" />
+        <item itemvalue="JUnit.UnitTestCompilationEngine.expressionlessSquareTest" />
         <item itemvalue="JUnit.UnitTestCompilationEngine" />
         <item itemvalue="JUnit.UnitTestCompilationEngine.varDecTest" />
       </list>
