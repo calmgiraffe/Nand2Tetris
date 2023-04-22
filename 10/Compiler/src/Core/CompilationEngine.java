@@ -40,8 +40,7 @@ public class CompilationEngine {
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
 
-        // Header
-        writer.println(headerIndent + "<class>");
+        writer.println(headerIndent + "<class>"); // Header
 
         write("class", indent);
 
@@ -97,7 +96,6 @@ public class CompilationEngine {
         // Zero or more (',' varName)
         token = tk.getCurrToken();
         while (token.equals(",")) {
-            // token has to equal ',' -> print it
             write(",", indent);
 
             // varName identifier must follow ','
@@ -110,9 +108,7 @@ public class CompilationEngine {
             token = tk.getCurrToken();
         }
         write(";", indent);
-
         writer.println(headerIndent + "</classVarDec>"); // Footer
-
         compileClassVarDec(indentLevel); // 0 or more classVarDec in class -> recursive call
     }
 
@@ -193,7 +189,6 @@ public class CompilationEngine {
         // 0 or more (',' type varName)
         token = tk.getCurrToken();
         while (token.equals(",")) {
-            // token has to equal ',' -> print it
             write(",", indent);
 
             // primitive or className (type)
@@ -286,9 +281,8 @@ public class CompilationEngine {
             // Prepare next token
             token = tk.getCurrToken();
         }
-        write(";", indent); // Terminating semicolon
+        write(";", indent);
         writer.println(headerIndent + "</varDec>"); // Footer
-
         compileVarDec(indentLevel); // 0 or more varDec in subroutineDec -> recursive call
     }
 
@@ -334,9 +328,6 @@ public class CompilationEngine {
         // 0 or 1 ('[' expression ']')
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("=")) {
-            if (!token.equals("[")) {
-                throwRuntimeException("'[' or '='", symbol, token, type);
-            }
             write("[", indent);
             compileExpression(indentLevel + 1); // expression
             write("]", indent);
