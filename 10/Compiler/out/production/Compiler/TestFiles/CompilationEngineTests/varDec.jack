@@ -4,7 +4,7 @@ class Main {
     
     constructor Square new(int Ax, int Ay, int Asize) {
         var Square square1, square2;
-        var int x, y;
+        var int x, y, z, a, b, c;
         var boolean flag1, flag2;
     }
 
@@ -13,6 +13,6 @@ class Main {
     }
 
     method boolean move(int x, int y, char str) {
-        
+
     }
 }

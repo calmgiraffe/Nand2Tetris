@@ -27,7 +27,7 @@ public class Main {
         /* Iterate through sourceFiles and compile */
         for (String file : sourceFiles) {
             CompilationEngine compiler = new CompilationEngine(file);
-            compiler.compileClass(1);
+            compiler.compile();
         }
     }
 }
