@@ -24,20 +24,20 @@ call Ball.new 0
 pop this 3
 push pointer 0
 return
-function Pong.run 4
+function Pong.run 3
 push argument 0
 pop pointer 0
 push constant 0
-pop local 3
+pop local 2
 label WHILE_EXP0
-push local 3
+push local 2
 not
 not
 if-goto WHILE_END0
 call Keyboard.keyPressed 0
-pop local 2
+pop local 1
 push this 0
-push local 2
+push local 1
 call Paddle.update 2
 pop temp 0
 push this 1
@@ -66,7 +66,7 @@ goto IF_FALSE1
 label IF_TRUE1
 push constant 0
 not
-pop local 3
+pop local 2
 label IF_FALSE1
 push constant 5
 call Sys.wait 1

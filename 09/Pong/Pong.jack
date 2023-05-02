@@ -17,8 +17,8 @@ class Pong {
     }
 
     method void run() {
-        var int ballX, ballY;
         var char key;
+        var boolean key;
         var boolean gameOver;
 
         let gameOver = false;

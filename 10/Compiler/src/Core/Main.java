@@ -18,8 +18,8 @@ public class Main {
         ArrayDeque<String> sourceFiles = new ArrayDeque<>();
         if (args[0].endsWith(".jack")) { // If the argument is a .jack file, add it to the deque
             sourceFiles.add(args[0]);
-
-        } else { // If the argument is a directory, add all .jack files in the directory to the deque
+        }
+        else { // If the argument is a directory, add all .jack files in the directory to the deque
             File directory = new File(args[0]);
             FilenameFilter jackFilter = (dir, name) -> name.toLowerCase().endsWith(".jack");
             sourceFiles.addAll(List.of(Objects.requireNonNull(directory.list(jackFilter))));
