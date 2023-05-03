@@ -1,62 +1,104 @@
 SquareGame class declared
-square field 0 declared
-direction field 1 declared
+square Square field 0 declared
+direction int field 1 declared
 new subroutine declared
-this arg 0 declared
-square field 0 used
+this SquareGame arg 0 declared
+square Square field 0 used
 Square class used
 new subroutine used
-direction field 1 used
+<integerConstant> 0 </integerConstant>
+<integerConstant> 0 </integerConstant>
+<integerConstant> 30 </integerConstant>
+direction int field 1 used
+<integerConstant> 0 </integerConstant>
+<keyword> this </keyword>
 dispose subroutine declared
-this arg 0 declared
-square field 0 used
+this SquareGame arg 0 declared
+square Square field 0 used
 dispose subroutine used
 Memory class used
 deAlloc subroutine used
+<keyword> this </keyword>
 moveSquare subroutine declared
-this arg 0 declared
-direction field 1 used
-square field 0 used
+this SquareGame arg 0 declared
+direction int field 1 used
+<symbol> = </symbol>
+<integerConstant> 1 </integerConstant>
+square Square field 0 used
 moveUp subroutine used
-direction field 1 used
-square field 0 used
+direction int field 1 used
+<symbol> = </symbol>
+<integerConstant> 2 </integerConstant>
+square Square field 0 used
 moveDown subroutine used
-direction field 1 used
-square field 0 used
+direction int field 1 used
+<symbol> = </symbol>
+<integerConstant> 3 </integerConstant>
+square Square field 0 used
 moveLeft subroutine used
-direction field 1 used
-square field 0 used
+direction int field 1 used
+<symbol> = </symbol>
+<integerConstant> 4 </integerConstant>
+square Square field 0 used
 moveRight subroutine used
 Sys class used
 wait subroutine used
+<integerConstant> 5 </integerConstant>
 run subroutine declared
-this arg 0 declared
-key var 0 declared
-exit var 1 declared
-exit var 1 used
-key var 0 used
-key var 0 used
+this SquareGame arg 0 declared
+key char var 0 declared
+exit boolean var 1 declared
+exit boolean var 1 used
+<keyword> false </keyword>
+<symbol> ~ </symbol>
+exit boolean var 1 used
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 0 </integerConstant>
+key char var 0 used
 Keyboard class used
 keyPressed subroutine used
 moveSquare subroutine used
-key var 0 used
-exit var 1 used
-key var 0 used
-square field 0 used
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 81 </integerConstant>
+exit boolean var 1 used
+<keyword> true </keyword>
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 90 </integerConstant>
+square Square field 0 used
 decSize subroutine used
-key var 0 used
-square field 0 used
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 88 </integerConstant>
+square Square field 0 used
 incSize subroutine used
-key var 0 used
-direction field 1 used
-key var 0 used
-direction field 1 used
-key var 0 used
-direction field 1 used
-key var 0 used
-direction field 1 used
-key var 0 used
-key var 0 used
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 131 </integerConstant>
+direction int field 1 used
+<integerConstant> 1 </integerConstant>
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 133 </integerConstant>
+direction int field 1 used
+<integerConstant> 2 </integerConstant>
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 130 </integerConstant>
+direction int field 1 used
+<integerConstant> 3 </integerConstant>
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 132 </integerConstant>
+direction int field 1 used
+<integerConstant> 4 </integerConstant>
+<symbol> ~ </symbol>
+key char var 0 used
+<symbol> = </symbol>
+<integerConstant> 0 </integerConstant>
+key char var 0 used
 Keyboard class used
 keyPressed subroutine used
 moveSquare subroutine used

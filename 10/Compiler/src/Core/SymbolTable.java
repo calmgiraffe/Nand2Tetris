@@ -12,7 +12,7 @@ public class SymbolTable {
             "int","char","boolean"));
 
     /* Map ScopeType to cumulative index */
-    private final Map<String, Integer> scopeToIndex = new HashMap<>() {{
+    private final Map<String, Integer> scopeToCumulativeIndex = new HashMap<>() {{
         put("static", 0);
         put("field", 0);
         put("arg", 0);
@@ -36,25 +36,27 @@ public class SymbolTable {
     Assigns to it the index value of that scope, and adds 1 to the index */
     public void define(String name, String dataType, String scope) {
         /* If custom class, add to set of data types */
-        if (!DATA_TYPES.contains(dataType)) {
-            DATA_TYPES.add(dataType);
-        }
+        DATA_TYPES.add(dataType);
+
         // Add new row to symbol table
         String[] data = new String[3];
         data[0] = dataType;
         data[1] = scope;
-        data[2] = String.valueOf(scopeToIndex.get(scope));
+        data[2] = String.valueOf(scopeToCumulativeIndex.get(scope));
         nameToData.put(name, data); // Todo: handle case where name already exists by logging error
 
         // Increment data type's index by 1
-        scopeToIndex.replace(scope, scopeToIndex.get(scope) + 1);
+        scopeToCumulativeIndex.replace(scope, scopeToCumulativeIndex.get(scope) + 1);
     }
 
     /** Returns the number of variables of the given scope */
     public int varCount(String scope) {
-        // Todo: handle cases where invalid scope
-        if (scopeToIndex.containsKey(scope)) {
-            return scopeToIndex.get(scope);
+        if (!SCOPE_TYPES.contains(scope)) {
+            // Todo: handle cases where invalid scope
+            return -1;
+        }
+        if (scopeToCumulativeIndex.containsKey(scope)) {
+            return scopeToCumulativeIndex.get(scope);
         }
         return nextTable.varCount(scope);
     }
@@ -65,22 +67,23 @@ public class SymbolTable {
         if (nameToData.containsKey(name)) {
             return nameToData.get(name)[0];
         }
-        else if (nextTable != null) {
-            return nextTable.dataTypeOf(name);
+        if (nextTable == null) {
+            // Handle the case where name is not found in any table
+            return "Unknown";
         }
-        return null;
+        return nextTable.dataTypeOf(name);
     }
 
     /** Returns the scope of the named identifier */
     public String scopeOf(String name) {
-        // Todo: handle cases where invalid name
         if (nameToData.containsKey(name)) {
             return nameToData.get(name)[1];
         }
-        else if (nextTable != null) {
-            return nextTable.scopeOf(name);
+        if (nextTable == null) {
+            // Handle the case where name is not found in any table
+            return "Unknown";
         }
-        return null;
+        return nextTable.scopeOf(name);
     }
 
     /** Returns the index of the named variable */
@@ -88,19 +91,21 @@ public class SymbolTable {
         if (nameToData.containsKey(name)) {
             return nameToData.get(name)[2];
         }
-        else if (nextTable != null) {
-            return nextTable.indexOf(name);
+        if (nextTable == null) {
+            // Handle the case where name is not found in any table
+            return "Unknown";
         }
-        return null;
+        return nextTable.indexOf(name);
     }
 
     public boolean contains(String name) {
         if (nameToData.containsKey(name)) {
             return true;
         }
-        else if (nextTable != null) {
-            return nextTable.contains(name);
+        if (nextTable == null) {
+            // Handle the case where name is not found in any table
+            return false;
         }
-        return false;
+        return nextTable.contains(name);
     }
 }
