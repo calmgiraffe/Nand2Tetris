@@ -1,128 +1,78 @@
 <class>
-  <keyword> class </keyword>
-  <identifier> SquareGame </identifier>
   SquareGame class declared
-  <symbol> { </symbol>
   <classVarDec>
-    <keyword> field </keyword>
-    <identifier> Square </identifier>
-    <identifier> square </identifier>
     square field 0 declared
-    <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
-    <keyword> field </keyword>
-    <keyword> int </keyword>
-    <identifier> direction </identifier>
     direction field 1 declared
-    <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
-    <keyword> constructor </keyword>
-    <identifier> SquareGame </identifier>
-    <identifier> new </identifier>
     new subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <letStatement>
-          <keyword> let </keyword>
-          <identifier> square </identifier>
           square Square Square used
-          <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> Square </identifier>
               Square class used
-              <symbol> . </symbol>
-              <identifier> new </identifier>
-              <symbol> ( </symbol>
+              new subroutine used
               <expressionList>
                 <expression>
                   <term>
                     <integerConstant> 0 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
                     <integerConstant> 0 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
                     <integerConstant> 30 </integerConstant>
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </letStatement>
         <letStatement>
-          <keyword> let </keyword>
-          <identifier> direction </identifier>
           direction int int used
-          <symbol> = </symbol>
           <expression>
             <term>
               <integerConstant> 0 </integerConstant>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </letStatement>
         <returnStatement>
-          <keyword> return </keyword>
           <expression>
             <term>
               <keyword> this </keyword>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> dispose </identifier>
     dispose subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> square </identifier>
-          square class used
-          <symbol> . </symbol>
-          <identifier> dispose </identifier>
-          <symbol> ( </symbol>
+          square Square Square used
+          dispose subroutine used
           <expressionList>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> Memory </identifier>
           Memory class used
-          <symbol> . </symbol>
-          <identifier> deAlloc </identifier>
-          <symbol> ( </symbol>
+          deAlloc subroutine used
           <expressionList>
             <expression>
               <term>
@@ -130,36 +80,22 @@
               </term>
             </expression>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> moveSquare </identifier>
     moveSquare subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
               direction int int used
             </term>
             <symbol> = </symbol>
@@ -167,30 +103,18 @@
               <integerConstant> 1 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> square </identifier>
-              square class used
-              <symbol> . </symbol>
-              <identifier> moveUp </identifier>
-              <symbol> ( </symbol>
+              square Square Square used
+              moveUp subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
               direction int int used
             </term>
             <symbol> = </symbol>
@@ -198,30 +122,18 @@
               <integerConstant> 2 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> square </identifier>
-              square class used
-              <symbol> . </symbol>
-              <identifier> moveDown </identifier>
-              <symbol> ( </symbol>
+              square Square Square used
+              moveDown subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
               direction int int used
             </term>
             <symbol> = </symbol>
@@ -229,30 +141,18 @@
               <integerConstant> 3 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> square </identifier>
-              square class used
-              <symbol> . </symbol>
-              <identifier> moveLeft </identifier>
-              <symbol> ( </symbol>
+              square Square Square used
+              moveLeft subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
               direction int int used
             </term>
             <symbol> = </symbol>
@@ -260,31 +160,18 @@
               <integerConstant> 4 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> square </identifier>
-              square class used
-              <symbol> . </symbol>
-              <identifier> moveRight </identifier>
-              <symbol> ( </symbol>
+              square Square Square used
+              moveRight subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> Sys </identifier>
           Sys class used
-          <symbol> . </symbol>
-          <identifier> wait </identifier>
-          <symbol> ( </symbol>
+          wait subroutine used
           <expressionList>
             <expression>
               <term>
@@ -292,76 +179,45 @@
               </term>
             </expression>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> run </identifier>
     run subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <varDec>
-        <keyword> var </keyword>
-        <keyword> char </keyword>
-        <identifier> key </identifier>
         key var 0 declared
-        <symbol> ; </symbol>
       </varDec>
       <varDec>
-        <keyword> var </keyword>
-        <keyword> boolean </keyword>
-        <identifier> exit </identifier>
         exit var 1 declared
-        <symbol> ; </symbol>
       </varDec>
       <statements>
         <letStatement>
-          <keyword> let </keyword>
-          <identifier> exit </identifier>
           exit var 1 used
-          <symbol> = </symbol>
           <expression>
             <term>
               <keyword> false </keyword>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </letStatement>
         <whileStatement>
-          <keyword> while </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
               <symbol> ~ </symbol>
               <term>
-                <identifier> exit </identifier>
               </term>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <whileStatement>
-              <keyword> while </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -369,47 +225,28 @@
                   <integerConstant> 0 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <letStatement>
-                  <keyword> let </keyword>
-                  <identifier> key </identifier>
                   key var 0 used
-                  <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> Keyboard </identifier>
                       Keyboard class used
-                      <symbol> . </symbol>
-                      <identifier> keyPressed </identifier>
-                      <symbol> ( </symbol>
+                      keyPressed subroutine used
                       <expressionList>
                       </expressionList>
-                      <symbol> ) </symbol>
                     </term>
                   </expression>
-                  <symbol> ; </symbol>
                 </letStatement>
                 <doStatement>
-                  <keyword> do </keyword>
-                  <identifier> moveSquare </identifier>
-                  moveSquaresubroutine used
-                  <symbol> ( </symbol>
+                  moveSquare subroutine used
                   <expressionList>
                   </expressionList>
-                  <symbol> ) </symbol>
-                  <symbol> ; </symbol>
                 </doStatement>
               </statements>
-              <symbol> } </symbol>
             </whileStatement>
             <ifStatement>
-              <keyword> if </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -417,30 +254,20 @@
                   <integerConstant> 81 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <letStatement>
-                  <keyword> let </keyword>
-                  <identifier> exit </identifier>
                   exit var 1 used
-                  <symbol> = </symbol>
                   <expression>
                     <term>
                       <keyword> true </keyword>
                     </term>
                   </expression>
-                  <symbol> ; </symbol>
                 </letStatement>
               </statements>
-              <symbol> } </symbol>
             </ifStatement>
             <ifStatement>
-              <keyword> if </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -448,30 +275,18 @@
                   <integerConstant> 90 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <doStatement>
-                  <keyword> do </keyword>
-                  <identifier> square </identifier>
-                  square class used
-                  <symbol> . </symbol>
-                  <identifier> decSize </identifier>
-                  <symbol> ( </symbol>
+                  square Square Square used
+                  decSize subroutine used
                   <expressionList>
                   </expressionList>
-                  <symbol> ) </symbol>
-                  <symbol> ; </symbol>
                 </doStatement>
               </statements>
-              <symbol> } </symbol>
             </ifStatement>
             <ifStatement>
-              <keyword> if </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -479,30 +294,18 @@
                   <integerConstant> 88 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <doStatement>
-                  <keyword> do </keyword>
-                  <identifier> square </identifier>
-                  square class used
-                  <symbol> . </symbol>
-                  <identifier> incSize </identifier>
-                  <symbol> ( </symbol>
+                  square Square Square used
+                  incSize subroutine used
                   <expressionList>
                   </expressionList>
-                  <symbol> ) </symbol>
-                  <symbol> ; </symbol>
                 </doStatement>
               </statements>
-              <symbol> } </symbol>
             </ifStatement>
             <ifStatement>
-              <keyword> if </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -510,30 +313,20 @@
                   <integerConstant> 131 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <letStatement>
-                  <keyword> let </keyword>
-                  <identifier> direction </identifier>
                   direction int int used
-                  <symbol> = </symbol>
                   <expression>
                     <term>
                       <integerConstant> 1 </integerConstant>
                     </term>
                   </expression>
-                  <symbol> ; </symbol>
                 </letStatement>
               </statements>
-              <symbol> } </symbol>
             </ifStatement>
             <ifStatement>
-              <keyword> if </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -541,30 +334,20 @@
                   <integerConstant> 133 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <letStatement>
-                  <keyword> let </keyword>
-                  <identifier> direction </identifier>
                   direction int int used
-                  <symbol> = </symbol>
                   <expression>
                     <term>
                       <integerConstant> 2 </integerConstant>
                     </term>
                   </expression>
-                  <symbol> ; </symbol>
                 </letStatement>
               </statements>
-              <symbol> } </symbol>
             </ifStatement>
             <ifStatement>
-              <keyword> if </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -572,30 +355,20 @@
                   <integerConstant> 130 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <letStatement>
-                  <keyword> let </keyword>
-                  <identifier> direction </identifier>
                   direction int int used
-                  <symbol> = </symbol>
                   <expression>
                     <term>
                       <integerConstant> 3 </integerConstant>
                     </term>
                   </expression>
-                  <symbol> ; </symbol>
                 </letStatement>
               </statements>
-              <symbol> } </symbol>
             </ifStatement>
             <ifStatement>
-              <keyword> if </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
                   key var 0 used
                 </term>
                 <symbol> = </symbol>
@@ -603,35 +376,24 @@
                   <integerConstant> 132 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <letStatement>
-                  <keyword> let </keyword>
-                  <identifier> direction </identifier>
                   direction int int used
-                  <symbol> = </symbol>
                   <expression>
                     <term>
                       <integerConstant> 4 </integerConstant>
                     </term>
                   </expression>
-                  <symbol> ; </symbol>
                 </letStatement>
               </statements>
-              <symbol> } </symbol>
             </ifStatement>
             <whileStatement>
-              <keyword> while </keyword>
-              <symbol> ( </symbol>
               <expression>
                 <term>
                   <symbol> ~ </symbol>
                   <term>
-                    <symbol> ( </symbol>
                     <expression>
                       <term>
-                        <identifier> key </identifier>
                         key var 0 used
                       </term>
                       <symbol> = </symbol>
@@ -639,55 +401,33 @@
                         <integerConstant> 0 </integerConstant>
                       </term>
                     </expression>
-                    <symbol> ) </symbol>
                   </term>
                 </term>
               </expression>
-              <symbol> ) </symbol>
-              <symbol> { </symbol>
               <statements>
                 <letStatement>
-                  <keyword> let </keyword>
-                  <identifier> key </identifier>
                   key var 0 used
-                  <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> Keyboard </identifier>
                       Keyboard class used
-                      <symbol> . </symbol>
-                      <identifier> keyPressed </identifier>
-                      <symbol> ( </symbol>
+                      keyPressed subroutine used
                       <expressionList>
                       </expressionList>
-                      <symbol> ) </symbol>
                     </term>
                   </expression>
-                  <symbol> ; </symbol>
                 </letStatement>
                 <doStatement>
-                  <keyword> do </keyword>
-                  <identifier> moveSquare </identifier>
-                  moveSquaresubroutine used
-                  <symbol> ( </symbol>
+                  moveSquare subroutine used
                   <expressionList>
                   </expressionList>
-                  <symbol> ) </symbol>
-                  <symbol> ; </symbol>
                 </doStatement>
               </statements>
-              <symbol> } </symbol>
             </whileStatement>
           </statements>
-          <symbol> } </symbol>
         </whileStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
-  <symbol> } </symbol>
 </class>

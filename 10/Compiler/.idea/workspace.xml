@@ -5,9 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/SymbolTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Main_ce.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/SquareGame_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/SquareGame_ce.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Square_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ExpressionLessSquare/Square_ce.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" afterDir="false" />
@@ -137,5 +134,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Core/CompilationEngine.java</url>
+          <line>415</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

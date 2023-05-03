@@ -1,128 +1,68 @@
 <class>
-  <keyword> class </keyword>
-  <identifier> Square </identifier>
   Square class declared
-  <symbol> { </symbol>
   <classVarDec>
-    <keyword> field </keyword>
-    <keyword> int </keyword>
-    <identifier> x </identifier>
     x field 0 declared
-    <symbol> , </symbol>
-    <identifier> y </identifier>
     y field 1 declared
-    <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
-    <keyword> field </keyword>
-    <keyword> int </keyword>
-    <identifier> size </identifier>
     size field 2 declared
-    <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
-    <keyword> constructor </keyword>
-    <identifier> Square </identifier>
-    <identifier> new </identifier>
     new subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
-      <keyword> int </keyword>
-      <identifier> Ax </identifier>
       Ax arg 1 declared
-      <symbol> , </symbol>
-      <keyword> int </keyword>
-      <identifier> Ay </identifier>
       Ay arg 2 declared
-      <symbol> , </symbol>
-      <keyword> int </keyword>
-      <identifier> Asize </identifier>
       Asize arg 3 declared
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <letStatement>
-          <keyword> let </keyword>
-          <identifier> x </identifier>
           x int int used
-          <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> Ax </identifier>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </letStatement>
         <letStatement>
-          <keyword> let </keyword>
-          <identifier> y </identifier>
           y int int used
-          <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> Ay </identifier>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </letStatement>
         <letStatement>
-          <keyword> let </keyword>
-          <identifier> size </identifier>
           size int int used
-          <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> Asize </identifier>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </letStatement>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> draw </identifier>
-          drawsubroutine used
-          <symbol> ( </symbol>
+          draw subroutine used
           <expressionList>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
-          <keyword> return </keyword>
           <expression>
             <term>
               <keyword> this </keyword>
             </term>
           </expression>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> dispose </identifier>
     dispose subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> Memory </identifier>
           Memory class used
-          <symbol> . </symbol>
-          <identifier> deAlloc </identifier>
-          <symbol> ( </symbol>
+          deAlloc subroutine used
           <expressionList>
             <expression>
               <term>
@@ -130,37 +70,22 @@
               </term>
             </expression>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> draw </identifier>
     draw subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> Screen </identifier>
           Screen class used
-          <symbol> . </symbol>
-          <identifier> setColor </identifier>
-          <symbol> ( </symbol>
+          setColor subroutine used
           <expressionList>
             <expression>
               <term>
@@ -168,82 +93,52 @@
               </term>
             </expression>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> Screen </identifier>
           Screen class used
-          <symbol> . </symbol>
-          <identifier> drawRectangle </identifier>
-          <symbol> ( </symbol>
+          drawRectangle subroutine used
           <expressionList>
             <expression>
               <term>
-                <identifier> x </identifier>
               </term>
             </expression>
-            <symbol> , </symbol>
             <expression>
               <term>
-                <identifier> y </identifier>
               </term>
             </expression>
-            <symbol> , </symbol>
             <expression>
               <term>
-                <identifier> x </identifier>
                 x int int used
               </term>
               <symbol> + </symbol>
               <term>
-                <identifier> size </identifier>
               </term>
             </expression>
-            <symbol> , </symbol>
             <expression>
               <term>
-                <identifier> y </identifier>
                 y int int used
               </term>
               <symbol> + </symbol>
               <term>
-                <identifier> size </identifier>
               </term>
             </expression>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> erase </identifier>
     erase subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> Screen </identifier>
           Screen class used
-          <symbol> . </symbol>
-          <identifier> setColor </identifier>
-          <symbol> ( </symbol>
+          setColor subroutine used
           <expressionList>
             <expression>
               <term>
@@ -251,150 +146,99 @@
               </term>
             </expression>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <doStatement>
-          <keyword> do </keyword>
-          <identifier> Screen </identifier>
           Screen class used
-          <symbol> . </symbol>
-          <identifier> drawRectangle </identifier>
-          <symbol> ( </symbol>
+          drawRectangle subroutine used
           <expressionList>
             <expression>
               <term>
-                <identifier> x </identifier>
               </term>
             </expression>
-            <symbol> , </symbol>
             <expression>
               <term>
-                <identifier> y </identifier>
               </term>
             </expression>
-            <symbol> , </symbol>
             <expression>
               <term>
-                <identifier> x </identifier>
                 x int int used
               </term>
               <symbol> + </symbol>
               <term>
-                <identifier> size </identifier>
               </term>
             </expression>
-            <symbol> , </symbol>
             <expression>
               <term>
-                <identifier> y </identifier>
                 y int int used
               </term>
               <symbol> + </symbol>
               <term>
-                <identifier> size </identifier>
               </term>
             </expression>
           </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> incSize </identifier>
     incSize subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <symbol> ( </symbol>
                   <expression>
                     <term>
-                      <identifier> y </identifier>
                       y int int used
                     </term>
                     <symbol> + </symbol>
                     <term>
-                      <identifier> size </identifier>
                     </term>
                   </expression>
-                  <symbol> ) </symbol>
                 </term>
                 <symbol> &lt; </symbol>
                 <term>
                   <integerConstant> 254 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
             </term>
             <symbol> &amp; </symbol>
             <term>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <symbol> ( </symbol>
                   <expression>
                     <term>
-                      <identifier> x </identifier>
                       x int int used
                     </term>
                     <symbol> + </symbol>
                     <term>
-                      <identifier> size </identifier>
                     </term>
                   </expression>
-                  <symbol> ) </symbol>
                 </term>
                 <symbol> &lt; </symbol>
                 <term>
                   <integerConstant> 510 </integerConstant>
                 </term>
               </expression>
-              <symbol> ) </symbol>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> erase </identifier>
-              erasesubroutine used
-              <symbol> ( </symbol>
+              erase subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <letStatement>
-              <keyword> let </keyword>
-              <identifier> size </identifier>
               size int int used
-              <symbol> = </symbol>
               <expression>
                 <term>
-                  <identifier> size </identifier>
                   size int int used
                 </term>
                 <symbol> + </symbol>
@@ -402,48 +246,29 @@
                   <integerConstant> 2 </integerConstant>
                 </term>
               </expression>
-              <symbol> ; </symbol>
             </letStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> draw </identifier>
-              drawsubroutine used
-              <symbol> ( </symbol>
+              draw subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> decSize </identifier>
     decSize subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> size </identifier>
               size int int used
             </term>
             <symbol> &gt; </symbol>
@@ -451,27 +276,16 @@
               <integerConstant> 2 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> erase </identifier>
-              erasesubroutine used
-              <symbol> ( </symbol>
+              erase subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <letStatement>
-              <keyword> let </keyword>
-              <identifier> size </identifier>
               size int int used
-              <symbol> = </symbol>
               <expression>
                 <term>
-                  <identifier> size </identifier>
                   size int int used
                 </term>
                 <symbol> - </symbol>
@@ -479,48 +293,29 @@
                   <integerConstant> 2 </integerConstant>
                 </term>
               </expression>
-              <symbol> ; </symbol>
             </letStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> draw </identifier>
-              drawsubroutine used
-              <symbol> ( </symbol>
+              draw subroutine used
               <expressionList>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> moveUp </identifier>
     moveUp subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> y </identifier>
               y int int used
             </term>
             <symbol> &gt; </symbol>
@@ -528,16 +323,10 @@
               <integerConstant> 1 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -545,77 +334,53 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <symbol> ( </symbol>
                     <expression>
                       <term>
-                        <identifier> y </identifier>
                         y int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
-                        <identifier> size </identifier>
                       </term>
                     </expression>
-                    <symbol> ) </symbol>
                   </term>
                   <symbol> - </symbol>
                   <term>
                     <integerConstant> 1 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <letStatement>
-              <keyword> let </keyword>
-              <identifier> y </identifier>
               y int int used
-              <symbol> = </symbol>
               <expression>
                 <term>
-                  <identifier> y </identifier>
                   y int int used
                 </term>
                 <symbol> - </symbol>
@@ -623,15 +388,10 @@
                   <integerConstant> 2 </integerConstant>
                 </term>
               </expression>
-              <symbol> ; </symbol>
             </letStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -639,43 +399,29 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
@@ -684,66 +430,42 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> moveDown </identifier>
     moveDown subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> y </identifier>
                   y int int used
                 </term>
                 <symbol> + </symbol>
                 <term>
-                  <identifier> size </identifier>
                 </term>
               </expression>
-              <symbol> ) </symbol>
             </term>
             <symbol> &lt; </symbol>
             <term>
               <integerConstant> 254 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -751,43 +473,29 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
@@ -796,17 +504,11 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <letStatement>
-              <keyword> let </keyword>
-              <identifier> y </identifier>
               y int int used
-              <symbol> = </symbol>
               <expression>
                 <term>
-                  <identifier> y </identifier>
                   y int int used
                 </term>
                 <symbol> + </symbol>
@@ -814,15 +516,10 @@
                   <integerConstant> 2 </integerConstant>
                 </term>
               </expression>
-              <symbol> ; </symbol>
             </letStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -830,99 +527,66 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <symbol> ( </symbol>
                     <expression>
                       <term>
-                        <identifier> y </identifier>
                         y int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
-                        <identifier> size </identifier>
                       </term>
                     </expression>
-                    <symbol> ) </symbol>
                   </term>
                   <symbol> - </symbol>
                   <term>
                     <integerConstant> 1 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> moveLeft </identifier>
     moveLeft subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> x </identifier>
               x int int used
             </term>
             <symbol> &gt; </symbol>
@@ -930,16 +594,10 @@
               <integerConstant> 1 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -947,77 +605,53 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <symbol> ( </symbol>
                     <expression>
                       <term>
-                        <identifier> x </identifier>
                         x int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
-                        <identifier> size </identifier>
                       </term>
                     </expression>
-                    <symbol> ) </symbol>
                   </term>
                   <symbol> - </symbol>
                   <term>
                     <integerConstant> 1 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <letStatement>
-              <keyword> let </keyword>
-              <identifier> x </identifier>
               x int int used
-              <symbol> = </symbol>
               <expression>
                 <term>
-                  <identifier> x </identifier>
                   x int int used
                 </term>
                 <symbol> - </symbol>
@@ -1025,15 +659,10 @@
                   <integerConstant> 2 </integerConstant>
                 </term>
               </expression>
-              <symbol> ; </symbol>
             </letStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -1041,32 +670,21 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
@@ -1074,78 +692,51 @@
                     <integerConstant> 1 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
   <subroutineDec>
-    <keyword> method </keyword>
-    <keyword> void </keyword>
-    <identifier> moveRight </identifier>
     moveRight subroutine declared
     this arg 0 declared
-    <symbol> ( </symbol>
     <parameterList>
     </parameterList>
-    <symbol> ) </symbol>
     <subroutineBody>
-      <symbol> { </symbol>
       <statements>
         <ifStatement>
-          <keyword> if </keyword>
-          <symbol> ( </symbol>
           <expression>
             <term>
-              <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> x </identifier>
                   x int int used
                 </term>
                 <symbol> + </symbol>
                 <term>
-                  <identifier> size </identifier>
                 </term>
               </expression>
-              <symbol> ) </symbol>
             </term>
             <symbol> &lt; </symbol>
             <term>
               <integerConstant> 510 </integerConstant>
             </term>
           </expression>
-          <symbol> ) </symbol>
-          <symbol> { </symbol>
           <statements>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -1153,32 +744,21 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
@@ -1186,29 +766,20 @@
                     <integerConstant> 1 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <letStatement>
-              <keyword> let </keyword>
-              <identifier> x </identifier>
               x int int used
-              <symbol> = </symbol>
               <expression>
                 <term>
-                  <identifier> x </identifier>
                   x int int used
                 </term>
                 <symbol> + </symbol>
@@ -1216,15 +787,10 @@
                   <integerConstant> 2 </integerConstant>
                 </term>
               </expression>
-              <symbol> ; </symbol>
             </letStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> setColor </identifier>
-              <symbol> ( </symbol>
+              setColor subroutine used
               <expressionList>
                 <expression>
                   <term>
@@ -1232,79 +798,54 @@
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
             <doStatement>
-              <keyword> do </keyword>
-              <identifier> Screen </identifier>
               Screen class used
-              <symbol> . </symbol>
-              <identifier> drawRectangle </identifier>
-              <symbol> ( </symbol>
+              drawRectangle subroutine used
               <expressionList>
                 <expression>
                   <term>
-                    <symbol> ( </symbol>
                     <expression>
                       <term>
-                        <identifier> x </identifier>
                         x int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
-                        <identifier> size </identifier>
                       </term>
                     </expression>
-                    <symbol> ) </symbol>
                   </term>
                   <symbol> - </symbol>
                   <term>
                     <integerConstant> 1 </integerConstant>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> x </identifier>
                     x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
-                <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> y </identifier>
                     y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
-                    <identifier> size </identifier>
                   </term>
                 </expression>
               </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
             </doStatement>
           </statements>
-          <symbol> } </symbol>
         </ifStatement>
         <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
         </returnStatement>
       </statements>
-      <symbol> } </symbol>
     </subroutineBody>
   </subroutineDec>
-  <symbol> } </symbol>
 </class>

@@ -18,6 +18,10 @@ public class SymbolTable {
         put("arg", 0);
         put("var", 0);
     }};
+    /* name -> data type, scope, index
+    Note: In Jack and in most programming languages, variables cannot share
+    the same name even if they are different data types */
+    private final Map<String, String[]> nameToData = new HashMap<>();
     private SymbolTable nextTable;
 
     /** Default constructor */
@@ -27,11 +31,6 @@ public class SymbolTable {
     SymbolTable(SymbolTable nextTable) {
         this.nextTable = nextTable;
     }
-
-    /** name -> data type, scope, index
-    Note: In Jack and in most programming languages, variables cannot share
-    the same name even if they are different data types */
-    private final Map<String, String[]> nameToData = new HashMap<>();
 
     /** Adds to the symbol table a new variable of the given name, dataType, and scope.
     Assigns to it the index value of that scope, and adds 1 to the index */
@@ -96,7 +95,7 @@ public class SymbolTable {
     }
 
     public boolean contains(String name) {
-        if (scopeToIndex.containsKey(name)) {
+        if (nameToData.containsKey(name)) {
             return true;
         }
         if (nextTable != null) {
