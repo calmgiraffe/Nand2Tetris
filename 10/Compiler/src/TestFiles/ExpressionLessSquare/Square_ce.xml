@@ -6,30 +6,37 @@
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> x </identifier>
+    x field 0 declared
     <symbol> , </symbol>
     <identifier> y </identifier>
+    y field 1 declared
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> size </identifier>
+    size field 2 declared
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> constructor </keyword>
     <identifier> Square </identifier>
     <identifier> new </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
       <keyword> int </keyword>
       <identifier> Ax </identifier>
+      Ax arg 1 declared
       <symbol> , </symbol>
       <keyword> int </keyword>
       <identifier> Ay </identifier>
+      Ay arg 2 declared
       <symbol> , </symbol>
       <keyword> int </keyword>
       <identifier> Asize </identifier>
+      Asize arg 3 declared
     </parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
@@ -94,6 +101,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> dispose </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -129,6 +137,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> draw </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -198,6 +207,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> erase </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -267,6 +277,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> incSize </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -329,6 +340,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> decSize </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -391,6 +403,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveUp </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -535,6 +548,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveDown </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -679,6 +693,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveLeft </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -823,6 +838,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveRight </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>

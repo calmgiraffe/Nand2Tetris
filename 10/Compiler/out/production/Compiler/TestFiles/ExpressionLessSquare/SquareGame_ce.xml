@@ -6,18 +6,21 @@
     <keyword> field </keyword>
     <identifier> Square </identifier>
     <identifier> square </identifier>
+    square field 0 declared
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> direction </identifier>
+    direction field 1 declared
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> constructor </keyword>
     <identifier> SquareGame </identifier>
     <identifier> new </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -64,6 +67,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> dispose </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -110,6 +114,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveSquare </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -245,6 +250,7 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> run </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -255,12 +261,14 @@
         <keyword> var </keyword>
         <keyword> char </keyword>
         <identifier> key </identifier>
+        key var 0 declared
         <symbol> ; </symbol>
       </varDec>
       <varDec>
         <keyword> var </keyword>
         <keyword> boolean </keyword>
         <identifier> exit </identifier>
+        exit var 1 declared
         <symbol> ; </symbol>
       </varDec>
       <statements>

@@ -1,35 +1,44 @@
 <class>
   <keyword> class </keyword>
   <identifier> Square </identifier>
+  Square class declared
   <symbol> { </symbol>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> x </identifier>
+    x field 0 declared
     <symbol> , </symbol>
     <identifier> y </identifier>
+    y field 1 declared
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> size </identifier>
+    size field 2 declared
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> constructor </keyword>
     <identifier> Square </identifier>
     <identifier> new </identifier>
+    new subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
       <keyword> int </keyword>
       <identifier> Ax </identifier>
+      Ax arg 1 declared
       <symbol> , </symbol>
       <keyword> int </keyword>
       <identifier> Ay </identifier>
+      Ay arg 2 declared
       <symbol> , </symbol>
       <keyword> int </keyword>
       <identifier> Asize </identifier>
+      Asize arg 3 declared
     </parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
@@ -38,6 +47,7 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> x </identifier>
+          x int int used
           <symbol> = </symbol>
           <expression>
             <term>
@@ -49,6 +59,7 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> y </identifier>
+          y int int used
           <symbol> = </symbol>
           <expression>
             <term>
@@ -60,6 +71,7 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> size </identifier>
+          size int int used
           <symbol> = </symbol>
           <expression>
             <term>
@@ -71,6 +83,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> draw </identifier>
+          drawsubroutine used
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -94,6 +107,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> dispose </identifier>
+    dispose subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -104,6 +119,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Memory </identifier>
+          Memoryclass used
           <symbol> . </symbol>
           <identifier> deAlloc </identifier>
           <symbol> ( </symbol>
@@ -129,6 +145,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> draw </identifier>
+    draw subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -139,6 +157,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+          Screenclass used
           <symbol> . </symbol>
           <identifier> setColor </identifier>
           <symbol> ( </symbol>
@@ -155,6 +174,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+          Screenclass used
           <symbol> . </symbol>
           <identifier> drawRectangle </identifier>
           <symbol> ( </symbol>
@@ -174,6 +194,7 @@
             <expression>
               <term>
                 <identifier> x </identifier>
+                x int int used
               </term>
               <symbol> + </symbol>
               <term>
@@ -184,6 +205,7 @@
             <expression>
               <term>
                 <identifier> y </identifier>
+                y int int used
               </term>
               <symbol> + </symbol>
               <term>
@@ -206,6 +228,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> erase </identifier>
+    erase subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -216,6 +240,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+          Screenclass used
           <symbol> . </symbol>
           <identifier> setColor </identifier>
           <symbol> ( </symbol>
@@ -232,6 +257,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
+          Screenclass used
           <symbol> . </symbol>
           <identifier> drawRectangle </identifier>
           <symbol> ( </symbol>
@@ -251,6 +277,7 @@
             <expression>
               <term>
                 <identifier> x </identifier>
+                x int int used
               </term>
               <symbol> + </symbol>
               <term>
@@ -261,6 +288,7 @@
             <expression>
               <term>
                 <identifier> y </identifier>
+                y int int used
               </term>
               <symbol> + </symbol>
               <term>
@@ -283,6 +311,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> incSize </identifier>
+    incSize subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -302,6 +332,7 @@
                   <expression>
                     <term>
                       <identifier> y </identifier>
+                      y int int used
                     </term>
                     <symbol> + </symbol>
                     <term>
@@ -326,6 +357,7 @@
                   <expression>
                     <term>
                       <identifier> x </identifier>
+                      x int int used
                     </term>
                     <symbol> + </symbol>
                     <term>
@@ -348,6 +380,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> erase </identifier>
+              erasesubroutine used
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -357,10 +390,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> size </identifier>
+              size int int used
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> size </identifier>
+                  size int int used
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -372,6 +407,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> draw </identifier>
+              drawsubroutine used
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -393,6 +429,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> decSize </identifier>
+    decSize subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -406,6 +444,7 @@
           <expression>
             <term>
               <identifier> size </identifier>
+              size int int used
             </term>
             <symbol> &gt; </symbol>
             <term>
@@ -418,6 +457,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> erase </identifier>
+              erasesubroutine used
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -427,10 +467,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> size </identifier>
+              size int int used
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> size </identifier>
+                  size int int used
                 </term>
                 <symbol> - </symbol>
                 <term>
@@ -442,6 +484,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> draw </identifier>
+              drawsubroutine used
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -463,6 +506,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveUp </identifier>
+    moveUp subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -476,6 +521,7 @@
           <expression>
             <term>
               <identifier> y </identifier>
+              y int int used
             </term>
             <symbol> &gt; </symbol>
             <term>
@@ -488,6 +534,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -504,6 +551,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -520,6 +568,7 @@
                     <expression>
                       <term>
                         <identifier> y </identifier>
+                        y int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
@@ -537,6 +586,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -547,6 +597,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -560,10 +611,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> y </identifier>
+              y int int used
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> y </identifier>
+                  y int int used
                 </term>
                 <symbol> - </symbol>
                 <term>
@@ -575,6 +628,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -591,6 +645,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -610,6 +665,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -620,6 +676,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -645,6 +702,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveDown </identifier>
+    moveDown subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -661,6 +720,7 @@
               <expression>
                 <term>
                   <identifier> y </identifier>
+                  y int int used
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -680,6 +740,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -696,6 +757,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -715,6 +777,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -725,6 +788,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -738,10 +802,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> y </identifier>
+              y int int used
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> y </identifier>
+                  y int int used
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -753,6 +819,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -769,6 +836,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -785,6 +853,7 @@
                     <expression>
                       <term>
                         <identifier> y </identifier>
+                        y int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
@@ -802,6 +871,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -812,6 +882,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -837,6 +908,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveLeft </identifier>
+    moveLeft subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -850,6 +923,7 @@
           <expression>
             <term>
               <identifier> x </identifier>
+              x int int used
             </term>
             <symbol> &gt; </symbol>
             <term>
@@ -862,6 +936,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -878,6 +953,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -888,6 +964,7 @@
                     <expression>
                       <term>
                         <identifier> x </identifier>
+                        x int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
@@ -911,6 +988,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -921,6 +999,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -934,10 +1013,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> x </identifier>
+              x int int used
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> x </identifier>
+                  x int int used
                 </term>
                 <symbol> - </symbol>
                 <term>
@@ -949,6 +1030,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -965,6 +1047,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -984,6 +1067,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -994,6 +1078,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -1019,6 +1104,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveRight </identifier>
+    moveRight subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -1035,6 +1122,7 @@
               <expression>
                 <term>
                   <identifier> x </identifier>
+                  x int int used
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -1054,6 +1142,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -1070,6 +1159,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -1089,6 +1179,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -1099,6 +1190,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -1112,10 +1204,12 @@
             <letStatement>
               <keyword> let </keyword>
               <identifier> x </identifier>
+              x int int used
               <symbol> = </symbol>
               <expression>
                 <term>
                   <identifier> x </identifier>
+                  x int int used
                 </term>
                 <symbol> + </symbol>
                 <term>
@@ -1127,6 +1221,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> setColor </identifier>
               <symbol> ( </symbol>
@@ -1143,6 +1238,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
+              Screenclass used
               <symbol> . </symbol>
               <identifier> drawRectangle </identifier>
               <symbol> ( </symbol>
@@ -1153,6 +1249,7 @@
                     <expression>
                       <term>
                         <identifier> x </identifier>
+                        x int int used
                       </term>
                       <symbol> + </symbol>
                       <term>
@@ -1176,6 +1273,7 @@
                 <expression>
                   <term>
                     <identifier> x </identifier>
+                    x int int used
                   </term>
                   <symbol> + </symbol>
                   <term>
@@ -1186,6 +1284,7 @@
                 <expression>
                   <term>
                     <identifier> y </identifier>
+                    y int int used
                   </term>
                   <symbol> + </symbol>
                   <term>

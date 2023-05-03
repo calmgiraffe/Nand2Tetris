@@ -1,23 +1,28 @@
 <class>
   <keyword> class </keyword>
   <identifier> SquareGame </identifier>
+  SquareGame class declared
   <symbol> { </symbol>
   <classVarDec>
     <keyword> field </keyword>
     <identifier> Square </identifier>
     <identifier> square </identifier>
+    square field 0 declared
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
     <identifier> direction </identifier>
+    direction field 1 declared
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> constructor </keyword>
     <identifier> SquareGame </identifier>
     <identifier> new </identifier>
+    new subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -28,10 +33,12 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> square </identifier>
+          square Square Square used
           <symbol> = </symbol>
           <expression>
             <term>
               <identifier> Square </identifier>
+              Square class used
               <symbol> . </symbol>
               <identifier> new </identifier>
               <symbol> ( </symbol>
@@ -62,6 +69,7 @@
         <letStatement>
           <keyword> let </keyword>
           <identifier> direction </identifier>
+          direction int int used
           <symbol> = </symbol>
           <expression>
             <term>
@@ -87,6 +95,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> dispose </identifier>
+    dispose subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -97,6 +107,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> square </identifier>
+          square class used
           <symbol> . </symbol>
           <identifier> dispose </identifier>
           <symbol> ( </symbol>
@@ -108,6 +119,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Memory </identifier>
+          Memory class used
           <symbol> . </symbol>
           <identifier> deAlloc </identifier>
           <symbol> ( </symbol>
@@ -133,6 +145,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> moveSquare </identifier>
+    moveSquare subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -146,6 +160,7 @@
           <expression>
             <term>
               <identifier> direction </identifier>
+              direction int int used
             </term>
             <symbol> = </symbol>
             <term>
@@ -158,6 +173,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
+              square class used
               <symbol> . </symbol>
               <identifier> moveUp </identifier>
               <symbol> ( </symbol>
@@ -175,6 +191,7 @@
           <expression>
             <term>
               <identifier> direction </identifier>
+              direction int int used
             </term>
             <symbol> = </symbol>
             <term>
@@ -187,6 +204,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
+              square class used
               <symbol> . </symbol>
               <identifier> moveDown </identifier>
               <symbol> ( </symbol>
@@ -204,6 +222,7 @@
           <expression>
             <term>
               <identifier> direction </identifier>
+              direction int int used
             </term>
             <symbol> = </symbol>
             <term>
@@ -216,6 +235,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
+              square class used
               <symbol> . </symbol>
               <identifier> moveLeft </identifier>
               <symbol> ( </symbol>
@@ -233,6 +253,7 @@
           <expression>
             <term>
               <identifier> direction </identifier>
+              direction int int used
             </term>
             <symbol> = </symbol>
             <term>
@@ -245,6 +266,7 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
+              square class used
               <symbol> . </symbol>
               <identifier> moveRight </identifier>
               <symbol> ( </symbol>
@@ -259,6 +281,7 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Sys </identifier>
+          Sys class used
           <symbol> . </symbol>
           <identifier> wait </identifier>
           <symbol> ( </symbol>
@@ -284,6 +307,8 @@
     <keyword> method </keyword>
     <keyword> void </keyword>
     <identifier> run </identifier>
+    run subroutine declared
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -294,18 +319,21 @@
         <keyword> var </keyword>
         <keyword> char </keyword>
         <identifier> key </identifier>
+        key var 0 declared
         <symbol> ; </symbol>
       </varDec>
       <varDec>
         <keyword> var </keyword>
         <keyword> boolean </keyword>
         <identifier> exit </identifier>
+        exit var 1 declared
         <symbol> ; </symbol>
       </varDec>
       <statements>
         <letStatement>
           <keyword> let </keyword>
           <identifier> exit </identifier>
+          exit var 1 used
           <symbol> = </symbol>
           <expression>
             <term>
@@ -334,6 +362,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -346,10 +375,12 @@
                 <letStatement>
                   <keyword> let </keyword>
                   <identifier> key </identifier>
+                  key var 0 used
                   <symbol> = </symbol>
                   <expression>
                     <term>
                       <identifier> Keyboard </identifier>
+                      Keyboard class used
                       <symbol> . </symbol>
                       <identifier> keyPressed </identifier>
                       <symbol> ( </symbol>
@@ -363,6 +394,7 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> moveSquare </identifier>
+                  moveSquaresubroutine used
                   <symbol> ( </symbol>
                   <expressionList>
                   </expressionList>
@@ -378,6 +410,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -390,6 +423,7 @@
                 <letStatement>
                   <keyword> let </keyword>
                   <identifier> exit </identifier>
+                  exit var 1 used
                   <symbol> = </symbol>
                   <expression>
                     <term>
@@ -407,6 +441,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -419,6 +454,7 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> square </identifier>
+                  square class used
                   <symbol> . </symbol>
                   <identifier> decSize </identifier>
                   <symbol> ( </symbol>
@@ -436,6 +472,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -448,6 +485,7 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> square </identifier>
+                  square class used
                   <symbol> . </symbol>
                   <identifier> incSize </identifier>
                   <symbol> ( </symbol>
@@ -465,6 +503,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -477,6 +516,7 @@
                 <letStatement>
                   <keyword> let </keyword>
                   <identifier> direction </identifier>
+                  direction int int used
                   <symbol> = </symbol>
                   <expression>
                     <term>
@@ -494,6 +534,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -506,6 +547,7 @@
                 <letStatement>
                   <keyword> let </keyword>
                   <identifier> direction </identifier>
+                  direction int int used
                   <symbol> = </symbol>
                   <expression>
                     <term>
@@ -523,6 +565,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -535,6 +578,7 @@
                 <letStatement>
                   <keyword> let </keyword>
                   <identifier> direction </identifier>
+                  direction int int used
                   <symbol> = </symbol>
                   <expression>
                     <term>
@@ -552,6 +596,7 @@
               <expression>
                 <term>
                   <identifier> key </identifier>
+                  key var 0 used
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -564,6 +609,7 @@
                 <letStatement>
                   <keyword> let </keyword>
                   <identifier> direction </identifier>
+                  direction int int used
                   <symbol> = </symbol>
                   <expression>
                     <term>
@@ -586,6 +632,7 @@
                     <expression>
                       <term>
                         <identifier> key </identifier>
+                        key var 0 used
                       </term>
                       <symbol> = </symbol>
                       <term>
@@ -602,10 +649,12 @@
                 <letStatement>
                   <keyword> let </keyword>
                   <identifier> key </identifier>
+                  key var 0 used
                   <symbol> = </symbol>
                   <expression>
                     <term>
                       <identifier> Keyboard </identifier>
+                      Keyboard class used
                       <symbol> . </symbol>
                       <identifier> keyPressed </identifier>
                       <symbol> ( </symbol>
@@ -619,6 +668,7 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> moveSquare </identifier>
+                  moveSquaresubroutine used
                   <symbol> ( </symbol>
                   <expressionList>
                   </expressionList>

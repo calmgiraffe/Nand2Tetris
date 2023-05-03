@@ -6,12 +6,14 @@
     <keyword> static </keyword>
     <keyword> boolean </keyword>
     <identifier> test </identifier>
+    test static 0 declared
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> function </keyword>
     <keyword> void </keyword>
     <identifier> main </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -22,6 +24,7 @@
         <keyword> var </keyword>
         <identifier> SquareGame </identifier>
         <identifier> game </identifier>
+        game var 0 declared
         <symbol> ; </symbol>
       </varDec>
       <statements>
@@ -70,6 +73,7 @@
     <keyword> function </keyword>
     <keyword> void </keyword>
     <identifier> more </identifier>
+    this arg 0 declared
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -80,6 +84,7 @@
         <keyword> var </keyword>
         <keyword> boolean </keyword>
         <identifier> b </identifier>
+        b var 0 declared
         <symbol> ; </symbol>
       </varDec>
       <statements>

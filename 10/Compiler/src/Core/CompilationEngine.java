@@ -16,8 +16,12 @@ public class CompilationEngine {
     private static final Set<String> OP = Set.of("+","-","*","/","&","|","<",">","=");
     private static final Set<String> UNARY_OP = Set.of("-", "~");
     private static final Set<String> KEYWORD_CONST = Set.of("true","false","null","this");
+
     private final Tokenizer tk;
     private final PrintWriter writer;
+    private final SymbolTable classSymTable = new SymbolTable();
+    private SymbolTable subroutineSymTable;
+    private String className;
 
     /* Build the list of output files */
     public CompilationEngine(String source) throws IOException {
@@ -48,6 +52,9 @@ public class CompilationEngine {
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!type.equals(identifier)) { throwRuntimeException("className", identifier, token, type); }
         writer.println(indent + "<identifier> " + token + " </identifier>");
+
+        className = token; // all subroutines have an implicit instance of this type
+        writer.println(indent + className + " class declared");
         tk.advance();
 
         write("{", indent);
@@ -62,6 +69,7 @@ public class CompilationEngine {
     ('static' | 'field') type varName (',' varName)* ';'
     ex., field int x, y, z  */
     private void compileClassVarDec(int indentLevel) throws IOException {
+        String scopeOf, dataTypeOf;
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
@@ -71,26 +79,35 @@ public class CompilationEngine {
         if (!(token.equals("static") || token.equals("field"))) {
             return;
         }
-        writer.println(headerIndent + "<classVarDec>"); // Header
+
+        // Header, ("static" | "field")
+        writer.println(headerIndent + "<classVarDec>");
         writer.println(indent + "<keyword> " + token + " </keyword>"); // 'static' or 'field'
+        scopeOf = token;
         tk.advance();
 
-        // Primitive type or className (type)
+        // type: primitive or className
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!PRIMITIVES.contains(token)) {
             if (type != identifier) {
                 throwRuntimeException("type", keyword + ", " + identifier, token, type);
             }
             writer.println(indent + "<identifier> " + token + " </identifier>");
-        } else {
+        }
+        else {
             writer.println(indent + "<keyword> " + token + " </keyword>");
         }
+        dataTypeOf = token; // all class var decs are of this type
         tk.advance();
 
         // At least one varName
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
         writer.println(indent + "<identifier> " + token + " </identifier>");
+
+        /* Add to class symbol table - either primitive type or object */
+        classSymTable.define(token, dataTypeOf, scopeOf);
+        writer.println(indent + token + " " + scopeOf + " " + classSymTable.indexOf(token) + " declared");
         tk.advance();
 
         // Zero or more (',' varName)
@@ -102,40 +119,52 @@ public class CompilationEngine {
             token = tk.getCurrToken(); type = tk.getCurrType();
             if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
             writer.println(indent + "<identifier> " + token + " </identifier>");
+
+            /* Add to class symbol table - either primitive type or object */
+            classSymTable.define(token, dataTypeOf, scopeOf);
+            writer.println(indent + token + " " + scopeOf + " " + classSymTable.indexOf(token) + " declared");
             tk.advance();
 
             // Prepare next token
             token = tk.getCurrToken();
         }
+
+        // Terminating ';', footer
         write(";", indent);
-        writer.println(headerIndent + "</classVarDec>"); // Footer
+        writer.println(headerIndent + "</classVarDec>");
+
         compileClassVarDec(indentLevel); // 0 or more classVarDec in class -> recursive call
     }
 
     /* Method for compiling object routines like constructor, static/non-static methods
+    ('constructor' | 'function' | 'method') ('void' | type) subroutineName '(' parameterList ')' subroutineBody
     ex., method void draw(int x, int y) */
     private void compileSubroutineDec(int indentLevel) throws IOException {
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
 
-        // Immediately return if not one of the three
+        // Immediately return if not one of 'constructor', 'function', 'method'
         token = tk.getCurrToken();
         if (!(token.equals("constructor") || token.equals("function") || token.equals("method"))) {
             return;
         }
-        writer.println(headerIndent + "<subroutineDec>"); // Header
+
+        // Header, ('constructor' | 'function' | 'method')
+        subroutineSymTable = new SymbolTable(classSymTable);
+        writer.println(headerIndent + "<subroutineDec>");
         writer.println(indent + "<keyword> " + token + " </keyword>");
         tk.advance();
 
-        // void, primitive type, or identifier
+        // subroutine type: void, primitive type, or identifier
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (!token.equals("void") && !PRIMITIVES.contains(token)) {
             if (type != identifier) {
                 throwRuntimeException("'void' | type", keyword + ", " + identifier, token, type);
             }
             writer.println(indent + "<identifier> " + token + " </identifier>");
-        } else {
+        }
+        else {
             writer.println(indent + "<keyword> " + token + " </keyword>");
         }
         tk.advance();
@@ -144,6 +173,11 @@ public class CompilationEngine {
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (type != identifier) { throwRuntimeException("subroutineName", identifier, token, type); }
         writer.println(indent + "<identifier> " + token + " </identifier>");
+        writer.println(indent + token + " subroutine declared");
+
+        /* SYMBOL TABLE - add 'this' to subroutine table */
+        subroutineSymTable.define("this", className, "arg");
+        writer.println(indent + "this arg " + subroutineSymTable.indexOf("this") + " declared");
         tk.advance();
 
         write("(", indent);
@@ -151,14 +185,16 @@ public class CompilationEngine {
         write(")", indent);
         compileSubroutineBody(indentLevel + 1); // subroutineBody (contains at least "{}")
 
-        writer.println(headerIndent + "</subroutineDec>"); // Footer
+        writer.println(headerIndent + "</subroutineDec>"); // footer
 
         compileSubroutineDec(indentLevel); // 0 or more subroutineDec in class -> recursive call
     }
 
-    /* Method for compiling 0 or 1 parameterList within subroutineDec
+    /* Method for compiling 0 or 1 parameterList within subroutineDec, i.e., subroutine args
+    ((type varName) (',' type varName)*)?
     ex., int x, int y, boolean flag */
     private void compileParameterList(int indentLevel) throws IOException {
+        String dataTypeOf;
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
@@ -172,18 +208,25 @@ public class CompilationEngine {
             writer.println(headerIndent + "</parameterList>");
             return;
         }
-        // type
+
+        // type: primitive or className
         if (type == identifier) {
             writer.println(indent + "<identifier> " + token + " </identifier>");
-        } else {
+        }
+        else {
             writer.println(indent + "<keyword> " + token + " </keyword>");
         }
+        dataTypeOf = token;
         tk.advance();
 
         // varName
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
         writer.println(indent + "<identifier> " + token + " </identifier>");
+
+        /* SYMBOL TABLE - add first arg to subroutine table */
+        subroutineSymTable.define(token, dataTypeOf, "arg");
+        writer.println(indent + token + " arg " + subroutineSymTable.indexOf(token) + " declared");
         tk.advance();
 
         // 0 or more (',' type varName)
@@ -198,20 +241,27 @@ public class CompilationEngine {
                     throwRuntimeException("type", keyword + ", " + identifier, token, type);
                 }
                 writer.println(indent + "<identifier> " + token + " </identifier>");
-            } else {
+            }
+            else {
                 writer.println(indent + "<keyword> " + token + " </keyword>");
             }
+            dataTypeOf = token;
             tk.advance();
 
             // varName identifier must follow type
             token = tk.getCurrToken(); type = tk.getCurrType();
             if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
             writer.println(indent + "<identifier> " + token + " </identifier>");
+
+            /* SYMBOL TABLE - add next args to subroutine table */
+            subroutineSymTable.define(token, dataTypeOf, "arg");
+            writer.println(indent + token + " arg " + subroutineSymTable.indexOf(token) + " declared");
             tk.advance();
 
             // Prepare next token
             token = tk.getCurrToken();
         }
+
         // Footer
         writer.println(headerIndent + "</parameterList>");
     }
@@ -231,11 +281,10 @@ public class CompilationEngine {
         writer.println(headerIndent + "</subroutineBody>"); // Footer
     }
 
-    /* Method for compiling varDec, ex., {
-    var char key;
-    var boolean exit;
-    ... } */
+    /* Method for compiling varDec.
+    'var' type varName (',' varName)* ';' */
     private void compileVarDec(int indentLevel) throws IOException {
+        String dataTypeOf;
         String token; Tokenizer.TokenType type;
         String headerIndent = INDENT.repeat(indentLevel - 1);
         String indent = INDENT.repeat(indentLevel);
@@ -245,8 +294,10 @@ public class CompilationEngine {
         if (!token.equals("var")) {
             return;
         }
-        writer.println(headerIndent + "<varDec>"); // header
-        write("var", indent); // 'var' keyword
+
+        // Header, 'var'
+        writer.println(headerIndent + "<varDec>");
+        write("var", indent);
 
         // Primitive type or className (type)
         token = tk.getCurrToken(); type = tk.getCurrType();
@@ -255,15 +306,21 @@ public class CompilationEngine {
                 throwRuntimeException("type", keyword + ", " + identifier, token, type);
             }
             writer.println(indent + "<identifier> " + token + " </identifier>");
-        } else {
+        }
+        else {
             writer.println(indent + "<keyword> " + token + " </keyword>");
         }
+        dataTypeOf = token; // all var decs of this type
         tk.advance();
 
         // varName identifier
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
         writer.println(indent + "<identifier> " + token + " </identifier>");
+
+        /* SYMBOL TABLE - add var to subroutine table */
+        subroutineSymTable.define(token, dataTypeOf, "var");
+        writer.println(indent + token + " var " + subroutineSymTable.indexOf(token) + " declared");
         tk.advance();
 
         // Zero or more (',' varName)
@@ -276,13 +333,20 @@ public class CompilationEngine {
             token = tk.getCurrToken(); type = tk.getCurrType();
             if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
             writer.println(indent + "<identifier> " + token + " </identifier>");
+
+            /* SYMBOL TABLE - add var to subroutine table */
+            subroutineSymTable.define(token, dataTypeOf, "var");
+            writer.println(indent + token + " var " + subroutineSymTable.indexOf(token) + " declared");
             tk.advance();
 
             // Prepare next token
             token = tk.getCurrToken();
         }
+
+        // Terminating ';', footer
         write(";", indent);
-        writer.println(headerIndent + "</varDec>"); // Footer
+        writer.println(headerIndent + "</varDec>");
+
         compileVarDec(indentLevel); // 0 or more varDec in subroutineDec -> recursive call
     }
 
@@ -323,10 +387,14 @@ public class CompilationEngine {
         token = tk.getCurrToken(); type = tk.getCurrType();
         if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
         writer.println(indent + "<identifier> " + token + " </identifier>");
+
+        // Symbol table - retrieve from subroutine
+        writer.println(indent + token + " " + subroutineSymTable.scopeOf(token) +
+                " " + subroutineSymTable.indexOf(token) + " used");
         tk.advance();
 
         // 0 or 1 ('[' expression ']')
-        token = tk.getCurrToken(); type = tk.getCurrType();
+        token = tk.getCurrToken();
         if (!token.equals("=")) {
             write("[", indent);
             compileExpression(indentLevel + 1); // expression
@@ -336,7 +404,7 @@ public class CompilationEngine {
         compileExpression(indentLevel + 1);
         write(";", indent);
 
-        writer.println(headerIndent + "</letStatement>"); // footer
+        writer.println(headerIndent + "</letStatement>"); // Footer
     }
 
     /* 'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')? */
@@ -489,10 +557,19 @@ public class CompilationEngine {
             /* second token is op -> just a term, so return to term (op term)* */
             if (OP.contains(nextToken)) {
                 writer.println(indent + "<identifier> " + token + " </identifier>");
+
+                // Symbol table - retrieve from subroutine
+                writer.println(indent + token + " " + subroutineSymTable.scopeOf(token) +
+                        " " + subroutineSymTable.indexOf(token) + " used");
             }
             /* second token is '[' -> '[' expression ']' */
             else if (nextToken.equals("[")) {
                 writer.println(indent + "<identifier> " + token + " </identifier>");
+
+                // Symbol table - retrieve from subroutine
+                writer.println(indent + token + " " + subroutineSymTable.scopeOf(token) +
+                        " " + subroutineSymTable.indexOf(token) + " used");
+
                 write("[", indent);
                 compileExpression(indentLevel + 1);
                 write("]", indent);
@@ -520,11 +597,19 @@ public class CompilationEngine {
         writer.println(indent + "<identifier> " + token + " </identifier>");
 
         if (nextToken.equals("(")) {
+            writer.println(indent + token + "subroutine used");
+
             write("(", indent);
             compileExpressionList(indentLevel + 1);
             write(")", indent);
         }
         else if (nextToken.equals(".")) { // '.'
+            if (subroutineSymTable.contains(token)) {
+                writer.println(subroutineSymTable.scopeOf(token) + " used");
+            } else {
+                writer.println(indent + token + " class used");
+            }
+
             write(".", indent);
 
             // subroutineName
@@ -584,7 +669,8 @@ public class CompilationEngine {
 
     /* Helper method for writing specific symbols and keywords */
     private void write(String expected, String indent) throws IOException {
-        String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
+        String token = tk.getCurrToken();
+        TokenType type = tk.getCurrType();
 
         TokenType expectedType;
         if (Tokenizer.KEYWORDS.contains(expected)) {
