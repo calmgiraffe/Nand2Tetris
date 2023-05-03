@@ -1,159 +1,28 @@
-<class>
 Main class declared
-<classVarDec>
 test static 0 declared
-</classVarDec>
-<subroutineDec>
 main subroutine declared
 this arg 0 declared
-<parameterList>
-</parameterList>
-<subroutineBody>
-<varDec>
 game var 0 declared
-</varDec>
-<statements>
-<letStatement>
 game var 0 used
-<expression>
-<term>
 SquareGame class used
 new subroutine used
-<expressionList>
-</expressionList>
-</term>
-</expression>
-</letStatement>
-<doStatement>
 game var 0 used
 run subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-<doStatement>
 game var 0 used
 dispose subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-<returnStatement>
-</returnStatement>
-</statements>
-</subroutineBody>
-</subroutineDec>
-<subroutineDec>
 more subroutine declared
 this arg 0 declared
-<parameterList>
-</parameterList>
-<subroutineBody>
-<varDec>
 i var 0 declared
 j var 1 declared
-</varDec>
-<varDec>
 s var 2 declared
-</varDec>
-<varDec>
 a var 3 declared
-</varDec>
-<statements>
-<ifStatement>
-<expression>
-<term>
-<keyword> false </keyword>
-</term>
-</expression>
-<statements>
-<letStatement>
 s var 2 used
-<expression>
-<term>
-<stringConstant> string constant </stringConstant>
-</term>
-</expression>
-</letStatement>
-<letStatement>
 s var 2 used
-<expression>
-<term>
-<keyword> null </keyword>
-</term>
-</expression>
-</letStatement>
-<letStatement>
 a var 3 used
-<expression>
-<term>
-<integerConstant> 1 </integerConstant>
-</term>
-</expression>
-<expression>
-<term>
 a var 3 used
-<expression>
-<term>
-<integerConstant> 2 </integerConstant>
-</term>
-</expression>
-</term>
-</expression>
-</letStatement>
-</statements>
-<statements>
-<letStatement>
 i var 0 used
-<expression>
-<term>
 i var 0 used
-</term>
-<symbol> * </symbol>
-<term>
-<expression>
-<term>
-<symbol> - </symbol>
-<term>
-</term>
-</term>
-</expression>
-</term>
-</expression>
-</letStatement>
-<letStatement>
 j var 1 used
-<expression>
-<term>
 j var 1 used
-</term>
-<symbol> / </symbol>
-<term>
-<expression>
-<term>
-<symbol> - </symbol>
-<term>
-<integerConstant> 2 </integerConstant>
-</term>
-</term>
-</expression>
-</term>
-</expression>
-</letStatement>
-<letStatement>
 i var 0 used
-<expression>
-<term>
 i var 0 used
-</term>
-<symbol> | </symbol>
-<term>
-</term>
-</expression>
-</letStatement>
-</statements>
-</ifStatement>
-<returnStatement>
-</returnStatement>
-</statements>
-</subroutineBody>
-</subroutineDec>
-</class>

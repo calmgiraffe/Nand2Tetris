@@ -1,851 +1,166 @@
-<class>
-  Square class declared
-  <classVarDec>
-    x field 0 declared
-    y field 1 declared
-  </classVarDec>
-  <classVarDec>
-    size field 2 declared
-  </classVarDec>
-  <subroutineDec>
-    new subroutine declared
-    this arg 0 declared
-    <parameterList>
-      Ax arg 1 declared
-      Ay arg 2 declared
-      Asize arg 3 declared
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <letStatement>
-          x int int used
-          <expression>
-            <term>
-            </term>
-          </expression>
-        </letStatement>
-        <letStatement>
-          y int int used
-          <expression>
-            <term>
-            </term>
-          </expression>
-        </letStatement>
-        <letStatement>
-          size int int used
-          <expression>
-            <term>
-            </term>
-          </expression>
-        </letStatement>
-        <doStatement>
-          draw subroutine used
-          <expressionList>
-          </expressionList>
-        </doStatement>
-        <returnStatement>
-          <expression>
-            <term>
-              <keyword> this </keyword>
-            </term>
-          </expression>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    dispose subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <doStatement>
-          Memory class used
-          deAlloc subroutine used
-          <expressionList>
-            <expression>
-              <term>
-                <keyword> this </keyword>
-              </term>
-            </expression>
-          </expressionList>
-        </doStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    draw subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <doStatement>
-          Screen class used
-          setColor subroutine used
-          <expressionList>
-            <expression>
-              <term>
-                <keyword> true </keyword>
-              </term>
-            </expression>
-          </expressionList>
-        </doStatement>
-        <doStatement>
-          Screen class used
-          drawRectangle subroutine used
-          <expressionList>
-            <expression>
-              <term>
-              </term>
-            </expression>
-            <expression>
-              <term>
-              </term>
-            </expression>
-            <expression>
-              <term>
-                x int int used
-              </term>
-              <symbol> + </symbol>
-              <term>
-              </term>
-            </expression>
-            <expression>
-              <term>
-                y int int used
-              </term>
-              <symbol> + </symbol>
-              <term>
-              </term>
-            </expression>
-          </expressionList>
-        </doStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    erase subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <doStatement>
-          Screen class used
-          setColor subroutine used
-          <expressionList>
-            <expression>
-              <term>
-                <keyword> false </keyword>
-              </term>
-            </expression>
-          </expressionList>
-        </doStatement>
-        <doStatement>
-          Screen class used
-          drawRectangle subroutine used
-          <expressionList>
-            <expression>
-              <term>
-              </term>
-            </expression>
-            <expression>
-              <term>
-              </term>
-            </expression>
-            <expression>
-              <term>
-                x int int used
-              </term>
-              <symbol> + </symbol>
-              <term>
-              </term>
-            </expression>
-            <expression>
-              <term>
-                y int int used
-              </term>
-              <symbol> + </symbol>
-              <term>
-              </term>
-            </expression>
-          </expressionList>
-        </doStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    incSize subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <ifStatement>
-          <expression>
-            <term>
-              <expression>
-                <term>
-                  <expression>
-                    <term>
-                      y int int used
-                    </term>
-                    <symbol> + </symbol>
-                    <term>
-                    </term>
-                  </expression>
-                </term>
-                <symbol> &lt; </symbol>
-                <term>
-                  <integerConstant> 254 </integerConstant>
-                </term>
-              </expression>
-            </term>
-            <symbol> &amp; </symbol>
-            <term>
-              <expression>
-                <term>
-                  <expression>
-                    <term>
-                      x int int used
-                    </term>
-                    <symbol> + </symbol>
-                    <term>
-                    </term>
-                  </expression>
-                </term>
-                <symbol> &lt; </symbol>
-                <term>
-                  <integerConstant> 510 </integerConstant>
-                </term>
-              </expression>
-            </term>
-          </expression>
-          <statements>
-            <doStatement>
-              erase subroutine used
-              <expressionList>
-              </expressionList>
-            </doStatement>
-            <letStatement>
-              size int int used
-              <expression>
-                <term>
-                  size int int used
-                </term>
-                <symbol> + </symbol>
-                <term>
-                  <integerConstant> 2 </integerConstant>
-                </term>
-              </expression>
-            </letStatement>
-            <doStatement>
-              draw subroutine used
-              <expressionList>
-              </expressionList>
-            </doStatement>
-          </statements>
-        </ifStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    decSize subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <ifStatement>
-          <expression>
-            <term>
-              size int int used
-            </term>
-            <symbol> &gt; </symbol>
-            <term>
-              <integerConstant> 2 </integerConstant>
-            </term>
-          </expression>
-          <statements>
-            <doStatement>
-              erase subroutine used
-              <expressionList>
-              </expressionList>
-            </doStatement>
-            <letStatement>
-              size int int used
-              <expression>
-                <term>
-                  size int int used
-                </term>
-                <symbol> - </symbol>
-                <term>
-                  <integerConstant> 2 </integerConstant>
-                </term>
-              </expression>
-            </letStatement>
-            <doStatement>
-              draw subroutine used
-              <expressionList>
-              </expressionList>
-            </doStatement>
-          </statements>
-        </ifStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    moveUp subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <ifStatement>
-          <expression>
-            <term>
-              y int int used
-            </term>
-            <symbol> &gt; </symbol>
-            <term>
-              <integerConstant> 1 </integerConstant>
-            </term>
-          </expression>
-          <statements>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> false </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    <expression>
-                      <term>
-                        y int int used
-                      </term>
-                      <symbol> + </symbol>
-                      <term>
-                      </term>
-                    </expression>
-                  </term>
-                  <symbol> - </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <letStatement>
-              y int int used
-              <expression>
-                <term>
-                  y int int used
-                </term>
-                <symbol> - </symbol>
-                <term>
-                  <integerConstant> 2 </integerConstant>
-                </term>
-              </expression>
-            </letStatement>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> true </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-          </statements>
-        </ifStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    moveDown subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <ifStatement>
-          <expression>
-            <term>
-              <expression>
-                <term>
-                  y int int used
-                </term>
-                <symbol> + </symbol>
-                <term>
-                </term>
-              </expression>
-            </term>
-            <symbol> &lt; </symbol>
-            <term>
-              <integerConstant> 254 </integerConstant>
-            </term>
-          </expression>
-          <statements>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> false </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <letStatement>
-              y int int used
-              <expression>
-                <term>
-                  y int int used
-                </term>
-                <symbol> + </symbol>
-                <term>
-                  <integerConstant> 2 </integerConstant>
-                </term>
-              </expression>
-            </letStatement>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> true </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    <expression>
-                      <term>
-                        y int int used
-                      </term>
-                      <symbol> + </symbol>
-                      <term>
-                      </term>
-                    </expression>
-                  </term>
-                  <symbol> - </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-          </statements>
-        </ifStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    moveLeft subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <ifStatement>
-          <expression>
-            <term>
-              x int int used
-            </term>
-            <symbol> &gt; </symbol>
-            <term>
-              <integerConstant> 1 </integerConstant>
-            </term>
-          </expression>
-          <statements>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> false </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <expression>
-                      <term>
-                        x int int used
-                      </term>
-                      <symbol> + </symbol>
-                      <term>
-                      </term>
-                    </expression>
-                  </term>
-                  <symbol> - </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <letStatement>
-              x int int used
-              <expression>
-                <term>
-                  x int int used
-                </term>
-                <symbol> - </symbol>
-                <term>
-                  <integerConstant> 2 </integerConstant>
-                </term>
-              </expression>
-            </letStatement>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> true </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-          </statements>
-        </ifStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-  <subroutineDec>
-    moveRight subroutine declared
-    this arg 0 declared
-    <parameterList>
-    </parameterList>
-    <subroutineBody>
-      <statements>
-        <ifStatement>
-          <expression>
-            <term>
-              <expression>
-                <term>
-                  x int int used
-                </term>
-                <symbol> + </symbol>
-                <term>
-                </term>
-              </expression>
-            </term>
-            <symbol> &lt; </symbol>
-            <term>
-              <integerConstant> 510 </integerConstant>
-            </term>
-          </expression>
-          <statements>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> false </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <letStatement>
-              x int int used
-              <expression>
-                <term>
-                  x int int used
-                </term>
-                <symbol> + </symbol>
-                <term>
-                  <integerConstant> 2 </integerConstant>
-                </term>
-              </expression>
-            </letStatement>
-            <doStatement>
-              Screen class used
-              setColor subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <keyword> true </keyword>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-            <doStatement>
-              Screen class used
-              drawRectangle subroutine used
-              <expressionList>
-                <expression>
-                  <term>
-                    <expression>
-                      <term>
-                        x int int used
-                      </term>
-                      <symbol> + </symbol>
-                      <term>
-                      </term>
-                    </expression>
-                  </term>
-                  <symbol> - </symbol>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    x int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-                <expression>
-                  <term>
-                    y int int used
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                  </term>
-                </expression>
-              </expressionList>
-            </doStatement>
-          </statements>
-        </ifStatement>
-        <returnStatement>
-        </returnStatement>
-      </statements>
-    </subroutineBody>
-  </subroutineDec>
-</class>
+Square class declared
+x field 0 declared
+y field 1 declared
+size field 2 declared
+new subroutine declared
+this arg 0 declared
+Ax arg 1 declared
+Ay arg 2 declared
+Asize arg 3 declared
+x field 0 used
+y field 1 used
+size field 2 used
+draw subroutine used
+dispose subroutine declared
+this arg 0 declared
+Memory class used
+deAlloc subroutine used
+draw subroutine declared
+this arg 0 declared
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+erase subroutine declared
+this arg 0 declared
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+incSize subroutine declared
+this arg 0 declared
+y field 1 used
+<symbol> + </symbol>
+<symbol> &lt; </symbol>
+<symbol> &amp; </symbol>
+x field 0 used
+<symbol> + </symbol>
+<symbol> &lt; </symbol>
+erase subroutine used
+size field 2 used
+size field 2 used
+<symbol> + </symbol>
+draw subroutine used
+decSize subroutine declared
+this arg 0 declared
+size field 2 used
+<symbol> &gt; </symbol>
+erase subroutine used
+size field 2 used
+size field 2 used
+<symbol> - </symbol>
+draw subroutine used
+moveUp subroutine declared
+this arg 0 declared
+y field 1 used
+<symbol> &gt; </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+y field 1 used
+<symbol> + </symbol>
+<symbol> - </symbol>
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+y field 1 used
+y field 1 used
+<symbol> - </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+moveDown subroutine declared
+this arg 0 declared
+y field 1 used
+<symbol> + </symbol>
+<symbol> &lt; </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+y field 1 used
+y field 1 used
+<symbol> + </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+y field 1 used
+<symbol> + </symbol>
+<symbol> - </symbol>
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+moveLeft subroutine declared
+this arg 0 declared
+x field 0 used
+<symbol> &gt; </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+<symbol> - </symbol>
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+x field 0 used
+x field 0 used
+<symbol> - </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+moveRight subroutine declared
+this arg 0 declared
+x field 0 used
+<symbol> + </symbol>
+<symbol> &lt; </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>
+x field 0 used
+x field 0 used
+<symbol> + </symbol>
+Screen class used
+setColor subroutine used
+Screen class used
+drawRectangle subroutine used
+x field 0 used
+<symbol> + </symbol>
+<symbol> - </symbol>
+x field 0 used
+<symbol> + </symbol>
+y field 1 used
+<symbol> + </symbol>

@@ -65,7 +65,7 @@ public class SymbolTable {
         if (nameToData.containsKey(name)) {
             return nameToData.get(name)[0];
         }
-        if (nextTable != null) {
+        else if (nextTable != null) {
             return nextTable.dataTypeOf(name);
         }
         return null;
@@ -77,8 +77,8 @@ public class SymbolTable {
         if (nameToData.containsKey(name)) {
             return nameToData.get(name)[1];
         }
-        if (nextTable != null) {
-            return nextTable.dataTypeOf(name);
+        else if (nextTable != null) {
+            return nextTable.scopeOf(name);
         }
         return null;
     }
@@ -88,8 +88,8 @@ public class SymbolTable {
         if (nameToData.containsKey(name)) {
             return nameToData.get(name)[2];
         }
-        if (nextTable != null) {
-            return nextTable.dataTypeOf(name);
+        else if (nextTable != null) {
+            return nextTable.indexOf(name);
         }
         return null;
     }
@@ -98,7 +98,7 @@ public class SymbolTable {
         if (nameToData.containsKey(name)) {
             return true;
         }
-        if (nextTable != null) {
+        else if (nextTable != null) {
             return nextTable.contains(name);
         }
         return false;

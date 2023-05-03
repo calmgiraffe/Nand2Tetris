@@ -1,433 +1,62 @@
-<class>
 SquareGame class declared
-<classVarDec>
 square field 0 declared
-</classVarDec>
-<classVarDec>
 direction field 1 declared
-</classVarDec>
-<subroutineDec>
 new subroutine declared
 this arg 0 declared
-<parameterList>
-</parameterList>
-<subroutineBody>
-<statements>
-<letStatement>
-square Square Square used
-<expression>
-<term>
+square field 0 used
 Square class used
 new subroutine used
-<expressionList>
-<expression>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-</expression>
-<expression>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-</expression>
-<expression>
-<term>
-<integerConstant> 30 </integerConstant>
-</term>
-</expression>
-</expressionList>
-</term>
-</expression>
-</letStatement>
-<letStatement>
-direction int int used
-<expression>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-</expression>
-</letStatement>
-<returnStatement>
-<expression>
-<term>
-<keyword> this </keyword>
-</term>
-</expression>
-</returnStatement>
-</statements>
-</subroutineBody>
-</subroutineDec>
-<subroutineDec>
+direction field 1 used
 dispose subroutine declared
 this arg 0 declared
-<parameterList>
-</parameterList>
-<subroutineBody>
-<statements>
-<doStatement>
-square Square Square used
+square field 0 used
 dispose subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-<doStatement>
 Memory class used
 deAlloc subroutine used
-<expressionList>
-<expression>
-<term>
-<keyword> this </keyword>
-</term>
-</expression>
-</expressionList>
-</doStatement>
-<returnStatement>
-</returnStatement>
-</statements>
-</subroutineBody>
-</subroutineDec>
-<subroutineDec>
 moveSquare subroutine declared
 this arg 0 declared
-<parameterList>
-</parameterList>
-<subroutineBody>
-<statements>
-<ifStatement>
-<expression>
-<term>
-direction int int used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 1 </integerConstant>
-</term>
-</expression>
-<statements>
-<doStatement>
-square Square Square used
+direction field 1 used
+square field 0 used
 moveUp subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
-direction int int used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 2 </integerConstant>
-</term>
-</expression>
-<statements>
-<doStatement>
-square Square Square used
+direction field 1 used
+square field 0 used
 moveDown subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
-direction int int used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 3 </integerConstant>
-</term>
-</expression>
-<statements>
-<doStatement>
-square Square Square used
+direction field 1 used
+square field 0 used
 moveLeft subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
-direction int int used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 4 </integerConstant>
-</term>
-</expression>
-<statements>
-<doStatement>
-square Square Square used
+direction field 1 used
+square field 0 used
 moveRight subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</ifStatement>
-<doStatement>
 Sys class used
 wait subroutine used
-<expressionList>
-<expression>
-<term>
-<integerConstant> 5 </integerConstant>
-</term>
-</expression>
-</expressionList>
-</doStatement>
-<returnStatement>
-</returnStatement>
-</statements>
-</subroutineBody>
-</subroutineDec>
-<subroutineDec>
 run subroutine declared
 this arg 0 declared
-<parameterList>
-</parameterList>
-<subroutineBody>
-<varDec>
 key var 0 declared
-</varDec>
-<varDec>
 exit var 1 declared
-</varDec>
-<statements>
-<letStatement>
 exit var 1 used
-<expression>
-<term>
-<keyword> false </keyword>
-</term>
-</expression>
-</letStatement>
-<whileStatement>
-<expression>
-<term>
-<symbol> ~ </symbol>
-<term>
-</term>
-</term>
-</expression>
-<statements>
-<whileStatement>
-<expression>
-<term>
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-</expression>
-<statements>
-<letStatement>
 key var 0 used
-<expression>
-<term>
 Keyboard class used
 keyPressed subroutine used
-<expressionList>
-</expressionList>
-</term>
-</expression>
-</letStatement>
-<doStatement>
 moveSquare subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</whileStatement>
-<ifStatement>
-<expression>
-<term>
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 81 </integerConstant>
-</term>
-</expression>
-<statements>
-<letStatement>
 exit var 1 used
-<expression>
-<term>
-<keyword> true </keyword>
-</term>
-</expression>
-</letStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 90 </integerConstant>
-</term>
-</expression>
-<statements>
-<doStatement>
-square Square Square used
+square field 0 used
 decSize subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 88 </integerConstant>
-</term>
-</expression>
-<statements>
-<doStatement>
-square Square Square used
+square field 0 used
 incSize subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 131 </integerConstant>
-</term>
-</expression>
-<statements>
-<letStatement>
-direction int int used
-<expression>
-<term>
-<integerConstant> 1 </integerConstant>
-</term>
-</expression>
-</letStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
+direction field 1 used
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 133 </integerConstant>
-</term>
-</expression>
-<statements>
-<letStatement>
-direction int int used
-<expression>
-<term>
-<integerConstant> 2 </integerConstant>
-</term>
-</expression>
-</letStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
+direction field 1 used
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 130 </integerConstant>
-</term>
-</expression>
-<statements>
-<letStatement>
-direction int int used
-<expression>
-<term>
-<integerConstant> 3 </integerConstant>
-</term>
-</expression>
-</letStatement>
-</statements>
-</ifStatement>
-<ifStatement>
-<expression>
-<term>
+direction field 1 used
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 132 </integerConstant>
-</term>
-</expression>
-<statements>
-<letStatement>
-direction int int used
-<expression>
-<term>
-<integerConstant> 4 </integerConstant>
-</term>
-</expression>
-</letStatement>
-</statements>
-</ifStatement>
-<whileStatement>
-<expression>
-<term>
-<symbol> ~ </symbol>
-<term>
-<expression>
-<term>
+direction field 1 used
 key var 0 used
-</term>
-<symbol> = </symbol>
-<term>
-<integerConstant> 0 </integerConstant>
-</term>
-</expression>
-</term>
-</term>
-</expression>
-<statements>
-<letStatement>
 key var 0 used
-<expression>
-<term>
 Keyboard class used
 keyPressed subroutine used
-<expressionList>
-</expressionList>
-</term>
-</expression>
-</letStatement>
-<doStatement>
 moveSquare subroutine used
-<expressionList>
-</expressionList>
-</doStatement>
-</statements>
-</whileStatement>
-</statements>
-</whileStatement>
-<returnStatement>
-</returnStatement>
-</statements>
-</subroutineBody>
-</subroutineDec>
-</class>
