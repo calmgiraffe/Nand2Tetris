@@ -25,13 +25,13 @@
           </expression>
         </letStatement>
         <doStatement>
-          game var used
+          game var 0 used
           run subroutine used
           <expressionList>
           </expressionList>
         </doStatement>
         <doStatement>
-          game var used
+          game var 0 used
           dispose subroutine used
           <expressionList>
           </expressionList>

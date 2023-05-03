@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/SymbolTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,16 +129,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Core/CompilationEngine.java</url>
-          <line>415</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
