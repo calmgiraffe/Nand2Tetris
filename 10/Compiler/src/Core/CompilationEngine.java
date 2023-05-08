@@ -1,15 +1,30 @@
 package Core;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static Core.Tokenizer.TokenType;
 import static Core.Tokenizer.TokenType.*;
 import static Core.Tokenizer.XML_EXCEP;
+import static Core.VMWriter.Command.*;
 
 /* The Core.CompilationEngine should grab tokens from the tokenizer one-by-one, analyze the grammar,
 and emit a structured representation of the source code in a xml file */
 public class CompilationEngine {
+    public static Map<String, VMWriter.Command> opToCommand = new HashMap<>() {{
+        put("+", add);
+        put("-", sub);
+        put("=", eq);
+        put(">", lt);
+        put("<", gt);
+        put("|", or);
+    }};
+    public static Map<String, VMWriter.Command> unaryOpToCommand = new HashMap<>() {{
+        put("-", neg);
+        put("~", not);
+    }};
     private static final Set<String> PRIMITIVES = Set.of("int","char","boolean");
     private static final Set<String> STATEMENTS = Set.of("let","if","while","do","return");
     private static final Set<String> OP = Set.of("+","-","*","/","&","|","<",">","=");
@@ -17,6 +32,7 @@ public class CompilationEngine {
     private static final Set<String> KEYWORD_CONST = Set.of("true","false","null","this");
 
     private final Tokenizer tk;
+    private final VMWriter vmWriter = new VMWriter();
     private final PrintWriter writer;
     private final SymbolTable classSymTable = new SymbolTable();
     private SymbolTable subSymTable = new SymbolTable(classSymTable);
@@ -350,7 +366,6 @@ public class CompilationEngine {
         if (!token.equals(";")) {
             compileExpression();
         }
-
         check(";");
     }
 
@@ -361,11 +376,13 @@ public class CompilationEngine {
         // 0 or more (op term)
         String token = tk.getCurrToken();
         while (OP.contains(token)) {
-            writer.println("<symbol> " + XML_EXCEP.getOrDefault(token, token) + " </symbol>"); // op symbol
+            String op = token; // store the current op
             tk.advance();
 
             compileTerm();
             token = tk.getCurrToken(); // Prepare next token
+
+            vmWriter.writeArithmetic(opToCommand.get(op)); // write the op
         }
     }
 
