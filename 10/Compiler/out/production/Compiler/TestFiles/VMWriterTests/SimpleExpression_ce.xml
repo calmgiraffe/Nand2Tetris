@@ -1,0 +1,13 @@
+Main class declared
+x int static 0 declared
+y int static 1 declared
+z int static 2 declared
+a int field 0 declared
+b int field 1 declared
+c int field 2 declared
+new subroutine declared
+this Main arg 0 declared
+Ax int arg 1 declared
+Ay int arg 2 declared
+Asize int arg 3 declared
+x int static 0 used

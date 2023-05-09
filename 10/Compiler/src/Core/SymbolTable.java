@@ -6,13 +6,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class SymbolTable {
-    public static final Set<String> SCOPE_TYPES = Set.of(
-            "static","field","arg","var");
-    public static HashSet<String> DATA_TYPES = new HashSet<>(Set.of(
-            "int","char","boolean"));
+    public static final Set<String> SCOPE_TYPES = Set.of("static","field","arg","var");
+    public static HashSet<String> DATA_TYPES = new HashSet<>(Set.of("int","char","boolean"));
 
     /* Map ScopeType to cumulative index */
-    private final Map<String, Integer> scopeToCumulativeIndex = new HashMap<>() {{
+    private final Map<String, Integer> scopeToRunningIndex = new HashMap<>() {{
         put("static", 0);
         put("field", 0);
         put("arg", 0);
@@ -41,12 +39,12 @@ public class SymbolTable {
         // Add new row to symbol table
         String[] data = new String[3];
         data[0] = dataType;
-        data[1] = scope;
-        data[2] = String.valueOf(scopeToCumulativeIndex.get(scope));
+        data[1] = scope;    // scope will always be one of static, field, arg, var
+        data[2] = String.valueOf(scopeToRunningIndex.get(scope));
         nameToData.put(name, data); // Todo: handle case where name already exists by logging error
 
         // Increment data type's index by 1
-        scopeToCumulativeIndex.replace(scope, scopeToCumulativeIndex.get(scope) + 1);
+        scopeToRunningIndex.replace(scope, scopeToRunningIndex.get(scope) + 1);
     }
 
     /** Returns the number of variables of the given scope */
@@ -55,8 +53,8 @@ public class SymbolTable {
             // Todo: handle cases where invalid scope
             return -1;
         }
-        if (scopeToCumulativeIndex.containsKey(scope)) {
-            return scopeToCumulativeIndex.get(scope);
+        if (scopeToRunningIndex.containsKey(scope)) {
+            return scopeToRunningIndex.get(scope);
         }
         return nextTable.varCount(scope);
     }

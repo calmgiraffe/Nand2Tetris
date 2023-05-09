@@ -1,30 +1,17 @@
 package Core;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import static Core.Tokenizer.TokenType;
 import static Core.Tokenizer.TokenType.*;
 import static Core.Tokenizer.XML_EXCEP;
-import static Core.VMWriter.Command.*;
+import static Core.VMWriter.Arithmetic.*;
+import static Core.VMWriter.Segment.*;
 
 /* The Core.CompilationEngine should grab tokens from the tokenizer one-by-one, analyze the grammar,
 and emit a structured representation of the source code in a xml file */
 public class CompilationEngine {
-    public static Map<String, VMWriter.Command> opToCommand = new HashMap<>() {{
-        put("+", add);
-        put("-", sub);
-        put("=", eq);
-        put(">", lt);
-        put("<", gt);
-        put("|", or);
-    }};
-    public static Map<String, VMWriter.Command> unaryOpToCommand = new HashMap<>() {{
-        put("-", neg);
-        put("~", not);
-    }};
     private static final Set<String> PRIMITIVES = Set.of("int","char","boolean");
     private static final Set<String> STATEMENTS = Set.of("let","if","while","do","return");
     private static final Set<String> OP = Set.of("+","-","*","/","&","|","<",">","=");
@@ -32,16 +19,17 @@ public class CompilationEngine {
     private static final Set<String> KEYWORD_CONST = Set.of("true","false","null","this");
 
     private final Tokenizer tk;
-    private final VMWriter vmWriter = new VMWriter();
     private final PrintWriter writer;
     private final SymbolTable classSymTable = new SymbolTable();
     private SymbolTable subSymTable = new SymbolTable(classSymTable);
+    private VMWriter vmWriter;
     private String className;
 
     /** Build the list of output files */
     public CompilationEngine(String source) throws IOException {
         tk = new Tokenizer(source);
         String prefix = source.substring(0, source.length() - 5);
+        vmWriter = new VMWriter(prefix);
         writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + "_ce.xml")));
     }
 
@@ -50,6 +38,7 @@ public class CompilationEngine {
         compileClass();
         tk.close();
         writer.close();
+        vmWriter.close();
     }
 
     /* Method for compiling class, ex., class Main {...}
@@ -382,7 +371,7 @@ public class CompilationEngine {
             compileTerm();
             token = tk.getCurrToken(); // Prepare next token
 
-            vmWriter.writeArithmetic(opToCommand.get(op)); // write the op
+            vmWriter.writeArithmetic(op); // write the string that is mapped to op
         }
     }
 
@@ -392,15 +381,22 @@ public class CompilationEngine {
         String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
 
         if (type == integerConstant) {
-            writer.println("<integerConstant> " + token + " </integerConstant>");
+            vmWriter.writePush(CONSTANT, token);
             tk.advance();
         }
         else if (type == stringConstant) {
-            writer.println("<stringConstant> " + token + " </stringConstant>");
+            //writer.println("<stringConstant> " + token + " </stringConstant>");
             tk.advance();
         }
-        else if (KEYWORD_CONST.contains(token)) {
-            writer.println("<keyword> " + token + " </keyword>");
+        else if (KEYWORD_CONST.contains(token)) { // true, false, null, this
+            switch (token) {
+                case "false", "null" -> vmWriter.writePush(CONSTANT, "0");
+                case "this" -> vmWriter.writePush(POINTER, "0");
+                case "true" ->  {
+                    vmWriter.writePush(CONSTANT, "1");
+                    vmWriter.write(neg);
+                }
+            }
             tk.advance();
         }
         else if (token.equals("(")) { // '(' expression ')'
