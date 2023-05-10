@@ -527,41 +527,51 @@ public class CompilationEngine {
     /* Helper function for compileDo and compileTerm
     subroutineName '(' expressionList ')' | (className | varName) '.' subroutineName '(' expressionList ')' */
     private void compileSubroutineCall(String token, String nextToken) throws IOException {
-        TokenType type;
-        String subroutineName;
-
-        // subroutineName '(' expressionList ')'
-        // ex: g(2, y, -5, -z)
+        /* subroutineName '(' expressionList ')'
+        ex: g(2, y, -5, -z) */
         if (nextToken.equals("(")) {
-            subroutineName = className + "." + token;
+            // VM: push 'this' onto stack
+            String subroutineName = className + "." + token;
+            Segment memSegment = scopeToSegment.get(subSymTable.scopeOf("this"));
+            vmWriter.writePush(memSegment, subSymTable.indexOf("this"));
+
             check("(");
-            int nArgs = compileExpressionList();
+            int nArgs = compileExpressionList(); // resultants are pushed on stack
             check(")");
 
-            // VM: after args are pushed on stack, call the function
-            vmWriter.writeCall(subroutineName, nArgs);
+            // VM: after all args are pushed on stack, call function
+            vmWriter.writeCall(subroutineName, nArgs + 1);
         }
-        // (className | varName) '.' subroutineName '(' expressionList ')'
+        /* (className | varName) '.' subroutineName '(' expressionList ')'
+        ex: Memory.deAlloc(this), p1.distance(p2) */
         else if (nextToken.equals(".")) {
+            boolean isClass = false;
+            String calleeClassName = null;
 
-            if (subSymTable.contains(token)) { // is varName
-                printSymTableData(token, "used");
-            } else { // is className
-                writer.println(token + " class used");
+            /* (varName | className) */
+            if (subSymTable.contains(token)) {
+                // VM: push varName onto stack
+                Segment memSegment = scopeToSegment.get(subSymTable.scopeOf(token));
+                vmWriter.writePush(memSegment, subSymTable.indexOf(token));
+            } else {
+                // className: save its name
+                isClass = true;
+                calleeClassName = token;
             }
             check(".");
 
-            // subroutineName
-            token = tk.getCurrToken(); type = tk.getCurrType();
+            /* subroutineName */
+            token = tk.getCurrToken(); TokenType type = tk.getCurrType();
             if (!type.equals(identifier)) { throwRuntimeException("subroutineName", identifier, token, type); }
+            String subroutineName = isClass ? calleeClassName + "." + token : subSymTable.dataTypeOf(token) + "." + token;
             tk.advance();
 
             check("(");
-            int nArgs = compileExpressionList();
+            int nArgs = compileExpressionList(); // resultants are pushed on stack
             check(")");
 
-            // todo
-
+            // VM: after all args are pushed on stack, call function
+            vmWriter.writeCall(subroutineName, nArgs + 1);
         }
     }
 
