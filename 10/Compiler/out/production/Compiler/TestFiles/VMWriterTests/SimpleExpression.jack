@@ -1,8 +1,10 @@
-class Main {
-    static int x, y, z;
-    field int a, b, c;
-    
-    constructor Square new(int Ax, int Ay, int Asize) {
-      let x = 1 + 2 - 3 * 4 / 5;
-   }
+class Main {                           
+    function void main() {
+        var int x, y, z; // local 0, 1, 2
+        var boolean bool; // local 3
+        
+        let x = 1 + 2;
+        let y = (3*x - 1) + (x - 4);
+        let z = x / y;
+        }
 }

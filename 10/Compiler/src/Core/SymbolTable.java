@@ -5,21 +5,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static Core.SymbolTable.Scope.*;
+
 public class SymbolTable {
-    public static final Set<String> SCOPE_TYPES = Set.of("static","field","arg","var");
+    private record Data(String dataType, Scope scope, int index) {}
+    public enum Scope {
+        STATIC, FIELD, ARG, VAR
+    }
     public static HashSet<String> DATA_TYPES = new HashSet<>(Set.of("int","char","boolean"));
 
     /* Map ScopeType to cumulative index */
-    private final Map<String, Integer> scopeToRunningIndex = new HashMap<>() {{
-        put("static", 0);
-        put("field", 0);
-        put("arg", 0);
-        put("var", 0);
+    private final Map<Scope, Integer> scopeToRunningIndex = new HashMap<>() {{
+        put(STATIC, 0);
+        put(FIELD, 0);
+        put(ARG, 0);
+        put(VAR, 0);
     }};
     /* name -> data type, scope, index
     Note: In Jack and in most programming languages, variables cannot share
     the same name even if they are different data types */
-    private final Map<String, String[]> nameToData = new HashMap<>();
+    private final Map<String, Data> nameToData = new HashMap<>();
     private SymbolTable nextTable;
 
     /** Default constructor */
@@ -32,29 +37,26 @@ public class SymbolTable {
 
     /** Adds to the symbol table a new variable of the given name, dataType, and scope.
     Assigns to it the index value of that scope, and adds 1 to the index */
-    public void define(String name, String dataType, String scope) {
-        /* If custom class, add to set of data types */
+    public void define(String name, String dataType, Scope scope) {
+        // Add to set of data types, includes primitive and user-defined
         DATA_TYPES.add(dataType);
 
-        // Add new row to symbol table
-        String[] data = new String[3];
-        data[0] = dataType;
-        data[1] = scope;    // scope will always be one of static, field, arg, var
-        data[2] = String.valueOf(scopeToRunningIndex.get(scope));
-        nameToData.put(name, data); // Todo: handle case where name already exists by logging error
+        // Map name to new symbol table entry
+        // Todo: handle case where name already exists by logging error
+        Data data = new Data(dataType, scope, scopeToRunningIndex.get(scope));
+        nameToData.put(name, data);
 
         // Increment data type's index by 1
         scopeToRunningIndex.replace(scope, scopeToRunningIndex.get(scope) + 1);
     }
 
     /** Returns the number of variables of the given scope */
-    public int varCount(String scope) {
-        if (!SCOPE_TYPES.contains(scope)) {
-            // Todo: handle cases where invalid scope
-            return -1;
-        }
+    public int varCount(Scope scope) {
         if (scopeToRunningIndex.containsKey(scope)) {
             return scopeToRunningIndex.get(scope);
+        }
+        if (nextTable == null) {
+            return 0;
         }
         return nextTable.varCount(scope);
     }
@@ -63,7 +65,7 @@ public class SymbolTable {
     Can either be a primitive (int, boolean, char), built-in object, or user-defined object */
     public String dataTypeOf(String name) {
         if (nameToData.containsKey(name)) {
-            return nameToData.get(name)[0];
+            return nameToData.get(name).dataType;
         }
         if (nextTable == null) {
             // Handle the case where name is not found in any table
@@ -73,25 +75,25 @@ public class SymbolTable {
     }
 
     /** Returns the scope of the named identifier */
-    public String scopeOf(String name) {
+    public Scope scopeOf(String name) {
         if (nameToData.containsKey(name)) {
-            return nameToData.get(name)[1];
+            return nameToData.get(name).scope;
         }
         if (nextTable == null) {
             // Handle the case where name is not found in any table
-            return "Unknown";
+            return null;
         }
         return nextTable.scopeOf(name);
     }
 
     /** Returns the index of the named variable */
-    public String indexOf(String name) {
+    public int indexOf(String name) {
         if (nameToData.containsKey(name)) {
-            return nameToData.get(name)[2];
+            return nameToData.get(name).index;
         }
         if (nextTable == null) {
             // Handle the case where name is not found in any table
-            return "Unknown";
+            return -1;
         }
         return nextTable.indexOf(name);
     }

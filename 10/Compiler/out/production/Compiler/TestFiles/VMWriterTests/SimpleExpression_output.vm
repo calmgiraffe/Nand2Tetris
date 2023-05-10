@@ -1,7 +1,20 @@
+<let statement>
 push constant 1
 push constant 2
 add
+pop local 0
+<let statement>
 push constant 3
-add
+push local 0
+call Math.multiply 2
+push constant 1
+sub
+push local 0
 push constant 4
+sub
 add
+pop local 1
+<let statement>
+push local 0
+call Math.divide 2
+pop local 2
