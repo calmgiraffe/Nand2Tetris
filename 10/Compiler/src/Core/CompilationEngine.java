@@ -318,69 +318,74 @@ public class CompilationEngine {
             check("]");
         }
         check("=");
-        compileExpression();
+        compileExpression(); // RHS: expression value is put on stack
         check(";");
 
-        // VM code for LHS of let statement
-        Segment segment = scopeToSegment.get(subSymTable.scopeOf(varName));
-        vmWriter.writePop(segment, subSymTable.indexOf(varName));
+        // VM code: LHS of let statement
+        vmWriter.writePop(
+                scopeToSegment.get(subSymTable.scopeOf(varName)),
+                subSymTable.indexOf(varName)
+        );
     }
 
     /* 'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')? */
     private void compileIf() throws IOException {
+        // Set labels
         vmWriter.write("<if statement>");
         String elseLabel = "L" + labelCounter;
         String endLabel = "L" + (labelCounter + 1);
         labelCounter += 2;
 
-        // 'if' '(' expression ')' '{' statements '}'
+        /* 'if' '(' expression ')' '{' statements '}' */
         check("if");
         check("(");
-
-        compileExpression(); // resultant should be at top of stack
-        vmWriter.writeArithmetic(not); // negate the resultant
-        vmWriter.writeIf(elseLabel); // skip to else if true
-
+        compileExpression();
         check(")");
-        check("{");
-        compileStatements(); // statements (0 or more statement)
-        check("}");
-        vmWriter.writeGoto(endLabel);
-        vmWriter.writeLabel(elseLabel);
+        vmWriter.writeArithmetic(not); // negate the resultant, which is at top of stack
+        vmWriter.writeIf(elseLabel); // if-goto ELSE
 
-        // ('else' '{' statements '}')?
+        // Start of IF block
+        check("{");
+        compileStatements();
+        check("}");
+        vmWriter.writeGoto(endLabel); // goto END
+
+        /* ('else' '{' statements '}')? */
+        vmWriter.writeLabel(elseLabel); // label ELSE
         if (tk.getCurrToken().equals("else")) {
             check("else");
             check("{");
-            compileStatements(); // statements (0 or more statement)
+            compileStatements();
             check("}");
         }
-        vmWriter.writePush(CONSTANT, 0); // todo: evaluate need for these two filler instructions
+        // Todo: evaluate need for these two filler instructions
+        vmWriter.writePush(CONSTANT, 0);
         vmWriter.writePop(TEMP, 0);
-        vmWriter.writeLabel(endLabel);
+        vmWriter.writeLabel(endLabel); // label END
     }
 
     /* 'while' '(' expression ')' '{' statements '}' */
     private void compileWhile() throws IOException {
+        // Set labels
         vmWriter.write("<while statement>");
         String whileLabel = "L" + labelCounter;
         String endLabel = "L" + (labelCounter + 1);
         labelCounter += 2;
 
-        vmWriter.writeLabel(whileLabel);
+        vmWriter.writeLabel(whileLabel); // label A
         check("while");
         check("(");
         compileExpression();
         check(")");
         vmWriter.writeArithmetic(not); // negate resultant, which is currently on stack
-        vmWriter.writeIf(endLabel); // jump to end if true
+        vmWriter.writeIf(endLabel); // goto B if true -> skip compileStatements() blk
 
         check("{");
-        compileStatements(); // statements (0 or more statement)
+        compileStatements(); // 0 or more statement
         check("}");
 
-        vmWriter.writeGoto(whileLabel);
-        vmWriter.writeLabel(endLabel);
+        vmWriter.writeGoto(whileLabel); // goto A -> return to expression
+        vmWriter.writeLabel(endLabel); // label B
     }
 
     /* 'do' subroutineCall ';' */
@@ -389,14 +394,14 @@ public class CompilationEngine {
 
         check("do");
 
-        // subroutineCall
+        /* subroutineCall */
         String token = tk.getCurrToken();
         tk.advance();
         String nextToken = tk.getCurrToken();
-        compileSubroutineCall(token, nextToken);
+        compileSubroutineCall(token, nextToken); // resultant placed on stack
 
         check(";");
-        vmWriter.writePush(TEMP, 0);
+        vmWriter.writePush(TEMP, 0); // get rid of topmost value
     }
 
     /* 'return' expression? ';' */
@@ -405,13 +410,14 @@ public class CompilationEngine {
 
         check("return");
 
-        // expression?
+        /* expression? */
         String token = tk.getCurrToken();
         if (!token.equals(";")) {
             compileExpression();
         }
         check(";");
-        vmWriter.writeReturn();
+
+        vmWriter.writeReturn(); // VM code: return
     }
 
     /* term (op term)* */
@@ -524,9 +530,10 @@ public class CompilationEngine {
         if (nextToken.equals("(")) {
             subroutineName = className + "." + token;
             check("(");
-            int nArgs = compileExpressionList(); // args should be pushed on stack
+            int nArgs = compileExpressionList();
             check(")");
 
+            // VM: after args are pushed on stack, call the function
             vmWriter.writeCall(subroutineName, nArgs);
         }
         // (className | varName) '.' subroutineName '(' expressionList ')'
