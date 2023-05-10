@@ -162,15 +162,20 @@ public class CompilationEngine {
         check(")");
 
         // VM code generation to make new object the current object
+        // Allocate enough words for object instance variables
+        // then set THIS to base address of allocated region
         // todo: handle method and class function calls
-        int nVars = subSymTable.varCount(Scope.VAR);
-        int nArgs = subSymTable.varCount(Scope.ARG);
-        vmWriter.writeFunction(subroutineName, nVars);
-        vmWriter.writePush(CONSTANT, nArgs);
-        vmWriter.writeCall("Memory.alloc", 1);
+        // todo: class static variables?
+
+        int nVars = subSymTable.varCount(Scope.VAR); // function has nVars local variables
+        int objectSize = classSymTable.varCount(Scope.FIELD); // obj size (num words)
+        vmWriter.writeFunction(subroutineName, nVars); // function functionName nVars
+        vmWriter.writePush(CONSTANT, objectSize);
+        vmWriter.writeCall("Memory.alloc", 1); // pushes base address to stack
         vmWriter.writePop(POINTER, 0);
 
-        compileSubroutineBody(); // contains at least "{}"
+        // '{' varDec* statement* '}' -> goes on to fill in allocated memory and execute statements
+        compileSubroutineBody();
 
         // 0 or more subroutineDec in class -> recursive call
         compileSubroutineDec();
@@ -406,7 +411,7 @@ public class CompilationEngine {
 
     /* 'return' expression? ';' */
     private void compileReturn() throws IOException {
-        vmWriter.write("  <return statement>");
+        vmWriter.write("<return statement>");
 
         check("return");
 
