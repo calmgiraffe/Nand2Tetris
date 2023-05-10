@@ -4,7 +4,7 @@ class Main {
         var boolean bool; // local 3
         
         let x = 1 + 2;
-        let y = (3*x - 1) + (x - 4);
+        let y = 5 + ((3*x - 1) + (x - 4));
         let z = x / y;
         }
 }

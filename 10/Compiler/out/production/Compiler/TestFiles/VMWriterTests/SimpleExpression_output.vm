@@ -4,6 +4,7 @@ push constant 2
 add
 pop local 0
 <let statement>
+push constant 5
 push constant 3
 push local 0
 call Math.multiply 2
@@ -13,8 +14,10 @@ push local 0
 push constant 4
 sub
 add
+add
 pop local 1
 <let statement>
 push local 0
+push local 1
 call Math.divide 2
 pop local 2

@@ -56,21 +56,29 @@ public class VMWriter {
     }
 
     /** Writes a VM label command */
-    public void writeLabel(String label) {}
+    public void writeLabel(String label) {
+        writer.println("label " + label);
+    }
 
     /** Writes a VM goto command */
-    public void writeGoto(String label) {}
+    public void writeGoto(String label) {
+        writer.println("goto " + label);
+    }
 
     /** Writes a VM if-goto command */
-    public void writeIf(String label) {}
+    public void writeIf(String label) {
+        writer.println("if-goto " + label);
+    }
 
     /** Writes a VM call command */
     public void writeCall(String name, int nArgs) {
         writer.println("call " + name + " " + nArgs);
     }
 
-    /** Writes a VM function command */
-    public void writeFunction(String name, int nArgs) {}
+    /** Writes a VM function command for subroutine definitions */
+    public void writeFunction(String name, int nVars) {
+        writer.println("function " + name + " " + nVars);
+    }
 
     /** Writes a VM return command */
     public void writeReturn() {
