@@ -562,8 +562,9 @@ public class CompilationEngine {
             Segment memSegment = scopeToSegment.get(subSymTable.scopeOf("this"));
             vmWriter.writePush(memSegment, subSymTable.indexOf("this"));
 
+            // resultants of compileExpressionList() are pushed on stack
             check("(");
-            int nArgs = compileExpressionList(); // resultants are pushed on stack
+            int nArgs = compileExpressionList();
             check(")");
 
             // VM: after all args are pushed on stack, call function
@@ -581,7 +582,7 @@ public class CompilationEngine {
                 Segment memSegment = scopeToSegment.get(subSymTable.scopeOf(token));
                 vmWriter.writePush(memSegment, subSymTable.indexOf(token));
             } else {
-                // className: save its name
+                // subroutine associated with class, save its name
                 isClass = true;
                 calleeClassName = token;
             }
@@ -593,12 +594,13 @@ public class CompilationEngine {
             String subroutineName = isClass ? calleeClassName + "." + token : subSymTable.dataTypeOf(token) + "." + token;
             tk.advance();
 
+            // resultants of compileExpressionList() are pushed on stack
             check("(");
-            int nArgs = compileExpressionList(); // resultants are pushed on stack
+            int nArgs = compileExpressionList();
             check(")");
 
             // VM: after all args are pushed on stack, call function
-            vmWriter.writeCall(subroutineName, nArgs + 1);
+            vmWriter.writeCall(subroutineName, nArgs + ((isClass) ? 0 : 1));
         }
     }
 

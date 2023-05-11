@@ -1,6 +1,4 @@
 function Main.main 0
-push argument 0
-pop pointer 0
 push constant 1
 push constant 2
 push constant 3

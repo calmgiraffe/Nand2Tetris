@@ -2,67 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Seven/Main.vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ArrayTest/Main.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ArrayTest/Main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ArrayTest/MainT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/MainT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/MainT_test.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main_ce.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGameT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGameT_test.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame_ce.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareT_test.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square_ce.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTestVMWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTestVMWriter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/VMWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/VMWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT_test.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGameT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGameT_test.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareT_test.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UnitTestVMWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTestVMWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Main.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/MainT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Square.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Square.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareGame.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareGame.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareGameT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/Main.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/Main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/MainT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/Square.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/Square.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/SquareGame.jack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/SquareGame.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/SquareGameT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Square/SquareT.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
