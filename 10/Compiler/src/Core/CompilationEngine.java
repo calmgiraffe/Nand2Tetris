@@ -513,12 +513,11 @@ public class CompilationEngine {
             check(")");
         }
         else if (UNARY_OP.contains(token)) { // (unaryOp term)
-            String op = token;
             tk.advance();
 
             // VM: push exp; unary op
             compileTerm();
-            vmWriter.writeArithmetic(UNARY_OP_TO_COMMAND.get(op));
+            vmWriter.writeArithmetic(UNARY_OP_TO_COMMAND.get(token));
         }
         else if (type == identifier) { // varName | varName '[' expression ']' | subroutineCall
             // Need to peek ahead to determine next steps
@@ -659,9 +658,6 @@ public class CompilationEngine {
         }
         tk.advance();
     }
-
-    // Todo: complete checkType (similar to check())
-    private void checkType(TokenType expectedType) throws IOException {}
 
     private void printSymTableData(String name, String declaration) {
         if (!subSymTable.contains(name)) {
