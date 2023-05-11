@@ -154,22 +154,26 @@ public class CompilationEngine {
         tk.advance();
 
         /* type: void, primitive type, or identifier */
-        String token = tk.getCurrToken();
-        TokenType type = tk.getCurrType();
+        String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
         if (!token.equals("void") && !PRIMITIVES.contains(token) && type != identifier) {
             throwRuntimeException("'void' | type", keyword + ", " + identifier, token, type);
         }
         tk.advance();
 
         /* subroutineName */
-        token = tk.getCurrToken();
-        type = tk.getCurrType();
-        if (type != identifier) { throwRuntimeException("subroutineName", identifier, token, type); }
+        token = tk.getCurrToken(); type = tk.getCurrType();
+        if (type != identifier) {
+            // Check if the current token type is an identifier
+            throwRuntimeException("subroutineName", identifier, token, type);
+        }
         if (subType == SubroutineType.CONSTRUCTOR) {
-            if (!token.equals("new")) { throwRuntimeException("'new'", identifier, token, type); }
+            // If the subroutine type is a constructor, the token should be 'new'
+            if (!token.equals("new")) {
+                throwRuntimeException("'new'", identifier, token, type);
+            }
         }
         else if (subType == SubroutineType.METHOD) {
-            // Add 'this' to subroutine symbol table, if method
+            // Add 'this' to subroutine symbol table, if subroutine is method
             subSymTable.define("this", className, Scope.ARG);
         }
         String subroutineName = className + '.' + token;
@@ -180,19 +184,25 @@ public class CompilationEngine {
         check(")");
 
         // VM code: function functionName nVars
-        int nVars = subSymTable.varCount(Scope.VAR);
-        vmWriter.writeFunction(subroutineName, nVars);
+        vmWriter.writeFunction(subroutineName, subSymTable.varCount(Scope.VAR));
 
-        switch (subType) {
-            case CONSTRUCTOR -> {
-                // Allocate enough words for object instance variables (num field variables)
-                int objectSize = classSymTable.varCount(Scope.FIELD);
-                vmWriter.writePush(CONSTANT, objectSize);
-                vmWriter.writeCall("Memory.alloc", 1); // pushes base address to stack
-            }
-            case METHOD, FUNCTION -> vmWriter.writePush(ARGUMENT, 0);
+        if (subType == SubroutineType.CONSTRUCTOR) {
+            // Allocate enough words for object instance variables.
+            // The allocated size is equal to the number of field variables.
+            int objectSize = classSymTable.varCount(Scope.FIELD);
+            vmWriter.writePush(CONSTANT, objectSize);
+
+            // Memory.alloc pushes base address to stack
+            vmWriter.writeCall("Memory.alloc", 1);
+
+            // Pops the base address to pointer 0.
+            vmWriter.writePop(POINTER, 0);
         }
-        vmWriter.writePop(POINTER, 0);
+        else if (subType == SubroutineType.METHOD) {
+            // For methods, push the first argument (this) to the stack and pop it to pointer 0.
+            vmWriter.writePush(ARGUMENT, 0);
+            vmWriter.writePop(POINTER, 0);
+        }
 
         // '{' varDec* statement* '}' -> goes on to fill in allocated memory and execute statements
         compileSubroutineBody();
@@ -415,8 +425,6 @@ public class CompilationEngine {
 
     /* 'do' subroutineCall ';' */
     private void compileDo() throws IOException {
-        vmWriter.write("<do statement>");
-
         check("do");
 
         /* subroutineCall */
@@ -431,17 +439,16 @@ public class CompilationEngine {
 
     /* 'return' expression? ';' */
     private void compileReturn() throws IOException {
-        vmWriter.write("<return statement>");
-
         check("return");
 
         /* expression? */
         String token = tk.getCurrToken();
         if (!token.equals(";")) {
             compileExpression();
+        } else { // no expression -> void method/function
+            vmWriter.writePush(CONSTANT, 0);
         }
         check(";");
-
         vmWriter.writeReturn(); // VM code: return
     }
 

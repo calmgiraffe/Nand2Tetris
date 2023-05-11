@@ -34,7 +34,7 @@ public class VMWriter {
     private final PrintWriter writer;
 
     VMWriter(String prefix) throws IOException {
-        writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + "_output.vm")));
+        writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + ".vm")));
     }
     public void write(String string) {
         writer.println(string);

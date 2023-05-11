@@ -1,4 +1,5 @@
 import Core.CompilationEngine;
+import Core.Main;
 import org.junit.Test;
 
 import java.io.IOException;

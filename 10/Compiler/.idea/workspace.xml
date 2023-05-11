@@ -2,12 +2,67 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Seven/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ArrayTest/Main.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ArrayTest/Main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ArrayTest/MainT.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/VMWriterTests/SimpleExpression.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/VMWriterTests/SimpleExpression.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/VMWriterTests/SimpleExpression_output.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/VMWriterTests/SimpleExpression_output.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/MainT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/MainT_test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main_ce.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGameT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGameT_test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame_ce.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareT_test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square_ce.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/UnitTestVMWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/UnitTestVMWriter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/VMWriterTests/SimpleExpression_output.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/VMWriterTests/SimpleExpression_output.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/VMWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/VMWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/MainT_test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGameT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGameT_test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareT_test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UnitTestVMWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UnitTestVMWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Main.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/MainT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Square.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/Square.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareGame.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareGame.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareGameT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ExpressionLessSquare/SquareT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/Main.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/Main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/MainT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/Square.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/Square.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/SquareGame.jack" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/SquareGame.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/SquareGameT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Square/SquareT.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,22 +105,26 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.UnitTestVMWriter.simpleExpressionTest">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Core.Main" />
+      <module name="Compiler" />
+      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/Seven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UnitTestSyntaxAnalyzer.arrayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="UnitTestSyntaxAnalyzer" />
       <option name="METHOD_NAME" value="arrayTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UnitTestSyntaxAnalyzer.expressionlessSquareTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Compiler" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTestSyntaxAnalyzer" />
-      <option name="METHOD_NAME" value="expressionlessSquareTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -81,11 +140,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnitTestTokenizer.XMLSquare" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UnitTestVMWriter.sevenTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Compiler" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UnitTestTokenizer" />
-      <option name="METHOD_NAME" value="XMLSquare" />
+      <option name="MAIN_CLASS_NAME" value="UnitTestVMWriter" />
+      <option name="METHOD_NAME" value="sevenTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -101,13 +160,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.UnitTestSyntaxAnalyzer.arrayTest" />
+      <item itemvalue="JUnit.UnitTestSyntaxAnalyzer.squareTest" />
+      <item itemvalue="JUnit.UnitTestVMWriter.sevenTest" />
+      <item itemvalue="JUnit.UnitTestVMWriter.simpleExpressionTest" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.UnitTestVMWriter.sevenTest" />
         <item itemvalue="JUnit.UnitTestVMWriter.simpleExpressionTest" />
         <item itemvalue="JUnit.UnitTestSyntaxAnalyzer.squareTest" />
         <item itemvalue="JUnit.UnitTestSyntaxAnalyzer.arrayTest" />
-        <item itemvalue="JUnit.UnitTestSyntaxAnalyzer.expressionlessSquareTest" />
-        <item itemvalue="JUnit.UnitTestTokenizer.XMLSquare" />
       </list>
     </recent_temporary>
   </component>

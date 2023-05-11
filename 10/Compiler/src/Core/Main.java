@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.lang.System.exit;
 
@@ -22,7 +24,8 @@ public class Main {
         else { // If the argument is a directory, add all .jack files in the directory to the deque
             File directory = new File(args[0]);
             FilenameFilter jackFilter = (dir, name) -> name.toLowerCase().endsWith(".jack");
-            sourceFiles.addAll(List.of(Objects.requireNonNull(directory.list(jackFilter))));
+            sourceFiles.addAll(Arrays.stream(Objects.requireNonNull(directory.listFiles(jackFilter)))
+                    .map(File::getPath).toList());
         }
         /* Iterate through sourceFiles and compile */
         for (String file : sourceFiles) {
