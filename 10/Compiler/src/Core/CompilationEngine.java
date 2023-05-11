@@ -132,28 +132,46 @@ public class CompilationEngine {
     ('constructor' | 'function' | 'method') ('void' | type) subroutineName '(' parameterList ')' subroutineBody
     ex., method void draw(int x, int y) */
     private void compileSubroutineDec() throws IOException {
-        // Immediately return if not one of 'constructor', 'function', 'method'
-        String token = tk.getCurrToken();
-        if (!(token.equals("constructor") || token.equals("function") || token.equals("method"))) {
-            return;
+        enum SubroutineType {
+            METHOD, CONSTRUCTOR, FUNCTION
         }
         /* ('constructor' | 'function' | 'method') */
+        SubroutineType subType;
+        switch (tk.getCurrToken()) {
+            case "method":
+                subType = SubroutineType.METHOD;
+                break;
+            case "constructor":
+                subType = SubroutineType.CONSTRUCTOR;
+                break;
+            case "function":
+                subType = SubroutineType.FUNCTION;
+                break;
+            default: // Immediately return if not one of the three
+                return;
+        }
         subSymTable = new SymbolTable(classSymTable);
         tk.advance();
 
         /* type: void, primitive type, or identifier */
-        token = tk.getCurrToken(); TokenType type = tk.getCurrType();
+        String token = tk.getCurrToken();
+        TokenType type = tk.getCurrType();
         if (!token.equals("void") && !PRIMITIVES.contains(token) && type != identifier) {
             throwRuntimeException("'void' | type", keyword + ", " + identifier, token, type);
         }
         tk.advance();
 
         /* subroutineName */
-        token = tk.getCurrToken(); type = tk.getCurrType();
+        token = tk.getCurrToken();
+        type = tk.getCurrType();
         if (type != identifier) { throwRuntimeException("subroutineName", identifier, token, type); }
-
-        // Add 'this' to subroutine symbol table
-        subSymTable.define("this", className, Scope.ARG);
+        if (subType == SubroutineType.CONSTRUCTOR) {
+            if (!token.equals("new")) { throwRuntimeException("'new'", identifier, token, type); }
+        }
+        else if (subType == SubroutineType.METHOD) {
+            // Add 'this' to subroutine symbol table, if method
+            subSymTable.define("this", className, Scope.ARG);
+        }
         String subroutineName = className + '.' + token;
         tk.advance();
 
@@ -161,17 +179,19 @@ public class CompilationEngine {
         compileParameterList(); // vars are added to subroutine table
         check(")");
 
-        // VM code generation to make new object the current object
-        // Allocate enough words for object instance variables
-        // then set THIS to base address of allocated region
-        // todo: handle method and class function calls
-        // todo: class static variables?
+        // VM code: function functionName nVars
+        int nVars = subSymTable.varCount(Scope.VAR);
+        vmWriter.writeFunction(subroutineName, nVars);
 
-        int nVars = subSymTable.varCount(Scope.VAR); // function has nVars local variables
-        int objectSize = classSymTable.varCount(Scope.FIELD); // obj size (num words)
-        vmWriter.writeFunction(subroutineName, nVars); // function functionName nVars
-        vmWriter.writePush(CONSTANT, objectSize);
-        vmWriter.writeCall("Memory.alloc", 1); // pushes base address to stack
+        switch (subType) {
+            case CONSTRUCTOR -> {
+                // Allocate enough words for object instance variables (num field variables)
+                int objectSize = classSymTable.varCount(Scope.FIELD);
+                vmWriter.writePush(CONSTANT, objectSize);
+                vmWriter.writeCall("Memory.alloc", 1); // pushes base address to stack
+            }
+            case METHOD, FUNCTION -> vmWriter.writePush(ARGUMENT, 0);
+        }
         vmWriter.writePop(POINTER, 0);
 
         // '{' varDec* statement* '}' -> goes on to fill in allocated memory and execute statements
@@ -630,6 +650,9 @@ public class CompilationEngine {
         }
         tk.advance();
     }
+
+    // Todo: complete checkType (similar to check())
+    private void checkType(TokenType expectedType) throws IOException {}
 
     private void printSymTableData(String name, String declaration) {
         if (!subSymTable.contains(name)) {
