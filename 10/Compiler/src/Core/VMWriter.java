@@ -19,6 +19,7 @@ public class VMWriter {
         put(">", lt);
         put("<", gt);
         put("|", or);
+        put("&", and);
     }};
     public static Map<String, Arithmetic> UNARY_OP_TO_COMMAND = new HashMap<>() {{
         put("-", neg); // same as minus in OP_TO_COMMAND

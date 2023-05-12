@@ -2,7 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/ConvertToBin/Main.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/ConvertToBin/Main_ce.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main_ce.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_ce.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square_ce.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine$1SubroutineType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine$1SubroutineType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$Arithmetic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$Arithmetic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$Segment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$Segment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Seven/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Seven/Main.vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/VMWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/VMWriter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +67,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Core.Main" />
       <module name="Compiler" />
-      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/Seven" />
+      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/Square" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Core.*" />

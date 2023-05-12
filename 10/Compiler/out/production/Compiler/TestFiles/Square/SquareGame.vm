@@ -1,0 +1,251 @@
+function SquareGame.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+// let statement
+push constant 0
+push constant 0
+push constant 30
+call Square.new 3
+pop this 0
+// let statement
+push constant 0
+pop this 1
+// return statement
+push pointer 0
+return
+function SquareGame.dispose 0
+push argument 0
+pop pointer 0
+// do statement
+push this 0
+call Unknown.dispose 1
+push temp 0
+// do statement
+push pointer 0
+call Memory.deAlloc 1
+push temp 0
+// return statement
+push constant 0
+return
+function SquareGame.moveSquare 0
+push argument 0
+pop pointer 0
+// if statement
+push this 1
+push constant 1
+eq
+not
+if-goto L0
+// do statement
+push this 0
+call Unknown.moveUp 1
+push temp 0
+goto L1
+label L0
+push constant 0
+pop temp 0
+label L1
+// if statement
+push this 1
+push constant 2
+eq
+not
+if-goto L2
+// do statement
+push this 0
+call Unknown.moveDown 1
+push temp 0
+goto L3
+label L2
+push constant 0
+pop temp 0
+label L3
+// if statement
+push this 1
+push constant 3
+eq
+not
+if-goto L4
+// do statement
+push this 0
+call Unknown.moveLeft 1
+push temp 0
+goto L5
+label L4
+push constant 0
+pop temp 0
+label L5
+// if statement
+push this 1
+push constant 4
+eq
+not
+if-goto L6
+// do statement
+push this 0
+call Unknown.moveRight 1
+push temp 0
+goto L7
+label L6
+push constant 0
+pop temp 0
+label L7
+// do statement
+push constant 5
+call Sys.wait 1
+push temp 0
+// return statement
+push constant 0
+return
+function SquareGame.run 0
+push argument 0
+pop pointer 0
+// let statement
+push constant 0
+pop local 1
+// while statement
+label L8
+push local 1
+not
+not
+if-goto L9
+// while statement
+label L10
+push local 0
+push constant 0
+eq
+not
+if-goto L11
+// let statement
+call Keyboard.keyPressed 0
+pop local 0
+// do statement
+push pointer 0
+call SquareGame.moveSquare 1
+push temp 0
+goto L10
+label L11
+// if statement
+push local 0
+push constant 81
+eq
+not
+if-goto L12
+// let statement
+push constant 1
+neg
+pop local 1
+goto L13
+label L12
+push constant 0
+pop temp 0
+label L13
+// if statement
+push local 0
+push constant 90
+eq
+not
+if-goto L14
+// do statement
+push this 0
+call Unknown.decSize 1
+push temp 0
+goto L15
+label L14
+push constant 0
+pop temp 0
+label L15
+// if statement
+push local 0
+push constant 88
+eq
+not
+if-goto L16
+// do statement
+push this 0
+call Unknown.incSize 1
+push temp 0
+goto L17
+label L16
+push constant 0
+pop temp 0
+label L17
+// if statement
+push local 0
+push constant 131
+eq
+not
+if-goto L18
+// let statement
+push constant 1
+pop this 1
+goto L19
+label L18
+push constant 0
+pop temp 0
+label L19
+// if statement
+push local 0
+push constant 133
+eq
+not
+if-goto L20
+// let statement
+push constant 2
+pop this 1
+goto L21
+label L20
+push constant 0
+pop temp 0
+label L21
+// if statement
+push local 0
+push constant 130
+eq
+not
+if-goto L22
+// let statement
+push constant 3
+pop this 1
+goto L23
+label L22
+push constant 0
+pop temp 0
+label L23
+// if statement
+push local 0
+push constant 132
+eq
+not
+if-goto L24
+// let statement
+push constant 4
+pop this 1
+goto L25
+label L24
+push constant 0
+pop temp 0
+label L25
+// while statement
+label L26
+push local 0
+push constant 0
+eq
+not
+not
+if-goto L27
+// let statement
+call Keyboard.keyPressed 0
+pop local 0
+// do statement
+push pointer 0
+call SquareGame.moveSquare 1
+push temp 0
+goto L26
+label L27
+goto L8
+label L9
+// return statement
+push constant 0
+return

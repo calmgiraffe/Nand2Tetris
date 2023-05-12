@@ -55,13 +55,15 @@ public class CompilationEngine {
 
     /* Method for compiling class, ex., class Main {...}
     "class" className "{" classVarDec* subroutineDec* ")" */
-    // set className
+    // OK
     private void compileClass() throws IOException {
         check("class");
 
         /* className identifier */
         String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
-        if (!type.equals(identifier)) { throwRuntimeException("className", identifier, token, type); }
+        if (!type.equals(identifier)) {
+            throwRuntimeException("className", identifier, token, type);
+        }
         className = token; // all subroutines have an implicit instance of this type
         tk.advance();
 
@@ -75,18 +77,18 @@ public class CompilationEngine {
     ('static' | 'field') type varName (',' varName)* ';'
     ex., field int x, y, z
     Consists only of symbol table entry adding */
-    // class sym table gets filled here
+    // OK
     private void compileClassVarDec() throws IOException {
-        /* ("static" | "field") */
-        /* Immediately return if neither */
         Scope scopeOf;
         String token = tk.getCurrToken();
+
+        /* ("static" | "field") */
         if (token.equals("static")) {
             scopeOf = Scope.STATIC;
         } else if (token.equals("field")){
             scopeOf = Scope.FIELD;
         } else {
-            return;
+            return; // Immediately return if neither
         }
         tk.advance();
 
@@ -100,8 +102,9 @@ public class CompilationEngine {
 
         /* varName */
         token = tk.getCurrToken(); type = tk.getCurrType();
-        if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
-
+        if (type != identifier) {
+            throwRuntimeException("varName", identifier, token, type);
+        }
         // Add to class symbol table - either primitive type or object
         classSymTable.define(token, dataTypeOf, scopeOf);
         tk.advance();
@@ -113,8 +116,9 @@ public class CompilationEngine {
 
             /* varName identifier must follow ',' */
             token = tk.getCurrToken(); type = tk.getCurrType();
-            if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
-
+            if (type != identifier) {
+                throwRuntimeException("varName", identifier, token, type);
+            }
             // Add to class symbol table - either primitive type or object
             classSymTable.define(token, dataTypeOf, scopeOf);
             tk.advance();
@@ -194,15 +198,14 @@ public class CompilationEngine {
 
             // Memory.alloc pushes base address to stack
             vmWriter.writeCall("Memory.alloc", 1);
-
-            // Pops the base address to pointer 0.
-            vmWriter.writePop(POINTER, 0);
         }
         else if (subType == SubroutineType.METHOD) {
             // For methods, push the first argument (this) to the stack and pop it to pointer 0.
             vmWriter.writePush(ARGUMENT, 0);
-            vmWriter.writePop(POINTER, 0);
         }
+        // Pops the base address to pointer 0.
+        vmWriter.writePop(POINTER, 0);
+
 
         // '{' varDec* statement* '}' -> goes on to fill in allocated memory and execute statements
         compileSubroutineBody();
@@ -211,9 +214,11 @@ public class CompilationEngine {
         compileSubroutineDec();
     }
 
-    /* Method for compiling 0 or 1 parameterList within subroutineDec, i.e., subroutine args
-    ((type varName) (',' type varName)*)?
+    /* Method for compiling 0 or 1 parameterList within subroutineDec,
+    i.e., a method for compiling the arguments of a subroutine.
+    Def: ((type varName) (',' type varName)*)?
     ex., int x, int y, boolean flag */
+    // OK
     private void compileParameterList() throws IOException {
         /* Immediately return if not type -> 0 parameterList */
         String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
@@ -226,8 +231,9 @@ public class CompilationEngine {
 
         /* varName */
         token = tk.getCurrToken(); type = tk.getCurrType();
-        if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
-
+        if (type != identifier) {
+            throwRuntimeException("varName", identifier, token, type);
+        }
         // Add first arg to subroutine symbol table
         subSymTable.define(token, dataTypeOf, Scope.ARG);
         tk.advance();
@@ -247,8 +253,9 @@ public class CompilationEngine {
 
             /* varName */
             token = tk.getCurrToken(); type = tk.getCurrType();
-            if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
-
+            if (type != identifier) {
+                throwRuntimeException("varName", identifier, token, type);
+            }
             // Add next arg(s) to subroutine symbol table
             subSymTable.define(token, dataTypeOf, Scope.ARG);
             tk.advance();
@@ -259,6 +266,7 @@ public class CompilationEngine {
     }
 
     /* Method for compiling subroutine body, i.e., { varDec* statement* } */
+    // OK
     private void compileSubroutineBody() throws IOException {
         check("{");
         compileVarDec(); // 0 or more varDec
@@ -266,43 +274,44 @@ public class CompilationEngine {
         check("}");
     }
 
-    /* Method for compiling varDec.
-    'var' type varName (',' varName)* ';' */
+    /* Method for compiling var declarations within a subroutine.
+    Def: 'var' type varName (',' varName)* ';' */
     private void compileVarDec() throws IOException {
-        String dataTypeOf;
-        String token; TokenType type;
-
         // Immediately return if not var
-        token = tk.getCurrToken();
-        if (!token.equals("var")) { return; }
+        if (!tk.getCurrToken().equals("var")) {
+            return;
+        }
         check("var");
 
-        // Primitive type or className (type)
-        token = tk.getCurrToken(); type = tk.getCurrType();
+        /* type: primitive type or className */
+        String token = tk.getCurrToken();
+        TokenType type = tk.getCurrType();
         if (!PRIMITIVES.contains(token) && type != identifier) {
             throwRuntimeException("type", keyword + ", " + identifier, token, type);
         }
-        dataTypeOf = token; // all var decs of this type
+        String dataTypeOf = token; // all var decs are of this type
         tk.advance();
 
-        // varName identifier
+        /* varName identifier */
         token = tk.getCurrToken(); type = tk.getCurrType();
-        if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
-
-        /* Add var to subroutine symbol table */
+        if (type != identifier) {
+            throwRuntimeException("varName", identifier, token, type);
+        }
+        // Add var to subroutine symbol table
         subSymTable.define(token, dataTypeOf, Scope.VAR);
         tk.advance();
 
-        // Zero or more (',' varName)
+        /* (',' varName)* */
         token = tk.getCurrToken();
         while (token.equals(",")) {
             check(",");
 
-            // varName identifier must follow ','
+            /* varName identifier */
             token = tk.getCurrToken(); type = tk.getCurrType();
-            if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
-
-            /* Add var to subroutine symbol table */
+            if (type != identifier) {
+                throwRuntimeException("varName", identifier, token, type);
+            }
+            // Add var to subroutine symbol table
             subSymTable.define(token, dataTypeOf, Scope.VAR);
             tk.advance();
 
@@ -334,39 +343,59 @@ public class CompilationEngine {
         }
     }
 
-    /* 'let' varName ('[' expression ']')? '=' expression ';' */
+    /* Def: 'let' varName ('[' expression ']')? '=' expression ';' */
     private void compileLet() throws IOException {
-        vmWriter.write("<let statement>");
+        vmWriter.write("// let statement");
         check("let");
 
         /* varName identifier */
         String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
-        if (type != identifier) { throwRuntimeException("varName", identifier, token, type); }
+        if (type != identifier) {
+            throwRuntimeException("varName", identifier, token, type);
+        }
         String varName = token;
         tk.advance();
 
         /* 0 or 1 ('[' expression ']') */
         token = tk.getCurrToken();
+        boolean leftIsArray = false;
         if (!token.equals("=")) {
+            // LHS is an array index -> push varName, compileExp, then add
+            leftIsArray = true;
+            vmWriter.writePush(
+                    scopeToSegment.get(subSymTable.scopeOf(varName)),
+                    subSymTable.indexOf(varName)
+            );
             check("[");
             compileExpression();
             check("]");
+
+            vmWriter.writeArithmetic(add);
         }
+        // RHS: expression value is put on stack
         check("=");
-        compileExpression(); // RHS: expression value is put on stack
+        compileExpression();
         check(";");
 
         // VM code: LHS of let statement
-        vmWriter.writePop(
-                scopeToSegment.get(subSymTable.scopeOf(varName)),
-                subSymTable.indexOf(varName)
-        );
+        if (leftIsArray) {
+            vmWriter.writePop(POINTER, 1);
+            vmWriter.writePush(TEMP, 0);
+            vmWriter.writePop(THAT, 0);
+        }
+        else {
+            vmWriter.writePop(
+                    scopeToSegment.get(subSymTable.scopeOf(varName)),
+                    subSymTable.indexOf(varName)
+            );
+        }
     }
 
     /* 'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')? */
     private void compileIf() throws IOException {
-        // Set labels
-        vmWriter.write("<if statement>");
+        vmWriter.write("// if statement");
+
+        // Define labels to jump to else block and end
         String elseLabel = "L" + labelCounter;
         String endLabel = "L" + (labelCounter + 1);
         labelCounter += 2;
@@ -401,8 +430,9 @@ public class CompilationEngine {
 
     /* 'while' '(' expression ')' '{' statements '}' */
     private void compileWhile() throws IOException {
-        // Set labels
-        vmWriter.write("<while statement>");
+        vmWriter.write("// while statement");
+
+        // Set labels: one each for while and end
         String whileLabel = "L" + labelCounter;
         String endLabel = "L" + (labelCounter + 1);
         labelCounter += 2;
@@ -425,6 +455,7 @@ public class CompilationEngine {
 
     /* 'do' subroutineCall ';' */
     private void compileDo() throws IOException {
+        vmWriter.write("// do statement");
         check("do");
 
         /* subroutineCall */
@@ -434,22 +465,27 @@ public class CompilationEngine {
         compileSubroutineCall(token, nextToken); // resultant placed on stack
 
         check(";");
-        vmWriter.writePush(TEMP, 0); // get rid of topmost value
+
+        // VM: no return value, get rid of topmost value
+        vmWriter.writePush(TEMP, 0);
     }
 
     /* 'return' expression? ';' */
     private void compileReturn() throws IOException {
+        vmWriter.write("// return statement");
         check("return");
 
         /* expression? */
-        String token = tk.getCurrToken();
-        if (!token.equals(";")) {
+        if (!tk.getCurrToken().equals(";")) {
             compileExpression();
-        } else { // no expression -> void method/function
+        }
+        else { // no expression -> void method/function
             vmWriter.writePush(CONSTANT, 0);
         }
         check(";");
-        vmWriter.writeReturn(); // VM code: return
+
+        // VM code: return
+        vmWriter.writeReturn();
     }
 
     /* term (op term)* */
@@ -465,11 +501,14 @@ public class CompilationEngine {
             compileTerm();
             token = tk.getCurrToken(); // Prepare next token
 
-            if (op.equals("*")) { // write the VM equivalent of the current op
+            // VM code: write VM equivalent of current op
+            if (op.equals("*")) {
                 vmWriter.writeCall("Math.multiply", 2);
-            } else if (op.equals("/")) {
+            }
+            else if (op.equals("/")) {
                 vmWriter.writeCall("Math.divide", 2);
-            } else {
+            }
+            else {
                 vmWriter.writeArithmetic(OP_TO_COMMAND.get(op));
             }
         }
@@ -481,7 +520,7 @@ public class CompilationEngine {
         String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
 
         if (type == integerConstant) {
-            // VM: push the int
+            // VM: push the int to stack
             vmWriter.writePush(CONSTANT, Integer.parseInt(token));
             tk.advance();
         }
@@ -490,6 +529,7 @@ public class CompilationEngine {
             // by generating a sequence of calls to the String method appendChar, one for each char
             vmWriter.writePush(CONSTANT, token.length());
             vmWriter.writeCall("String.new", 1);
+
             for (int i = 0; i < token.length(); i++) {
                 vmWriter.writePush(CONSTANT, token.charAt(i));
                 vmWriter.writeCall("String.appendChar", 1);
@@ -526,17 +566,19 @@ public class CompilationEngine {
             // if next token is '(' or '.', must be subroutineCall
             // else, must be varName | varName '[' expression ']'
             String nextToken = tk.getCurrToken();
+
             if (nextToken.equals("(") || nextToken.equals(".")) { // subroutine call
                 compileSubroutineCall(token, nextToken);
             }
             else if (nextToken.equals("[")) { // second token is '[' -> varName '[' expression ']'
-                // todo: maybe remove duplicate
                 Segment segment = scopeToSegment.get(subSymTable.scopeOf(token));
                 vmWriter.writePush(segment, subSymTable.indexOf(token));
 
                 check("[");
                 compileExpression();
                 check("]");
+
+                vmWriter.writePop(TEMP, 0);
             }
             else { // varName
                 Segment segment = scopeToSegment.get(subSymTable.scopeOf(token));
@@ -553,15 +595,16 @@ public class CompilationEngine {
     /* Helper function for compileDo and compileTerm
     subroutineName '(' expressionList ')' | (className | varName) '.' subroutineName '(' expressionList ')' */
     private void compileSubroutineCall(String token, String nextToken) throws IOException {
-        /* subroutineName '(' expressionList ')'
+        /*
+        Def: subroutineName '(' expressionList ')'
+        Has to be method operating on current object, i.e., 'this'
         ex: g(2, y, -5, -z) */
-        if (nextToken.equals("(")) {
+        if (nextToken.equals("(")) { // todo: review
             // VM: push 'this' onto stack
             String subroutineName = className + "." + token;
-            Segment memSegment = scopeToSegment.get(subSymTable.scopeOf("this"));
-            vmWriter.writePush(memSegment, subSymTable.indexOf("this"));
+            vmWriter.writePush(POINTER, 0);
 
-            // resultants of compileExpressionList() are pushed on stack
+            // VM: resultants of compileExpressionList() are pushed on stack
             check("(");
             int nArgs = compileExpressionList();
             check(")");
@@ -569,19 +612,23 @@ public class CompilationEngine {
             // VM: after all args are pushed on stack, call function
             vmWriter.writeCall(subroutineName, nArgs + 1);
         }
-        /* (className | varName) '.' subroutineName '(' expressionList ')'
+        /*
+        Def: (className | varName) '.' subroutineName '(' expressionList ')'
+        Can either be method, function, or constructor.
+        A constructor is a special type of function
         ex: Memory.deAlloc(this), p1.distance(p2) */
-        else if (nextToken.equals(".")) {
+        else if (nextToken.equals(".")) { // todo: review function calls
             boolean isClass = false;
             String calleeClassName = null;
 
             /* (varName | className) */
             if (subSymTable.contains(token)) {
-                // VM: push varName onto stack
+                // varName -> VM: push varName onto stack
                 Segment memSegment = scopeToSegment.get(subSymTable.scopeOf(token));
                 vmWriter.writePush(memSegment, subSymTable.indexOf(token));
-            } else {
-                // subroutine associated with class, save its name
+            }
+            else {
+                // className -> static subroutine, save its name
                 isClass = true;
                 calleeClassName = token;
             }
@@ -589,7 +636,9 @@ public class CompilationEngine {
 
             /* subroutineName */
             token = tk.getCurrToken(); TokenType type = tk.getCurrType();
-            if (!type.equals(identifier)) { throwRuntimeException("subroutineName", identifier, token, type); }
+            if (!type.equals(identifier)) {
+                throwRuntimeException("subroutineName", identifier, token, type);
+            }
             String subroutineName = isClass ? calleeClassName + "." + token : subSymTable.dataTypeOf(token) + "." + token;
             tk.advance();
 

@@ -1,0 +1,15 @@
+function Main.main 0
+// let statement
+call SquareGame.new 0
+pop local 0
+// do statement
+push local 0
+call Unknown.run 1
+push temp 0
+// do statement
+push local 0
+call Unknown.dispose 1
+push temp 0
+// return statement
+push constant 0
+return
