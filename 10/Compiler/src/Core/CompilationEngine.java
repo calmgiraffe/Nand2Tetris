@@ -487,7 +487,7 @@ public class CompilationEngine {
 
             for (int i = 0; i < token.length(); i++) {
                 vmWriter.writePush(CONSTANT, token.charAt(i));
-                vmWriter.writeCall("String.appendChar", 1);
+                vmWriter.writeCall("String.appendChar", 2);
             }
             tk.advance();
         }
@@ -580,13 +580,14 @@ public class CompilationEngine {
         else if (nextToken.equals(".")) {
             // If in symbol table, must be varName
             boolean isVarName = subSymTable.contains(token);
-            String calleeClassName = null;
+            String calleeClassName;
 
             /* (varName | className) */
             if (isVarName) {
                 // VM: push varName onto stack
                 Segment memSegment = scopeToSegment.get(subSymTable.scopeOf(token));
                 vmWriter.writePush(memSegment, subSymTable.indexOf(token));
+                calleeClassName = subSymTable.dataTypeOf(token);
             }
             else {
                 // VM: function (i.e., static method), save its name
@@ -596,7 +597,7 @@ public class CompilationEngine {
 
             /* subroutineName */
             token = tk.getCurrToken();
-            String subroutineName = isVarName ? subSymTable.dataTypeOf(token) + "." + token : calleeClassName + "." + token;
+            String subroutineName = calleeClassName + "." + token;
             verifyType(identifier);
 
             /* '(' expressionList ')' */

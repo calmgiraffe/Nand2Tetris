@@ -19,7 +19,7 @@ push argument 0
 pop pointer 0
 // do statement
 push this 0
-call Unknown.dispose 1
+call Square.dispose 1
 push temp 0
 // do statement
 push pointer 0
@@ -39,7 +39,7 @@ not
 if-goto L0
 // do statement
 push this 0
-call Unknown.moveUp 1
+call Square.moveUp 1
 push temp 0
 goto L1
 label L0
@@ -54,7 +54,7 @@ not
 if-goto L2
 // do statement
 push this 0
-call Unknown.moveDown 1
+call Square.moveDown 1
 push temp 0
 goto L3
 label L2
@@ -69,7 +69,7 @@ not
 if-goto L4
 // do statement
 push this 0
-call Unknown.moveLeft 1
+call Square.moveLeft 1
 push temp 0
 goto L5
 label L4
@@ -84,7 +84,7 @@ not
 if-goto L6
 // do statement
 push this 0
-call Unknown.moveRight 1
+call Square.moveRight 1
 push temp 0
 goto L7
 label L6
@@ -98,7 +98,7 @@ push temp 0
 // return statement
 push constant 0
 return
-function SquareGame.run 0
+function SquareGame.run 2
 push argument 0
 pop pointer 0
 // let statement
@@ -149,7 +149,7 @@ not
 if-goto L14
 // do statement
 push this 0
-call Unknown.decSize 1
+call Square.decSize 1
 push temp 0
 goto L15
 label L14
@@ -164,7 +164,7 @@ not
 if-goto L16
 // do statement
 push this 0
-call Unknown.incSize 1
+call Square.incSize 1
 push temp 0
 goto L17
 label L16

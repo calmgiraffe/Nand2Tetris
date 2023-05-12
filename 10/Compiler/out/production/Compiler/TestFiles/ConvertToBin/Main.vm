@@ -1,4 +1,4 @@
-function Main.main 0
+function Main.main 1
 // do statement
 push constant 8001
 push constant 16
@@ -17,7 +17,7 @@ push temp 0
 // return statement
 push constant 0
 return
-function Main.convert 0
+function Main.convert 3
 // let statement
 push constant 1
 neg

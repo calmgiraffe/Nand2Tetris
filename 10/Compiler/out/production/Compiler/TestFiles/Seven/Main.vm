@@ -1,5 +1,4 @@
 function Main.main 0
-pop pointer 0
 // do statement
 push constant 1
 push constant 2

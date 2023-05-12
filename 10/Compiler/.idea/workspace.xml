@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine$1SubroutineType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/ConvertToBin/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/ConvertToBin/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ConvertToBin/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ConvertToBin/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Seven/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Seven/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +58,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Core.Main" />
       <module name="Compiler" />
-      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/Seven" />
+      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/Average" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Core.*" />
