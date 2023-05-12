@@ -160,7 +160,8 @@ public class CompilationEngine {
         check("(");
         if (subType == SubroutineType.METHOD) {
             // Add 'this' to subroutine symbol table, if subroutine is method
-            subSymTable.define("this", className, Scope.ARG); // todo: verify
+            // According to method call contract, arg 0 is current object
+            subSymTable.define("this", className, Scope.ARG);
         }
         compileParameterList();
         check(")");
@@ -218,7 +219,7 @@ public class CompilationEngine {
         compileVarDec(); // 0 or more varDec -> sub symbol table filled with vars
 
         // VM code: function functionName nVars
-        // nVars should now be equal to correct number of local variables
+        // nVars = number of local variables
         int nVars = subSymTable.varCount(Scope.VAR);
         vmWriter.writeFunction(subroutineName, nVars);
 
@@ -228,21 +229,16 @@ public class CompilationEngine {
             int objectSize = classSymTable.varCount(Scope.FIELD);
             vmWriter.writePush(CONSTANT, objectSize);
 
-            // Memory.alloc pushes base address to stack, which is then popped to POINTER
+            // Memory.alloc pushes base address to stack, which is then popped to POINTER 0
+            // Now, this segment is properly aligned with newly created object
             vmWriter.writeCall("Memory.alloc", 1);
             vmWriter.writePop(POINTER, 0);
         }
         else if (subType == SubroutineType.METHOD) {
-            // todo: verify
             // For methods, push the first argument (this) to the stack and pop it to pointer 0.
             vmWriter.writePush(ARGUMENT, 0);
+            vmWriter.writePop(POINTER, 0);
         }
-        else { // subType == SubroutineType.FUNCTION
-            // todo: verify
-        }
-        // Pops the base address to pointer 0.
-        vmWriter.writePop(POINTER, 0);
-
         compileStatements(); // statements (0 or more statement)
         check("}");
     }
@@ -431,6 +427,7 @@ public class CompilationEngine {
     }
 
     /* 'return' expression? ';' */
+    // OK
     private void compileReturn() throws IOException {
         vmWriter.write("// return statement");
         check("return");
@@ -439,7 +436,7 @@ public class CompilationEngine {
         if (!tk.getCurrToken().equals(";")) {
             compileExpression();
         }
-        else { // no expression -> void method/function
+        else { // no expression -> void method/function. Simply push null value
             vmWriter.writePush(CONSTANT, 0);
         }
         check(";");
@@ -511,24 +508,25 @@ public class CompilationEngine {
             check(")");
         }
         else if (UNARY_OP.contains(token)) { // (unaryOp term)
+            String unaryOp = token;
             tk.advance();
 
             // VM: push exp; unary op
             compileTerm();
-            vmWriter.writeArithmetic(UNARY_OP_TO_COMMAND.get(token));
+            vmWriter.writeArithmetic(UNARY_OP_TO_COMMAND.get(unaryOp));
         }
         else if (type == identifier) { // varName | varName '[' expression ']' | subroutineCall
-            // Need to peek ahead to determine next steps
+            // Peek ahead to determine next steps
             tk.advance();
 
-            // if next token is '(' or '.', must be subroutineCall
-            // else, must be varName | varName '[' expression ']'
             String nextToken = tk.getCurrToken();
-
-            if (nextToken.equals("(") || nextToken.equals(".")) { // subroutine call
+            if (nextToken.equals("(") || nextToken.equals(".")) {
+                // if next token is '(' or '.', must be a subroutine call
                 compileSubroutineCall(token, nextToken);
             }
-            else if (nextToken.equals("[")) { // second token is '[' -> varName '[' expression ']'
+            else if (nextToken.equals("[")) {
+                // todo: verify
+                // If next token is '[', must be varName '[' expression ']'
                 Segment segment = scopeToSegment.get(subSymTable.scopeOf(token));
                 vmWriter.writePush(segment, subSymTable.indexOf(token));
 
@@ -538,7 +536,8 @@ public class CompilationEngine {
 
                 vmWriter.writePop(TEMP, 0);
             }
-            else { // varName
+            else {
+                // else, must be varName
                 Segment segment = scopeToSegment.get(subSymTable.scopeOf(token));
                 vmWriter.writePush(segment, subSymTable.indexOf(token));
             }
@@ -555,13 +554,16 @@ public class CompilationEngine {
         /*
         Def: subroutineName '(' expressionList ')'
         Has to be method operating on current object, i.e., 'this'
-        ex: g(2, y, -5, -z) */
-        if (nextToken.equals("(")) { // todo: review
+        ex: g(2, y, -5, -z)
+        */
+        if (nextToken.equals("(")) {
             // VM: push 'this' onto stack
             String subroutineName = className + "." + token;
             vmWriter.writePush(POINTER, 0);
 
-            // VM: resultants of compileExpressionList() are pushed on stack
+            /* '(' expressionList ')' */
+            // The resultants of compileExpressionList() are pushed on stack.
+            // The expression list is the inputted arguments of the subroutine.
             check("(");
             int nArgs = compileExpressionList();
             check(")");
@@ -572,37 +574,41 @@ public class CompilationEngine {
         /*
         Def: (className | varName) '.' subroutineName '(' expressionList ')'
         Can either be method, function, or constructor.
-        A constructor is a special type of function
-        ex: Memory.deAlloc(this), p1.distance(p2) */
-        else if (nextToken.equals(".")) { // todo: review function calls
-            boolean isClass = false;
+        A constructor is a special type of function.
+        ex: Memory.deAlloc(this), p1.distance(p2)
+        */
+        else if (nextToken.equals(".")) {
+            // If in symbol table, must be varName
+            boolean isVarName = subSymTable.contains(token);
             String calleeClassName = null;
 
             /* (varName | className) */
-            if (subSymTable.contains(token)) {
-                // varName -> VM: push varName onto stack
+            if (isVarName) {
+                // VM: push varName onto stack
                 Segment memSegment = scopeToSegment.get(subSymTable.scopeOf(token));
                 vmWriter.writePush(memSegment, subSymTable.indexOf(token));
             }
             else {
-                // className -> static subroutine, save its name
-                isClass = true;
+                // VM: function (i.e., static method), save its name
                 calleeClassName = token;
             }
             check(".");
 
             /* subroutineName */
             token = tk.getCurrToken();
-            String subroutineName = isClass ? calleeClassName + "." + token : subSymTable.dataTypeOf(token) + "." + token;
+            String subroutineName = isVarName ? subSymTable.dataTypeOf(token) + "." + token : calleeClassName + "." + token;
             verifyType(identifier);
 
-            // resultants of compileExpressionList() are pushed on stack
+            /* '(' expressionList ')' */
+            // The resultants of compileExpressionList() are pushed on stack.
+            // The expression list is the inputted arguments of the subroutine.
             check("(");
             int nArgs = compileExpressionList();
             check(")");
 
             // VM: after all args are pushed on stack, call function
-            vmWriter.writeCall(subroutineName, nArgs + ((isClass) ? 0 : 1));
+            // if isVarName, need extra arg for the varName object
+            vmWriter.writeCall(subroutineName, nArgs + ((isVarName) ? 1 : 0));
         }
     }
 
