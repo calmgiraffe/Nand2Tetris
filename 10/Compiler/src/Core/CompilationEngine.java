@@ -250,6 +250,7 @@ public class CompilationEngine {
 
     /* Method for compiling var declarations within a subroutine.
     Def: 'var' type varName (',' varName)* ';' */
+    // OK
     private void compileVarDec() throws IOException {
         // Immediately return if not var
         if (!tk.getCurrToken().equals("var")) {
@@ -449,6 +450,7 @@ public class CompilationEngine {
     }
 
     /* term (op term)* */
+    // OK
     private void compileExpression() throws IOException {
         /* term */
         compileTerm();
@@ -606,10 +608,10 @@ public class CompilationEngine {
     }
 
     /* ( expression (',' expression)* )? */
+    // OK
     private int compileExpressionList() throws IOException {
         // Immediately return if closing bracket (no expressions)
-        String token = tk.getCurrToken();
-        if (token.equals(")")) {
+        if (tk.getCurrToken().equals(")")) {
             return 0;
         }
         compileExpression();
@@ -650,6 +652,7 @@ public class CompilationEngine {
         tk.advance();
     }
 
+    /* Helper method for checking if a token is the correct TokenType  */
     private void checkType(TokenType expectedType) throws IOException {
         String token = tk.getCurrToken();
         TokenType currType = tk.getCurrType();
