@@ -44,7 +44,7 @@ push temp 0
 goto L1
 label L0
 push constant 0
-pop temp 1
+pop temp 0
 label L1
 // if statement
 push this 1
@@ -59,7 +59,7 @@ push temp 0
 goto L3
 label L2
 push constant 0
-pop temp 1
+pop temp 0
 label L3
 // if statement
 push this 1
@@ -74,7 +74,7 @@ push temp 0
 goto L5
 label L4
 push constant 0
-pop temp 1
+pop temp 0
 label L5
 // if statement
 push this 1
@@ -89,7 +89,7 @@ push temp 0
 goto L7
 label L6
 push constant 0
-pop temp 1
+pop temp 0
 label L7
 // do statement
 push constant 5
@@ -139,7 +139,7 @@ pop local 1
 goto L13
 label L12
 push constant 0
-pop temp 1
+pop temp 0
 label L13
 // if statement
 push local 0
@@ -154,7 +154,7 @@ push temp 0
 goto L15
 label L14
 push constant 0
-pop temp 1
+pop temp 0
 label L15
 // if statement
 push local 0
@@ -169,7 +169,7 @@ push temp 0
 goto L17
 label L16
 push constant 0
-pop temp 1
+pop temp 0
 label L17
 // if statement
 push local 0
@@ -183,7 +183,7 @@ pop this 1
 goto L19
 label L18
 push constant 0
-pop temp 1
+pop temp 0
 label L19
 // if statement
 push local 0
@@ -197,7 +197,7 @@ pop this 1
 goto L21
 label L20
 push constant 0
-pop temp 1
+pop temp 0
 label L21
 // if statement
 push local 0
@@ -211,7 +211,7 @@ pop this 1
 goto L23
 label L22
 push constant 0
-pop temp 1
+pop temp 0
 label L23
 // if statement
 push local 0
@@ -225,7 +225,7 @@ pop this 1
 goto L25
 label L24
 push constant 0
-pop temp 1
+pop temp 0
 label L25
 // while statement
 label L26

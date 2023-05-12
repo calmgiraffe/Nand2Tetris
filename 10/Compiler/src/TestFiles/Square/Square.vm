@@ -104,7 +104,7 @@ push temp 0
 goto L1
 label L0
 push constant 0
-pop temp 1
+pop temp 0
 label L1
 // return statement
 push constant 0
@@ -134,7 +134,7 @@ push temp 0
 goto L3
 label L2
 push constant 0
-pop temp 1
+pop temp 0
 label L3
 // return statement
 push constant 0
@@ -191,7 +191,7 @@ push temp 0
 goto L5
 label L4
 push constant 0
-pop temp 1
+pop temp 0
 label L5
 // return statement
 push constant 0
@@ -250,7 +250,7 @@ push temp 0
 goto L7
 label L6
 push constant 0
-pop temp 1
+pop temp 0
 label L7
 // return statement
 push constant 0
@@ -307,7 +307,7 @@ push temp 0
 goto L9
 label L8
 push constant 0
-pop temp 1
+pop temp 0
 label L9
 // return statement
 push constant 0
@@ -366,7 +366,7 @@ push temp 0
 goto L11
 label L10
 push constant 0
-pop temp 1
+pop temp 0
 label L11
 // return statement
 push constant 0

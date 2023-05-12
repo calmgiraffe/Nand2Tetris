@@ -1,4 +1,5 @@
 function Main.main 0
+pop pointer 0
 // let statement
 call SquareGame.new 0
 pop local 0

@@ -1,7 +1,10 @@
 function Main.main 0
 pop pointer 0
+// do statement
+call PongGame.newInstance 0
+push temp 0
 // let statement
-call SquareGame.new 0
+call PongGame.getInstance 0
 pop local 0
 // do statement
 push local 0
