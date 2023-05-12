@@ -17,6 +17,9 @@ import static Core.VMWriter.UNARY_OP_TO_COMMAND;
 /* The Core.CompilationEngine should grab tokens from the tokenizer one-by-one, analyze the grammar,
 and emit a structured representation of the source code in a xml file */
 public class CompilationEngine {
+    enum SubroutineType {
+        METHOD, CONSTRUCTOR, FUNCTION
+    }
     private final Map<Scope, Segment> scopeToSegment = new HashMap<>() {{
         put(Scope.STATIC, Segment.STATIC);
         put(Scope.FIELD, Segment.THIS);
@@ -62,7 +65,7 @@ public class CompilationEngine {
 
         /* className identifier */
         className = tk.getCurrToken(); // all subroutines have an implicit instance of this type
-        checkType(identifier);
+        verifyType(identifier);
 
         check("{");
         compileClassVarDec(); // classVarDec*
@@ -100,7 +103,7 @@ public class CompilationEngine {
         /* varName */
         // Add to class symbol table - ('static' | 'field') (primitive | className)
         classSymTable.define(tk.getCurrToken(), dataTypeOf, scopeOf);
-        checkType(identifier);
+        verifyType(identifier);
 
         /* Zero or more (',' varName) */
         while (tk.getCurrToken().equals(",")) {
@@ -109,7 +112,7 @@ public class CompilationEngine {
             /* varName */
             // Add to class symbol table - ('static' | 'field') (primitive | className)
             classSymTable.define(tk.getCurrToken(), dataTypeOf, scopeOf);
-            checkType(identifier);
+            verifyType(identifier);
         }
         check(";");
 
@@ -121,9 +124,6 @@ public class CompilationEngine {
     ('constructor' | 'function' | 'method') ('void' | type) subroutineName '(' parameterList ')' subroutineBody
     ex., method void draw(int x, int y) */
     private void compileSubroutineDec() throws IOException {
-        enum SubroutineType {
-            METHOD, CONSTRUCTOR, FUNCTION
-        }
         /* ('constructor' | 'function' | 'method') */
         SubroutineType subType;
         switch (tk.getCurrToken()) {
@@ -139,61 +139,34 @@ public class CompilationEngine {
             default: // Immediately return if not one of the three
                 return;
         }
-        // Link class symbol table with subroutine symbol table
+
+        // Only time a new subroutine symbol table is made; link class symbol table
         subSymTable = new SymbolTable(classSymTable);
         tk.advance();
 
         /* type: void, primitive type, or identifier */
-        String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
+        String token = tk.getCurrToken();
+        TokenType type = tk.getCurrType();
         if (!token.equals("void") && !PRIMITIVES.contains(token) && type != identifier) {
             throwRuntimeException("'void', primitive type, or className");
         }
         tk.advance();
 
         /* subroutineName */
-        token = tk.getCurrToken(); type = tk.getCurrType();
-        if (type != identifier) {
-            // Check if the current token type is an identifier
-            throwRuntimeException("subroutineName identifier");
-        }
+        String subroutineName = className + "." + tk.getCurrToken();
+        verifyType(identifier);
 
-
-        if (subType == SubroutineType.CONSTRUCTOR) {
-
-        }
-        else if (subType == SubroutineType.METHOD) {
-            // Add 'this' to subroutine symbol table, if subroutine is method
-            subSymTable.define("this", className, Scope.ARG);
-        }
-        String subroutineName = className + '.' + token;
-        tk.advance();
-
+        /* '(' parameterList ')' -> compiling the arguments of subroutine */
         check("(");
-        compileParameterList(); // vars are added to subroutine table
+        if (subType == SubroutineType.METHOD) {
+            // Add 'this' to subroutine symbol table, if subroutine is method
+            subSymTable.define("this", className, Scope.ARG); // todo: verify
+        }
+        compileParameterList();
         check(")");
 
-        // VM code: function functionName nVars
-        int nVars = subSymTable.varCount(Scope.VAR);
-        vmWriter.writeFunction(subroutineName, nVars);
-
-        if (subType == SubroutineType.CONSTRUCTOR) {
-            // Allocate enough words for object instance variables.
-            // The allocated size is equal to the number of field variables.
-            int objectSize = classSymTable.varCount(Scope.FIELD);
-            vmWriter.writePush(CONSTANT, objectSize);
-
-            // Memory.alloc pushes base address to stack
-            vmWriter.writeCall("Memory.alloc", 1);
-        }
-        else if (subType == SubroutineType.METHOD) {
-            // For methods, push the first argument (this) to the stack and pop it to pointer 0.
-            vmWriter.writePush(ARGUMENT, 0);
-        }
-        // Pops the base address to pointer 0.
-        vmWriter.writePop(POINTER, 0);
-
-        // '{' varDec* statement* '}' -> goes on to fill in allocated memory and execute statements
-        compileSubroutineBody();
+        // '{' varDec* statement* '}' -> declare local vars and execute statements
+        compileSubroutineBody(subroutineName, subType);
 
         // 0 or more subroutineDec in class -> recursive call
         compileSubroutineDec();
@@ -218,7 +191,7 @@ public class CompilationEngine {
         /* varName */
         // Add first arg to subroutine symbol table
         subSymTable.define(tk.getCurrToken(), dataType, Scope.ARG);
-        checkType(identifier);
+        verifyType(identifier);
 
         /* 0 or more (',' type varName) */
         while (tk.getCurrToken().equals(",")) {
@@ -235,15 +208,41 @@ public class CompilationEngine {
             /* varName */
             // Add next args to subroutine symbol table
             subSymTable.define(tk.getCurrToken(), dataType, Scope.ARG);
-            checkType(identifier);
+            verifyType(identifier);
         }
     }
 
     /* Method for compiling subroutine body, i.e., { varDec* statement* } */
-    // OK
-    private void compileSubroutineBody() throws IOException {
+    private void compileSubroutineBody(String subroutineName, SubroutineType subType) throws IOException {
         check("{");
-        compileVarDec(); // 0 or more varDec
+        compileVarDec(); // 0 or more varDec -> sub symbol table filled with vars
+
+        // VM code: function functionName nVars
+        // nVars should now be equal to correct number of local variables
+        int nVars = subSymTable.varCount(Scope.VAR);
+        vmWriter.writeFunction(subroutineName, nVars);
+
+        if (subType == SubroutineType.CONSTRUCTOR) {
+            // Allocate enough words for object instance variables.
+            // The allocated size is equal to the number of field variables of current class.
+            int objectSize = classSymTable.varCount(Scope.FIELD);
+            vmWriter.writePush(CONSTANT, objectSize);
+
+            // Memory.alloc pushes base address to stack, which is then popped to POINTER
+            vmWriter.writeCall("Memory.alloc", 1);
+            vmWriter.writePop(POINTER, 0);
+        }
+        else if (subType == SubroutineType.METHOD) {
+            // todo: verify
+            // For methods, push the first argument (this) to the stack and pop it to pointer 0.
+            vmWriter.writePush(ARGUMENT, 0);
+        }
+        else { // subType == SubroutineType.FUNCTION
+            // todo: verify
+        }
+        // Pops the base address to pointer 0.
+        vmWriter.writePop(POINTER, 0);
+
         compileStatements(); // statements (0 or more statement)
         check("}");
     }
@@ -270,7 +269,7 @@ public class CompilationEngine {
         /* varName identifier */
         // Add var to subroutine symbol table
         subSymTable.define(tk.getCurrToken(), dataType, Scope.VAR);
-        checkType(identifier);
+        verifyType(identifier);
 
         /* (',' varName)* */
         while (tk.getCurrToken().equals(",")) {
@@ -279,7 +278,7 @@ public class CompilationEngine {
             /* varName identifier */
             // Add var to subroutine symbol table
             subSymTable.define(tk.getCurrToken(), dataType, Scope.VAR);
-            checkType(identifier);
+            verifyType(identifier);
         }
         check(";");
 
@@ -314,7 +313,7 @@ public class CompilationEngine {
 
         /* varName identifier */
         String varName = tk.getCurrToken();
-        checkType(identifier);
+        verifyType(identifier);
 
         /* 0 or 1 ('[' expression ']') */
         String token = tk.getCurrToken();
@@ -595,7 +594,7 @@ public class CompilationEngine {
             /* subroutineName */
             token = tk.getCurrToken();
             String subroutineName = isClass ? calleeClassName + "." + token : subSymTable.dataTypeOf(token) + "." + token;
-            checkType(identifier);
+            verifyType(identifier);
 
             // resultants of compileExpressionList() are pushed on stack
             check("(");
@@ -653,7 +652,7 @@ public class CompilationEngine {
     }
 
     /* Helper method for checking if a token is the correct TokenType  */
-    private void checkType(TokenType expectedType) throws IOException {
+    private void verifyType(TokenType expectedType) throws IOException {
         String token = tk.getCurrToken();
         TokenType currType = tk.getCurrType();
         if (currType != expectedType) {
