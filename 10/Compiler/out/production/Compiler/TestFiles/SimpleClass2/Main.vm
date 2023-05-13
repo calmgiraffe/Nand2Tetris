@@ -92,6 +92,8 @@ push argument 0
 push argument 1
 sub
 return
+push constant 0
+pop temp 0
 label L1
 function Main.sumUpTo 2
 // let statement

@@ -1,0 +1,10 @@
+function Main.main 0
+// let statement
+push constant 0
+push constant 0
+push constant 50
+call Square.new 3
+pop this 0
+// return statement
+push constant 0
+return

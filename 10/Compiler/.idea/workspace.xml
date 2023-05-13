@@ -2,13 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Average/Main_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Square.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Square.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Square_SymTable.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass1/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass1/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Average/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Average/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass2/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass2/Main.vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.jack" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/SimpleClass1/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/SimpleClass1/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Average/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Average/Main.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +61,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Core.Main" />
       <module name="Compiler" />
-      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/SimpleClass2" />
+      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/SimpleSquare" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Core.*" />

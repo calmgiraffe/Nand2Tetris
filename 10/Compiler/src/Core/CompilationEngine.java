@@ -477,8 +477,9 @@ public class CompilationEngine {
         }
     }
 
-    /* integerConstant | stringConstant | keywordConstant | varName | varName '[' expression ']' |
-    '(' expression ')' | (unaryOp term) | subroutineCall */
+    // OK
+    /** Compile a term. <p> Def: integerConstant | stringConstant | keywordConstant | varName |
+     varName '[' expression ']' | '(' expression ')' | (unaryOp term) | subroutineCall */
     private void compileTerm() throws IOException {
         String currToken = tk.getCurrToken(); TokenType type = tk.getCurrType();
 
@@ -641,6 +642,7 @@ public class CompilationEngine {
         }
         return numExpressions;
     }
+
 
     private void throwRuntimeException(String expected) throws IOException {
         String actual = tk.getCurrToken();
