@@ -1,5 +1,7 @@
 package Core;
 
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -107,5 +109,19 @@ public class SymbolTable {
             return false;
         }
         return nextTable.contains(name);
+    }
+
+    public void printSymbolTable(PrintWriter writer, String header) {
+        writer.println("<" + header + ">");
+        for (String name : nameToData.keySet()) {
+            writer.print(name);
+            writer.print(" ");
+            writer.print(dataTypeOf(name));
+            writer.print(" ");
+            writer.print(scopeOf(name));
+            writer.print(" ");
+            writer.println(indexOf(name));
+        }
+        writer.println("");
     }
 }

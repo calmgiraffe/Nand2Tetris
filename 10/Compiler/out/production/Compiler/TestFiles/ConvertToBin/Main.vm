@@ -39,7 +39,7 @@ pop local 0
 // if statement
 push local 1
 push constant 16
-lt
+gt
 not
 not
 if-goto L2
@@ -109,7 +109,7 @@ function Main.fillMemory 0
 label L8
 push argument 1
 push constant 0
-lt
+gt
 not
 if-goto L9
 // do statement

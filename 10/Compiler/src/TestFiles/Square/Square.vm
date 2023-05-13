@@ -79,12 +79,12 @@ push this 1
 push this 2
 add
 push constant 254
-gt
+lt
 push this 0
 push this 2
 add
 push constant 510
-gt
+lt
 and
 not
 if-goto L0
@@ -115,7 +115,7 @@ pop pointer 0
 // if statement
 push this 2
 push constant 2
-lt
+gt
 not
 if-goto L2
 // do statement
@@ -145,7 +145,7 @@ pop pointer 0
 // if statement
 push this 1
 push constant 1
-lt
+gt
 not
 if-goto L4
 // do statement
@@ -204,7 +204,7 @@ push this 1
 push this 2
 add
 push constant 254
-gt
+lt
 not
 if-goto L6
 // do statement
@@ -261,7 +261,7 @@ pop pointer 0
 // if statement
 push this 0
 push constant 1
-lt
+gt
 not
 if-goto L8
 // do statement
@@ -320,7 +320,7 @@ push this 0
 push this 2
 add
 push constant 510
-gt
+lt
 not
 if-goto L10
 // do statement

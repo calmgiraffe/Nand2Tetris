@@ -1,0 +1,12 @@
+<Main>
+isTrue boolean STATIC 3
+a int FIELD 0
+b int FIELD 1
+c int FIELD 2
+ch char FIELD 3
+x int STATIC 0
+y int STATIC 1
+z int STATIC 2
+isFalse boolean STATIC 4
+message String STATIC 5
+

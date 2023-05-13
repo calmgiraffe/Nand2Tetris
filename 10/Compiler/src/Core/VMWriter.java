@@ -16,8 +16,8 @@ public class VMWriter {
         put("+", add);
         put("-", sub);
         put("=", eq);
-        put(">", lt);
-        put("<", gt);
+        put(">", gt);
+        put("<", lt);
         put("|", or);
         put("&", and);
     }};

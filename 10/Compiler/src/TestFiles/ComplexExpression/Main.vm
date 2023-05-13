@@ -1,0 +1,27 @@
+function Main.main 1
+// let statement
+push constant 10
+push constant 4
+add
+push constant 8
+push constant 3
+sub
+call Math.multiply 2
+push constant 7
+push constant 2
+call Math.multiply 2
+sub
+push constant 6
+push constant 4
+push constant 1
+add
+sub
+call Math.divide 2
+pop local 0
+// do statement
+push local 0
+call Output.printInt 1
+push temp 0
+// return statement
+push constant 0
+return

@@ -1,0 +1,56 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/11/Seven/Main.jack
+
+
+class Main {
+   static int x, y, z;
+   static boolean isTrue, isFalse;
+   static String message;
+
+   field int a, b, c;
+   field char ch;
+
+   function void main() {
+      let isTrue = true;
+      let isFalse = false;
+
+      do Output.printString(Main.getHelloWorldStr());
+      do Output.println();
+      
+      do Output.printInt(Main.averageOrSubtract(8, 12, isTrue));
+      do Output.printString(" ");
+      do Output.printInt(Main.averageOrSubtract(8, 12, ~isTrue));
+      do Output.println();
+      
+      do Output.printInt(Main.sumUpTo(10));
+
+      return;
+   }
+
+   function String getHelloWorldStr() {
+      return "Hello World";
+   }
+
+   function int averageOrSubtract(int a, int b, boolean flag) {
+      if (flag) {
+         return (a + b) / 2;
+      } else {
+         return a - b;
+      }
+   }
+
+   function int sumUpTo(int x) {
+      var int sum, i;
+
+      let sum = 0;
+      let i = 0;
+
+      while (i < (x + 1)) {
+         let sum = sum + i;
+         let i = i + 1;
+      }
+      return sum;
+   }
+}

@@ -1,0 +1,56 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/11/Seven/Main.jack
+
+
+class Main {
+   static boolean isTrue;
+
+   function void main() {
+      let isTrue = true;
+
+      do Output.printString(Main.getHelloWorldStr());
+      do Output.println();
+      
+      do Output.printInt(Main.addToVar(8, 12, isTrue));
+      do Output.printString(" ");
+      do Output.printInt(Main.addToVar(8, 12, ~isTrue));
+      do Output.println();
+
+      do Main.checkIf();
+      do Output.println();
+
+      return;
+   }
+
+   function String getHelloWorldStr() {
+      return "Hello World";
+   }
+
+   function int addToVar(int a, int b, boolean flag) {
+      var int x, y;
+      var String str;
+      var char ch;
+
+      let x = 100;
+      let y = 200;
+      let str = "abcdef";
+      let ch = str.charAt(1);
+
+      if (flag) {
+         do Output.printString(str);
+         return a + x;
+      } else {
+         do Output.printChar(ch);
+         return b + y;
+      }
+   }
+
+   function void checkIf() {
+      if (2 < 1) {
+         do Output.printString("2 is greater than 1");
+      }
+      return;
+   }
+}

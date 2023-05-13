@@ -33,7 +33,7 @@ public class CompilationEngine {
     private static final Set<String> KEYWORD_CONST = Set.of("true","false","null","this");
 
     private final Tokenizer tk;
-    private final PrintWriter writer;
+    private final PrintWriter writer; // todo: move this into symbol table
     private final VMWriter vmWriter;
     private final SymbolTable classSymTable = new SymbolTable();
     private SymbolTable subSymTable = new SymbolTable(classSymTable);
@@ -45,7 +45,7 @@ public class CompilationEngine {
         tk = new Tokenizer(source);
         String prefix = source.substring(0, source.length() - 5);
         vmWriter = new VMWriter(prefix);
-        writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + "_ce.xml")));
+        writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + "_SymTable.txt")));
     }
 
     /** Analyze the grammar of the source file and output a structured representation to an XML file */
@@ -56,9 +56,9 @@ public class CompilationEngine {
         vmWriter.close();
     }
 
-    /* Method for compiling class, ex., class Main {...}
-    "class" className "{" classVarDec* subroutineDec* ")" */
     // OK
+    /** Method for compiling a class, ex., class Main {...} <p>
+     * Def: "class" className '{' classVarDec* subroutineDec* ')' */
     private void compileClass() throws IOException {
         /* 'class' keyword */
         check("class");
@@ -69,15 +69,17 @@ public class CompilationEngine {
 
         check("{");
         compileClassVarDec(); // classVarDec*
+        classSymTable.printSymbolTable(writer, className); // todo: preprocessor directive to enable/disable this
+
         compileSubroutineDec(); // subroutineDec*
         check("}");
     }
 
-    /* Method for compiling static or field (non-static) variables of object.
-    ('static' | 'field') type varName (',' varName)* ';'
-    ex., field int x, y, z
-    Consists only of symbol table entry adding */
     // OK
+    /** Method for compiling static or field (non-static) variables of object. Consists only of
+     * class symbol table entry adding. <p>
+     * Def: ('static' | 'field') type varName (',' varName)* ';' <br>
+     * Ex: field int x, y, z; <br> */
     private void compileClassVarDec() throws IOException {
         Scope scopeOf;
         String token = tk.getCurrToken();
@@ -173,11 +175,10 @@ public class CompilationEngine {
         compileSubroutineDec();
     }
 
-    /* Method for compiling 0 or 1 parameterList within subroutineDec,
-    i.e., a method for compiling the arguments of a subroutine.
-    Def: ((type varName) (',' type varName)*)?
-    ex., int x, int y, boolean flag */
     // OK
+    /** Method for compiling 0 or 1 parameterList within subroutineDec i.e., a method for compiling
+     * the arguments of a subroutine. <p> Def: ((type varName) (',' type varName)*)? <br>
+     * Ex: int x, int y, boolean flag */
     private void compileParameterList() throws IOException {
         /* Immediately return if not type -> 0 parameterList */
         String token = tk.getCurrToken();
@@ -213,7 +214,9 @@ public class CompilationEngine {
         }
     }
 
-    /* Method for compiling subroutine body, i.e., { varDec* statement* } */
+    // OK
+    /** Method for compiling a subroutine body, the local variable declarations and statements. <br>
+     * Def: { varDec* statement* } */
     private void compileSubroutineBody(String subroutineName, SubroutineType subType) throws IOException {
         check("{");
         compileVarDec(); // 0 or more varDec -> sub symbol table filled with vars
@@ -243,9 +246,9 @@ public class CompilationEngine {
         check("}");
     }
 
-    /* Method for compiling var declarations within a subroutine.
-    Def: 'var' type varName (',' varName)* ';' */
     // OK
+    /** Method for compiling variable declarations within a subroutine. <P>
+     * Def: 'var' type varName (',' varName)* ';' */
     private void compileVarDec() throws IOException {
         // Immediately return if not var
         if (!tk.getCurrToken().equals("var")) {
@@ -282,8 +285,8 @@ public class CompilationEngine {
         compileVarDec();
     }
 
-    /* Compile a let, if, while, do, or return statement */
     // OK
+    /** Compile a series of let, if, while, do, or return statements. */
     private void compileStatements() throws IOException {
         String token = tk.getCurrToken();
 
@@ -302,6 +305,7 @@ public class CompilationEngine {
         }
     }
 
+    // todo: review array logic
     /* Def: 'let' varName ('[' expression ']')? '=' expression ';' */
     private void compileLet() throws IOException {
         vmWriter.write("// let statement");
@@ -347,7 +351,9 @@ public class CompilationEngine {
         }
     }
 
-    /* 'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')? */
+    // OK
+    /** Compile an if statement. <p>
+     * Def: 'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')? */
     private void compileIf() throws IOException {
         vmWriter.write("// if statement");
 
@@ -378,13 +384,14 @@ public class CompilationEngine {
             compileStatements();
             check("}");
         }
-        // Todo: evaluate need for these two filler instructions
+        // Todo: evaluate need for these two filler instructions, test on user name VM emulator
         vmWriter.writePush(CONSTANT, 0);
         vmWriter.writePop(TEMP, 0);
         vmWriter.writeLabel(endLabel); // label END
     }
 
-    /* 'while' '(' expression ')' '{' statements '}' */
+    // OK
+    /** Compile a while statement. <p> Def: 'while' '(' expression ')' '{' statements '}' */
     private void compileWhile() throws IOException {
         vmWriter.write("// while statement");
 
@@ -396,10 +403,10 @@ public class CompilationEngine {
         vmWriter.writeLabel(whileLabel); // label A
         check("while");
         check("(");
-        compileExpression();
+        compileExpression(); // Should be a boolean statement
         check(")");
         vmWriter.writeArithmetic(not); // negate resultant, which is currently on stack
-        vmWriter.writeIf(endLabel); // goto B if true -> skip compileStatements() blk
+        vmWriter.writeIf(endLabel); // goto B if true -> skip compileStatements() block
 
         check("{");
         compileStatements(); // 0 or more statement
@@ -409,7 +416,8 @@ public class CompilationEngine {
         vmWriter.writeLabel(endLabel); // label B
     }
 
-    /* 'do' subroutineCall ';' */
+    // OK
+    /** Compile a do statement. <p> Def: 'do' subroutineCall ';' */
     private void compileDo() throws IOException {
         vmWriter.write("// do statement");
         check("do");
@@ -422,12 +430,12 @@ public class CompilationEngine {
 
         check(";");
 
-        // VM: no return value, get rid of topmost value
+        // VM: no return value, get rid of resultant
         vmWriter.writePush(TEMP, 0);
     }
 
-    /* 'return' expression? ';' */
     // OK
+    /** Compile a return statement. <p> Def: 'return' expression? ';' */
     private void compileReturn() throws IOException {
         vmWriter.write("// return statement");
         check("return");
@@ -436,7 +444,7 @@ public class CompilationEngine {
         if (!tk.getCurrToken().equals(";")) {
             compileExpression();
         }
-        else { // no expression -> void method/function. Simply push null value
+        else { // no expression -> void method/function. Simply push null value and return this
             vmWriter.writePush(CONSTANT, 0);
         }
         check(";");
@@ -445,8 +453,8 @@ public class CompilationEngine {
         vmWriter.writeReturn();
     }
 
-    /* term (op term)* */
     // OK
+    /** Compile an expression. Def: term (op term)* */
     private void compileExpression() throws IOException {
         /* term */
         compileTerm();
@@ -534,6 +542,7 @@ public class CompilationEngine {
                 compileExpression();
                 check("]");
 
+                vmWriter.writeArithmetic(add);
                 vmWriter.writePop(TEMP, 0);
             }
             else {
@@ -613,8 +622,9 @@ public class CompilationEngine {
         }
     }
 
-    /* ( expression (',' expression)* )? */
     // OK
+    /** Compile an expression list. Only found when inputting arguments into a subroutine. <p>
+     * Def: ( expression (',' expression)* )? */
     private int compileExpressionList() throws IOException {
         // Immediately return if closing bracket (no expressions)
         if (tk.getCurrToken().equals(")")) {
@@ -642,7 +652,8 @@ public class CompilationEngine {
         throw new RuntimeException("Expected " + expected + " but found " + actualStr);
     }
 
-    /* Helper method for writing specific symbols and keywords */
+    /** Helper method for writing specific symbols and keywords.
+     * Also advances the tokenizer by one. */
     private void check(String expected) throws IOException {
         String token = tk.getCurrToken();
 
@@ -658,7 +669,8 @@ public class CompilationEngine {
         tk.advance();
     }
 
-    /* Helper method for checking if a token is the correct TokenType  */
+    /** Helper method for checking if a token is the correct TokenType
+     * Like check, advances the tokenizer by one. */
     private void verifyType(TokenType expectedType) throws IOException {
         String token = tk.getCurrToken();
         TokenType currType = tk.getCurrType();

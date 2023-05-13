@@ -1,0 +1,3 @@
+<Main>
+isTrue boolean STATIC 0
+
