@@ -12,5 +12,5 @@
 - Assembler ✓
 - Virtual machine translator ✓
 - Tokenizer & syntax analyzer ✓
-- Code generator
+- Code generator ✓
 - OS
