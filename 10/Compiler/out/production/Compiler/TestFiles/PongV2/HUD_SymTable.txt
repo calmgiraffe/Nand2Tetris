@@ -1,0 +1,7 @@
+<HUD>
+lastRowText int STATIC 0
+xStartPoints int STATIC 2
+yStart int STATIC 1
+gameOver boolean FIELD 0
+points int FIELD 1
+

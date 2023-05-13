@@ -33,10 +33,10 @@ public class CompilationEngine {
     private static final Set<String> KEYWORD_CONST = Set.of("true","false","null","this");
 
     private final Tokenizer tk;
-    private final PrintWriter writer; // todo: move this into symbol table
+    private final PrintWriter writer;
     private final VMWriter vmWriter;
-    private final SymbolTable classSymTable = new SymbolTable();
-    private SymbolTable subSymTable = new SymbolTable(classSymTable);
+    private final SymbolTable classSymTable;
+    private SymbolTable subSymTable;
     private String className;
     private int labelCounter = 0;
 
@@ -46,6 +46,7 @@ public class CompilationEngine {
         String prefix = source.substring(0, source.length() - 5);
         vmWriter = new VMWriter(prefix);
         writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + "_SymTable.txt")));
+        classSymTable = new SymbolTable(writer);
     }
 
     /** Analyze the grammar of the source file and output a structured representation to an XML file */
@@ -56,7 +57,6 @@ public class CompilationEngine {
         vmWriter.close();
     }
 
-    // OK
     /** Method for compiling a class, ex., class Main {...} <p>
      * Def: "class" className '{' classVarDec* subroutineDec* ')' */
     private void compileClass() throws IOException {
@@ -69,17 +69,16 @@ public class CompilationEngine {
 
         check("{");
         compileClassVarDec(); // classVarDec*
-        classSymTable.printSymbolTable(writer, className); // todo: preprocessor directive to enable/disable this
+        classSymTable.printSymbolTable(className); // todo: preprocessor directive to enable/disable this
 
         compileSubroutineDec(); // subroutineDec*
         check("}");
     }
 
-    // OK
     /** Method for compiling static or field (non-static) variables of object. Consists only of
      * class symbol table entry adding. <p>
-     * Def: ('static' | 'field') type varName (',' varName)* ';' <br>
-     * Ex: field int x, y, z; <br> */
+     * Def: ('static' | 'field') type varName (',' varName)* ';' <p>
+     * ex., field int x, y, z; <br> */
     private void compileClassVarDec() throws IOException {
         Scope scopeOf;
         String token = tk.getCurrToken();
@@ -122,9 +121,10 @@ public class CompilationEngine {
         compileClassVarDec();
     }
 
-    /* Method for compiling object routines like constructor, static/non-static methods
-    ('constructor' | 'function' | 'method') ('void' | type) subroutineName '(' parameterList ')' subroutineBody
-    ex., method void draw(int x, int y) */
+    /** Method for compiling object routines like constructor, static/non-static methods. <p> Def:
+     * ('constructor' | 'function' | 'method') ('void' | type) subroutineName '(' parameterList ')'
+     * subroutineBody <p>
+     * ex., method void draw(int x, int y) */
     private void compileSubroutineDec() throws IOException {
         /* ('constructor' | 'function' | 'method') */
         SubroutineType subType;
@@ -142,7 +142,7 @@ public class CompilationEngine {
                 return;
         }
         // This is the only time a new subroutine symbol table is made; link class symbol table
-        subSymTable = new SymbolTable(classSymTable);
+        subSymTable = new SymbolTable(writer, classSymTable);
         tk.advance();
 
         /* type: void, primitive type, or identifier */
@@ -169,15 +169,15 @@ public class CompilationEngine {
 
         // '{' varDec* statement* '}' -> declare local vars and execute statements
         compileSubroutineBody(subroutineName, subType);
+        subSymTable.printSymbolTable(subroutineName);
 
         // 0 or more subroutineDec in class -> recursive call
         compileSubroutineDec();
     }
 
-    // OK
     /** Method for compiling 0 or 1 parameterList within subroutineDec i.e., a method for compiling
      * the arguments of a subroutine. <p> Def: ((type varName) (',' type varName)*)? <br>
-     * Ex: int x, int y, boolean flag */
+     * ex., int x, int y, boolean flag */
     private void compileParameterList() throws IOException {
         /* Immediately return if not type -> 0 parameterList */
         String token = tk.getCurrToken();
@@ -213,7 +213,6 @@ public class CompilationEngine {
         }
     }
 
-    // OK
     /** Method for compiling a subroutine body, the local variable declarations and statements. <br>
      * Def: { varDec* statement* } */
     private void compileSubroutineBody(String subroutineName, SubroutineType subType) throws IOException {
@@ -245,8 +244,7 @@ public class CompilationEngine {
         check("}");
     }
 
-    // OK
-    /** Method for compiling variable declarations within a subroutine. <P>
+    /** Method for compiling variable declarations within a subroutine. <p>
      * Def: 'var' type varName (',' varName)* ';' */
     private void compileVarDec() throws IOException {
         // Immediately return if not var
@@ -284,7 +282,6 @@ public class CompilationEngine {
         compileVarDec();
     }
 
-    // OK
     /** Compile a series of let, if, while, do, or return statements. */
     private void compileStatements() throws IOException {
         String token = tk.getCurrToken();
@@ -304,7 +301,6 @@ public class CompilationEngine {
         }
     }
 
-    // OK
     /** Compile a let statement. Also handles case where LHS is an array, such as a[1]. <p>
      * Def: 'let' varName ('[' expression ']')? '=' expression ';' */
     private void compileLet() throws IOException {
@@ -350,7 +346,6 @@ public class CompilationEngine {
         }
     }
 
-    // OK
     /** Compile an if statement. <p>
      * Def: 'if' '(' expression ')' '{' statements '}' ('else' '{' statements '}')? */
     private void compileIf() throws IOException {
@@ -383,13 +378,12 @@ public class CompilationEngine {
             compileStatements();
             check("}");
         }
-        // Todo: evaluate need for these two filler instructions, test on user name VM emulator
+        // Todo: evaluate need for these two filler instructions, eventually test on user made VM emulator
         vmWriter.writePush(CONSTANT, 0);
         vmWriter.writePop(TEMP, 0);
         vmWriter.writeLabel(endLabel); // label END
     }
 
-    // OK
     /** Compile a while statement. <p> Def: 'while' '(' expression ')' '{' statements '}' */
     private void compileWhile() throws IOException {
         vmWriter.write("// while statement");
@@ -415,7 +409,6 @@ public class CompilationEngine {
         vmWriter.writeLabel(endLabel); // label B
     }
 
-    // OK
     /** Compile a do statement. <p> Def: 'do' subroutineCall ';' */
     private void compileDo() throws IOException {
         vmWriter.write("// do statement");
@@ -433,7 +426,6 @@ public class CompilationEngine {
         vmWriter.writePop(TEMP, 0);
     }
 
-    // OK
     /** Compile a return statement. <p> Def: 'return' expression? ';' */
     private void compileReturn() throws IOException {
         vmWriter.write("// return statement");
@@ -452,7 +444,6 @@ public class CompilationEngine {
         vmWriter.writeReturn();
     }
 
-    // OK
     /** Compile an expression. Def: term (op term)* */
     private void compileExpression() throws IOException {
         /* term */
@@ -476,7 +467,6 @@ public class CompilationEngine {
         }
     }
 
-    // OK
     /** Compile a term. <p> Def: integerConstant | stringConstant | keywordConstant | varName |
      varName '[' expression ']' | '(' expression ')' | (unaryOp term) | subroutineCall */
     private void compileTerm() throws IOException {
@@ -557,8 +547,8 @@ public class CompilationEngine {
         }
     }
 
-    /* Helper function for compileDo and compileTerm
-    subroutineName '(' expressionList ')' | (className | varName) '.' subroutineName '(' expressionList ')' */
+    /** Compiles a subroutine, used by compileDo and compileTerm. <p> Def: subroutineName
+     * '(' expressionList ')' | (className | varName) '.' subroutineName '(' expressionList ')' */
     private void compileSubroutineCall(String currToken, String nextToken) throws IOException {
         /*
         Def: subroutineName '(' expressionList ')'
@@ -622,7 +612,6 @@ public class CompilationEngine {
         }
     }
 
-    // OK
     /** Compile an expression list. Only found when inputting arguments into a subroutine. <p>
      * Def: ( expression (',' expression)* )? */
     private int compileExpressionList() throws IOException {
@@ -642,7 +631,7 @@ public class CompilationEngine {
         return numExpressions;
     }
 
-
+    /** Helper method for checking for specific strings; throws exception if mismatch. */
     private void throwRuntimeException(String expected) throws IOException {
         String actual = tk.getCurrToken();
         TokenType actualType = tk.getCurrType();
@@ -679,20 +668,5 @@ public class CompilationEngine {
             throw new RuntimeException("Expected " + expectedType + " but found " + token + " " + currType);
         }
         tk.advance();
-    }
-
-    private void printSymTableData(String name, String declaration) {
-        if (!subSymTable.contains(name)) {
-            return;
-        }
-        writer.print(name);
-        writer.print(" ");
-        writer.print(subSymTable.dataTypeOf(name));
-        writer.print(" ");
-        writer.print(subSymTable.scopeOf(name));
-        writer.print(" ");
-        writer.print(subSymTable.indexOf(name));
-        writer.print(" ");
-        writer.println(declaration);
     }
 }

@@ -1,0 +1,109 @@
+function Pong.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+call Paddle.initialize 0
+pop temp 0
+call HUD.initialize 0
+pop temp 0
+call Ball.initialize 0
+pop temp 0
+push constant 0
+push constant 100
+call Paddle.new 2
+pop this 0
+push constant 512
+call Paddle.width 0
+sub
+push constant 100
+call Paddle.new 2
+pop this 1
+call HUD.new 0
+pop this 2
+call Ball.new 0
+pop this 3
+push pointer 0
+return
+function Pong.run 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 2
+label L0
+push local 2
+not
+not
+if-goto L1
+call Keyboard.keyPressed 0
+pop local 1
+push this 0
+push local 1
+call Paddle.update 2
+pop temp 0
+push this 1
+push this 3
+call Paddle.track 2
+pop temp 0
+push this 3
+push this 0
+push this 1
+call Ball.update 3
+pop temp 0
+push this 3
+push this 0
+call Ball.isTouchingPlayer 2
+not
+if-goto L2
+push this 2
+call HUD.incrementPoints 1
+pop temp 0
+goto L3
+label L2
+push constant 0
+pop temp 0
+label L3
+push this 3
+call Ball.isTouchingSides 1
+not
+if-goto L4
+push constant 1
+neg
+pop local 2
+goto L5
+label L4
+push constant 0
+pop temp 0
+label L5
+push constant 5
+call Sys.wait 1
+pop temp 0
+goto L0
+label L1
+push this 2
+call HUD.gameOver 1
+pop temp 0
+push constant 3000
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function Pong.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Paddle.dispose 1
+pop temp 0
+push this 1
+call Paddle.dispose 1
+pop temp 0
+push this 2
+call HUD.dispose 1
+pop temp 0
+push this 3
+call Ball.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

@@ -1,2 +1,5 @@
 <Main>
 
+<Main.main>
+game SquareGame VAR 0
+

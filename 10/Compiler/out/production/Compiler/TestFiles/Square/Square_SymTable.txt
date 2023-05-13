@@ -3,3 +3,35 @@ size int FIELD 2
 x int FIELD 0
 y int FIELD 1
 
+<Square.new>
+Ax int ARG 0
+Ay int ARG 1
+Asize int ARG 2
+
+<Square.dispose>
+this Square ARG 0
+
+<Square.draw>
+this Square ARG 0
+
+<Square.erase>
+this Square ARG 0
+
+<Square.incSize>
+this Square ARG 0
+
+<Square.decSize>
+this Square ARG 0
+
+<Square.moveUp>
+this Square ARG 0
+
+<Square.moveDown>
+this Square ARG 0
+
+<Square.moveLeft>
+this Square ARG 0
+
+<Square.moveRight>
+this Square ARG 0
+

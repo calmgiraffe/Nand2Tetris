@@ -2,3 +2,16 @@
 square Square FIELD 0
 direction int FIELD 1
 
+<SquareGame.new>
+
+<SquareGame.dispose>
+this SquareGame ARG 0
+
+<SquareGame.moveSquare>
+this SquareGame ARG 0
+
+<SquareGame.run>
+exit boolean VAR 1
+this SquareGame ARG 0
+key char VAR 0
+

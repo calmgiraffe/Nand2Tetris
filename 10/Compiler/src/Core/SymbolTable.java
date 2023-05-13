@@ -1,7 +1,6 @@
 package Core;
 
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,12 +27,16 @@ public class SymbolTable {
     the same name even if they are different data types */
     private final Map<String, Data> nameToData = new HashMap<>();
     private SymbolTable nextTable;
+    private final PrintWriter writer;
 
     /** Default constructor */
-    SymbolTable() {}
+    SymbolTable(PrintWriter writer) {
+        this.writer = writer;
+    }
 
     /** Can add pointer to next symbol table to check */
-    SymbolTable(SymbolTable nextTable) {
+    SymbolTable(PrintWriter writer, SymbolTable nextTable) {
+        this.writer = writer;
         this.nextTable = nextTable;
     }
 
@@ -100,6 +103,7 @@ public class SymbolTable {
         return nextTable.indexOf(name);
     }
 
+    /** Returns true if variable exists within linked list of symbol tables */
     public boolean contains(String name) {
         if (nameToData.containsKey(name)) {
             return true;
@@ -111,7 +115,8 @@ public class SymbolTable {
         return nextTable.contains(name);
     }
 
-    public void printSymbolTable(PrintWriter writer, String header) {
+    /** Prints the symbol table to a separate txt file */
+    public void printSymbolTable(String header) { // todo: make this print in order
         writer.println("<" + header + ">");
         for (String name : nameToData.keySet()) {
             writer.print(name);

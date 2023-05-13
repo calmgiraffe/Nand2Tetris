@@ -1,0 +1,6 @@
+<Pong>
+ball Ball FIELD 3
+hud HUD FIELD 2
+opponentPaddle Paddle FIELD 1
+playerPaddle Paddle FIELD 0
+

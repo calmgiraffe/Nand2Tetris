@@ -15,3 +15,49 @@ wall int FIELD 14
 positivex boolean FIELD 8
 leftWall int FIELD 10
 
+<Ball.new>
+AtopWall int ARG 4
+ArightWall int ARG 3
+Ax int ARG 0
+Ay int ARG 1
+AleftWall int ARG 2
+AbottomWall int ARG 5
+
+<Ball.dispose>
+this Ball ARG 0
+
+<Ball.show>
+this Ball ARG 0
+
+<Ball.hide>
+this Ball ARG 0
+
+<Ball.draw>
+this Ball ARG 0
+
+<Ball.getLeft>
+this Ball ARG 0
+
+<Ball.getRight>
+this Ball ARG 0
+
+<Ball.setDestination>
+temp int VAR 2
+dx int VAR 0
+dy int VAR 1
+destx int ARG 1
+desty int ARG 2
+this Ball ARG 0
+
+<Ball.move>
+this Ball ARG 0
+
+<Ball.bounce>
+this Ball ARG 0
+newy int VAR 1
+newx int VAR 0
+bouncingDirection int ARG 1
+divLengthy int VAR 3
+factor int VAR 4
+divLengthx int VAR 2
+

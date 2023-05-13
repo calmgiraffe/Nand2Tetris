@@ -37,6 +37,7 @@ public class VMWriter {
     VMWriter(String prefix) throws IOException {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + ".vm")));
     }
+
     public void write(String string) {
         //writer.println(string);
     }

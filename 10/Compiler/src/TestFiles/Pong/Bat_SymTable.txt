@@ -5,3 +5,38 @@ y int FIELD 1
 height int FIELD 3
 direction int FIELD 4
 
+<Bat.new>
+Aheight int ARG 3
+Ax int ARG 0
+Ay int ARG 1
+Awidth int ARG 2
+
+<Bat.dispose>
+this Bat ARG 0
+
+<Bat.show>
+this Bat ARG 0
+
+<Bat.hide>
+this Bat ARG 0
+
+<Bat.draw>
+this Bat ARG 0
+
+<Bat.setDirection>
+this Bat ARG 0
+Adirection int ARG 1
+
+<Bat.getLeft>
+this Bat ARG 0
+
+<Bat.getRight>
+this Bat ARG 0
+
+<Bat.setWidth>
+this Bat ARG 0
+Awidth int ARG 1
+
+<Bat.move>
+this Bat ARG 0
+

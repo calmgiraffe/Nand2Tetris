@@ -1,0 +1,9 @@
+<Ball>
+xVel int STATIC 0
+size int STATIC 2
+y1 int FIELD 2
+x1 int FIELD 0
+y2 int FIELD 3
+x2 int FIELD 1
+yVel int STATIC 1
+
