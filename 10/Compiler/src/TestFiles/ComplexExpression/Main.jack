@@ -16,6 +16,9 @@ class Main {
       // (70 - 14) / 1
       // 56
       let resultant = ((10 + 4) * (8 - 3) - (7 * 2)) / (6 - (4 + 1));
+      do Output.printString("Expected: 56");
+      do Output.println();
+      do Output.printString("Got: ");
       do Output.printInt(resultant);
       return;
    }

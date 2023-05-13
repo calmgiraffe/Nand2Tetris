@@ -2,22 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main_SymTable.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame_SymTable.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square_SymTable.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable$Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable$Data.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable$Scope.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable$Scope.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/SymbolTable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Average/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Average/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass1/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass1/Main.vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/SymbolTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/VMWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/VMWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/ConvertToBin/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ConvertToBin/Main.vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/ComplexExpression/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/SimpleClass1/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/SimpleClass1/Main.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +55,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Core.Main" />
       <module name="Compiler" />
-      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/ComplexExpression" />
+      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/SimpleClass2" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Core.*" />

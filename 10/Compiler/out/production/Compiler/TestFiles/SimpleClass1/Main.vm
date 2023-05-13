@@ -123,12 +123,14 @@ push argument 1
 push local 1
 add
 return
+push constant 0
+pop temp 0
 label L1
 function Main.checkIf 0
 // if statement
 push constant 2
 push constant 1
-gt
+lt
 not
 if-goto L2
 // do statement
@@ -176,6 +178,8 @@ call Output.printString 1
 push temp 0
 goto L3
 label L2
+push constant 0
+pop temp 0
 label L3
 // return statement
 push constant 0

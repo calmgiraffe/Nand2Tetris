@@ -305,21 +305,20 @@ public class CompilationEngine {
         }
     }
 
-    // todo: review array logic
-    /* Def: 'let' varName ('[' expression ']')? '=' expression ';' */
+    // OK
+    /** Compile a let statement. Also handles case where LHS is an array, such as a[1]. <p>
+     * Def: 'let' varName ('[' expression ']')? '=' expression ';' */
     private void compileLet() throws IOException {
         vmWriter.write("// let statement");
         check("let");
 
-        /* varName identifier */
+        /* varName identifier: save a copy of it */
         String varName = tk.getCurrToken();
         verifyType(identifier);
 
-        /* 0 or 1 ('[' expression ']') */
-        String token = tk.getCurrToken();
+        /* ( '[' expression ']' )? */
         boolean leftIsArray = false;
-
-        if (!token.equals("=")) {
+        if (!tk.getCurrToken().equals("=")) {
             // LHS is an array index -> push varName, compileExp, then add
             leftIsArray = true;
             vmWriter.writePush(
@@ -339,9 +338,10 @@ public class CompilationEngine {
 
         // VM code: LHS of let statement
         if (leftIsArray) {
-            vmWriter.writePop(POINTER, 1);
-            vmWriter.writePush(TEMP, 0);
-            vmWriter.writePop(THAT, 0);
+            vmWriter.writePop(TEMP, 0); // push RHS to temporary storage
+            vmWriter.writePop(POINTER, 1); // set THAT to point to array index
+            vmWriter.writePush(TEMP, 0); //  push RHS back to stack
+            vmWriter.writePop(THAT, 0); // remove from stack and write to the specified array index
         }
         else {
             vmWriter.writePop(
@@ -480,27 +480,27 @@ public class CompilationEngine {
     /* integerConstant | stringConstant | keywordConstant | varName | varName '[' expression ']' |
     '(' expression ')' | (unaryOp term) | subroutineCall */
     private void compileTerm() throws IOException {
-        String token = tk.getCurrToken(); TokenType type = tk.getCurrType();
+        String currToken = tk.getCurrToken(); TokenType type = tk.getCurrType();
 
         if (type == integerConstant) {
             // VM: push the int to stack
-            vmWriter.writePush(CONSTANT, Integer.parseInt(token));
+            vmWriter.writePush(CONSTANT, Integer.parseInt(currToken));
             tk.advance();
         }
         else if (type == stringConstant) {
             // VM: call String constructor, then initialize the new object with the String chars
             // by generating a sequence of calls to the String method appendChar, one for each char
-            vmWriter.writePush(CONSTANT, token.length());
+            vmWriter.writePush(CONSTANT, currToken.length());
             vmWriter.writeCall("String.new", 1);
 
-            for (int i = 0; i < token.length(); i++) {
-                vmWriter.writePush(CONSTANT, token.charAt(i));
+            for (int i = 0; i < currToken.length(); i++) {
+                vmWriter.writePush(CONSTANT, currToken.charAt(i));
                 vmWriter.writeCall("String.appendChar", 2);
             }
             tk.advance();
         }
-        else if (KEYWORD_CONST.contains(token)) { // true, false, null, this
-            switch (token) {
+        else if (KEYWORD_CONST.contains(currToken)) { // true, false, null, this
+            switch (currToken) {
                 case "false", "null" -> vmWriter.writePush(CONSTANT, 0);
                 case "this" -> vmWriter.writePush(POINTER, 0);
                 case "true" ->  {
@@ -510,13 +510,13 @@ public class CompilationEngine {
             }
             tk.advance();
         }
-        else if (token.equals("(")) { // '(' expression ')'
+        else if (currToken.equals("(")) { // '(' expression ')'
             check("(");
             compileExpression();
             check(")");
         }
-        else if (UNARY_OP.contains(token)) { // (unaryOp term)
-            String unaryOp = token;
+        else if (UNARY_OP.contains(currToken)) { // (unaryOp term)
+            String unaryOp = currToken;
             tk.advance();
 
             // VM: push exp; unary op
@@ -530,25 +530,25 @@ public class CompilationEngine {
             String nextToken = tk.getCurrToken();
             if (nextToken.equals("(") || nextToken.equals(".")) {
                 // if next token is '(' or '.', must be a subroutine call
-                compileSubroutineCall(token, nextToken);
+                compileSubroutineCall(currToken, nextToken);
             }
             else if (nextToken.equals("[")) {
-                // todo: verify
                 // If next token is '[', must be varName '[' expression ']'
-                Segment segment = scopeToSegment.get(subSymTable.scopeOf(token));
-                vmWriter.writePush(segment, subSymTable.indexOf(token));
+                Segment segment = scopeToSegment.get(subSymTable.scopeOf(currToken));
+                vmWriter.writePush(segment, subSymTable.indexOf(currToken));
 
                 check("[");
                 compileExpression();
                 check("]");
 
                 vmWriter.writeArithmetic(add);
-                vmWriter.writePop(TEMP, 0);
+                vmWriter.writePop(POINTER, 1);
+                vmWriter.writePush(THAT, 0);
             }
             else {
                 // else, must be varName
-                Segment segment = scopeToSegment.get(subSymTable.scopeOf(token));
-                vmWriter.writePush(segment, subSymTable.indexOf(token));
+                Segment segment = scopeToSegment.get(subSymTable.scopeOf(currToken));
+                vmWriter.writePush(segment, subSymTable.indexOf(currToken));
             }
         }
         else {
