@@ -38,7 +38,7 @@ public class VMWriter {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(prefix + ".vm")));
     }
     public void write(String string) {
-        writer.println(string);
+        //writer.println(string);
     }
 
     /** Writes a VM push command */

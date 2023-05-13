@@ -1,0 +1,5 @@
+<Square>
+size int FIELD 2
+x int FIELD 0
+y int FIELD 1
+

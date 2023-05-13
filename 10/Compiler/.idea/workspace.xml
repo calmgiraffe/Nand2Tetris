@@ -2,19 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceccd8e6-5060-40be-bed4-17697731973a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/Average/Main_SymTable.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.jack" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.vm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main_SymTable.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Square.jack" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Square.vm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Square_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Pong/Ball_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Pong/Bat_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Pong/Main_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/Pong/PongGame_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Main.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Main.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Main_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Main_ce.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Square.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Square.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/SquareGame.jack" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/SquareGame.vm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/SquareGame_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/SquareGame_ce.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Square_SymTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestFiles/SquareRef/Square_ce.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/CompilationEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Average/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Average/Main.vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass2/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleClass2/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/Core/VMWriter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/Ball.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/Ball.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/Bat.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/Bat.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/PongGame.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Pong/PongGame.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleSquare/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleSquare/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleSquare/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleSquare/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleSquare/Main_SymTable.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/SimpleSquare/Main_SymTable.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/Square.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.vm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compiler/TestFiles/Square/SquareGame.vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/CompilationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/CompilationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestFiles/Average/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Average/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/VMWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/VMWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Pong/Ball.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Pong/Ball.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Pong/Bat.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Pong/Bat.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Pong/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Pong/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Pong/PongGame.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Pong/PongGame.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.jack" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.jack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main_SymTable.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/SimpleSquare/Main_SymTable.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Main.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Main.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/Square.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/Square.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestFiles/Square/SquareGame.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +89,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Core.Main" />
       <module name="Compiler" />
-      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/SimpleSquare" />
+      <option name="PROGRAM_PARAMETERS" value="./src/TestFiles/Pong" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Core.*" />

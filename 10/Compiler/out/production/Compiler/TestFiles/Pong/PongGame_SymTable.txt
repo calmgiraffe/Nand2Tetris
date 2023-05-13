@@ -1,0 +1,10 @@
+<PongGame>
+ball Ball FIELD 1
+exit boolean FIELD 3
+score int FIELD 4
+instance PongGame STATIC 0
+bat Bat FIELD 0
+lastWall int FIELD 5
+batWidth int FIELD 6
+wall int FIELD 2
+

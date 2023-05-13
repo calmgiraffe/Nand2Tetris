@@ -2,81 +2,63 @@ function Ball.new 0
 push constant 15
 call Memory.alloc 1
 pop pointer 0
-// let statement
 push argument 0
 pop this 0
-// let statement
 push argument 1
 pop this 1
-// let statement
 push argument 2
 pop this 10
-// let statement
 push argument 3
 push constant 6
 sub
 pop this 11
-// let statement
 push argument 4
 pop this 12
-// let statement
 push argument 5
 push constant 6
 sub
 pop this 13
-// let statement
 push constant 0
 pop this 14
-// do statement
 push pointer 0
 call Ball.show 1
-push temp 0
-// return statement
+pop temp 0
 push pointer 0
 return
 function Ball.dispose 0
 push argument 0
 pop pointer 0
-// do statement
 push pointer 0
 call Memory.deAlloc 1
-push temp 0
-// return statement
+pop temp 0
 push constant 0
 return
 function Ball.show 0
 push argument 0
 pop pointer 0
-// do statement
 push constant 1
 neg
 call Screen.setColor 1
-push temp 0
-// do statement
+pop temp 0
 push pointer 0
 call Ball.draw 1
-push temp 0
-// return statement
+pop temp 0
 push constant 0
 return
 function Ball.hide 0
 push argument 0
 pop pointer 0
-// do statement
 push constant 0
 call Screen.setColor 1
-push temp 0
-// do statement
+pop temp 0
 push pointer 0
 call Ball.draw 1
-push temp 0
-// return statement
+pop temp 0
 push constant 0
 return
 function Ball.draw 0
 push argument 0
 pop pointer 0
-// do statement
 push this 0
 push this 1
 push this 0
@@ -86,151 +68,123 @@ push this 1
 push constant 5
 add
 call Screen.drawRectangle 4
-push temp 0
-// return statement
+pop temp 0
 push constant 0
 return
 function Ball.getLeft 0
 push argument 0
 pop pointer 0
-// return statement
 push this 0
 return
 function Ball.getRight 0
 push argument 0
 pop pointer 0
-// return statement
 push this 0
 push constant 5
 add
 return
-function Ball.setDestination 0
+function Ball.setDestination 3
 push argument 0
 pop pointer 0
-// let statement
 push argument 1
 push this 0
 sub
 pop this 2
-// let statement
 push argument 2
 push this 1
 sub
 pop this 3
-// let statement
 push this 2
 call Math.abs 1
 pop local 0
-// let statement
 push this 3
 call Math.abs 1
 pop local 1
-// let statement
 push local 0
 push local 1
-gt
+lt
 pop this 7
-// if statement
 push this 7
 not
 if-goto L0
-// let statement
 push local 0
 pop local 2
-// let statement
 push local 1
 pop local 0
-// let statement
 push local 2
 pop local 1
-// let statement
 push this 1
 push argument 2
-gt
+lt
 pop this 8
-// let statement
 push this 0
 push argument 1
-gt
+lt
 pop this 9
 goto L1
 label L0
-// let statement
 push this 0
 push argument 1
-gt
+lt
 pop this 8
-// let statement
 push this 1
 push argument 2
-gt
+lt
 pop this 9
 push constant 0
 pop temp 0
 label L1
-// let statement
 push constant 2
 push local 1
 call Math.multiply 2
 push local 0
 sub
 pop this 4
-// let statement
 push constant 2
 push local 1
 call Math.multiply 2
 pop this 5
-// let statement
 push constant 2
 push local 1
 push local 0
 sub
 call Math.multiply 2
 pop this 6
-// return statement
 push constant 0
 return
 function Ball.move 0
 push argument 0
 pop pointer 0
-// do statement
 push pointer 0
 call Ball.hide 1
-push temp 0
-// if statement
+pop temp 0
 push this 4
 push constant 0
-gt
+lt
 not
 if-goto L2
-// let statement
 push this 4
 push this 5
 add
 pop this 4
 goto L3
 label L2
-// let statement
 push this 4
 push this 6
 add
 pop this 4
-// if statement
 push this 9
 not
 if-goto L4
-// if statement
 push this 7
 not
 if-goto L6
-// let statement
 push this 0
 push constant 4
 add
 pop this 0
 goto L7
 label L6
-// let statement
 push this 1
 push constant 4
 add
@@ -240,18 +194,15 @@ pop temp 0
 label L7
 goto L5
 label L4
-// if statement
 push this 7
 not
 if-goto L8
-// let statement
 push this 0
 push constant 4
 sub
 pop this 0
 goto L9
 label L8
-// let statement
 push this 1
 push constant 4
 sub
@@ -265,22 +216,18 @@ label L5
 push constant 0
 pop temp 0
 label L3
-// if statement
 push this 8
 not
 if-goto L10
-// if statement
 push this 7
 not
 if-goto L12
-// let statement
 push this 1
 push constant 4
 add
 pop this 1
 goto L13
 label L12
-// let statement
 push this 0
 push constant 4
 add
@@ -290,18 +237,15 @@ pop temp 0
 label L13
 goto L11
 label L10
-// if statement
 push this 7
 not
 if-goto L14
-// let statement
 push this 1
 push constant 4
 sub
 pop this 1
 goto L15
 label L14
-// let statement
 push this 0
 push constant 4
 sub
@@ -312,17 +256,14 @@ label L15
 push constant 0
 pop temp 0
 label L11
-// if statement
 push this 0
 push this 10
-lt
+gt
 not
 not
 if-goto L16
-// let statement
 push constant 1
 pop this 14
-// let statement
 push this 10
 pop this 0
 goto L17
@@ -330,17 +271,14 @@ label L16
 push constant 0
 pop temp 0
 label L17
-// if statement
 push this 0
 push this 11
-gt
+lt
 not
 not
 if-goto L18
-// let statement
 push constant 2
 pop this 14
-// let statement
 push this 11
 pop this 0
 goto L19
@@ -348,17 +286,14 @@ label L18
 push constant 0
 pop temp 0
 label L19
-// if statement
 push this 1
 push this 12
-lt
+gt
 not
 not
 if-goto L20
-// let statement
 push constant 3
 pop this 14
-// let statement
 push this 12
 pop this 1
 goto L21
@@ -366,17 +301,14 @@ label L20
 push constant 0
 pop temp 0
 label L21
-// if statement
 push this 1
 push this 13
-gt
+lt
 not
 not
 if-goto L22
-// let statement
 push constant 4
 pop this 14
-// let statement
 push this 13
 pop this 1
 goto L23
@@ -384,41 +316,34 @@ label L22
 push constant 0
 pop temp 0
 label L23
-// do statement
 push pointer 0
 call Ball.show 1
-push temp 0
-// return statement
+pop temp 0
 push this 14
 return
-function Ball.bounce 0
+function Ball.bounce 5
 push argument 0
 pop pointer 0
-// let statement
 push this 2
 push constant 10
 call Math.divide 2
 pop local 2
-// let statement
 push this 3
 push constant 10
 call Math.divide 2
 pop local 3
-// if statement
 push argument 1
 push constant 0
 eq
 not
 if-goto L24
-// let statement
 push constant 10
 pop local 4
 goto L25
 label L24
-// if statement
 push this 2
 push constant 0
-gt
+lt
 not
 push argument 1
 push constant 1
@@ -426,7 +351,7 @@ eq
 and
 push this 2
 push constant 0
-gt
+lt
 push argument 1
 push constant 1
 neg
@@ -435,12 +360,10 @@ and
 or
 not
 if-goto L26
-// let statement
 push constant 20
 pop local 4
 goto L27
 label L26
-// let statement
 push constant 5
 pop local 4
 push constant 0
@@ -449,16 +372,13 @@ label L27
 push constant 0
 pop temp 0
 label L25
-// if statement
 push this 14
 push constant 1
 eq
 not
 if-goto L28
-// let statement
 push constant 506
 pop local 0
-// let statement
 push local 3
 push constant 50
 neg
@@ -466,7 +386,6 @@ call Math.multiply 2
 push local 2
 call Math.divide 2
 pop local 1
-// let statement
 push this 1
 push local 1
 push local 4
@@ -475,23 +394,19 @@ add
 pop local 1
 goto L29
 label L28
-// if statement
 push this 14
 push constant 2
 eq
 not
 if-goto L30
-// let statement
 push constant 0
 pop local 0
-// let statement
 push local 3
 push constant 50
 call Math.multiply 2
 push local 2
 call Math.divide 2
 pop local 1
-// let statement
 push this 1
 push local 1
 push local 4
@@ -500,16 +415,13 @@ add
 pop local 1
 goto L31
 label L30
-// if statement
 push this 14
 push constant 3
 eq
 not
 if-goto L32
-// let statement
 push constant 250
 pop local 1
-// let statement
 push local 2
 push constant 25
 neg
@@ -517,7 +429,6 @@ call Math.multiply 2
 push local 3
 call Math.divide 2
 pop local 0
-// let statement
 push this 0
 push local 0
 push local 4
@@ -526,17 +437,14 @@ add
 pop local 0
 goto L33
 label L32
-// let statement
 push constant 0
 pop local 1
-// let statement
 push local 2
 push constant 25
 call Math.multiply 2
 push local 3
 call Math.divide 2
 pop local 0
-// let statement
 push this 0
 push local 0
 push local 4
@@ -552,12 +460,10 @@ label L31
 push constant 0
 pop temp 0
 label L29
-// do statement
 push pointer 0
 push local 0
 push local 1
 call Ball.setDestination 3
-push temp 0
-// return statement
+pop temp 0
 push constant 0
 return

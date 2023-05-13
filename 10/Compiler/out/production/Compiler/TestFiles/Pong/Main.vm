@@ -1,19 +1,13 @@
-function Main.main 0
-pop pointer 0
-// do statement
+function Main.main 1
 call PongGame.newInstance 0
-push temp 0
-// let statement
+pop temp 0
 call PongGame.getInstance 0
 pop local 0
-// do statement
 push local 0
-call Unknown.run 1
-push temp 0
-// do statement
+call PongGame.run 1
+pop temp 0
 push local 0
-call Unknown.dispose 1
-push temp 0
-// return statement
+call PongGame.dispose 1
+pop temp 0
 push constant 0
 return

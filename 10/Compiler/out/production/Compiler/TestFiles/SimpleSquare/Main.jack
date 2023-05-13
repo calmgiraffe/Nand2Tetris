@@ -7,12 +7,12 @@
 
 /** Initializes a new Square Dance game and starts running it. */
 class Main {
-    field Square square;
-
     function void main() {
-        let square = Square.new(0, 0, 50);
+        var Square square;
+        let square = Square.new(5, 6, 50);
+        //do square.draw();
 
-        /*
+        
         do square.draw();
         do Sys.wait(1000);
         do square.erase();
@@ -21,9 +21,9 @@ class Main {
         do Sys.wait(1000);
         do square.erase();
         do Sys.wait(1000);
-        */
+        
 
-        //do square.dispose();
+        do square.dispose();
         return;
     }
 }

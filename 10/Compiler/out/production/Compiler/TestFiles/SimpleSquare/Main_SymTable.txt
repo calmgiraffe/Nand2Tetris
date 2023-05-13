@@ -1,3 +1,2 @@
 <Main>
-square Square FIELD 0
 

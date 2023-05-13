@@ -1,0 +1,17 @@
+<Ball>
+straightD int FIELD 5
+positivey boolean FIELD 9
+bottomWall int FIELD 13
+d int FIELD 4
+invert boolean FIELD 7
+diagonalD int FIELD 6
+lengthy int FIELD 3
+lengthx int FIELD 2
+topWall int FIELD 12
+x int FIELD 0
+y int FIELD 1
+rightWall int FIELD 11
+wall int FIELD 14
+positivex boolean FIELD 8
+leftWall int FIELD 10
+

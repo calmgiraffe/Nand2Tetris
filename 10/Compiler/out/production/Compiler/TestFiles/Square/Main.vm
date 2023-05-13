@@ -1,15 +1,11 @@
 function Main.main 1
-// let statement
 call SquareGame.new 0
 pop local 0
-// do statement
 push local 0
 call SquareGame.run 1
-push temp 0
-// do statement
+pop temp 0
 push local 0
 call SquareGame.dispose 1
-push temp 0
-// return statement
+pop temp 0
 push constant 0
 return

@@ -1,0 +1,7 @@
+<Bat>
+x int FIELD 0
+width int FIELD 2
+y int FIELD 1
+height int FIELD 3
+direction int FIELD 4
+

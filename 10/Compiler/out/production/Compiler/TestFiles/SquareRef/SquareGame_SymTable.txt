@@ -1,0 +1,4 @@
+<SquareGame>
+square Square FIELD 0
+direction int FIELD 1
+
